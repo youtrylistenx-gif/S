@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>มึงลองฟัง.❤️‍🔥</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Prompt', sans-serif;
+      font-size: 16px;
+      color: #202124;
+      background: #fff;
+      min-height: 100vh;
+    }
+
+    /* ── LIVE USERS POPUP (TOP CENTER) ── */
+    #live-users-popup { 
+      position: fixed; top: 80px; left: 50%; transform: translateX(-50%); 
+      background: #ffffff; padding: 8px 16px; border-radius: 20px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 1px solid #e0e0e0;
+      z-index: 9999; font-size: 0.8rem; display: none; white-space: nowrap;
+    }
+
+    /* ── NAV ── */
+    .gs-nav {
+      height: 64px;
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .gs-nav-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      text-decoration: none;
+      color: #202124;
+    }
+    .logo-name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #202124;
+      white-space: nowrap;
+    }
+    .gs-nav-logo .logo-img {
+      height: 32px;
+      width: 32px;
+      object-fit: contain;
+    }
+    .gs-nav-links {
+      margin-left: 8px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .gs-nav-links a {
+      text-decoration: none;
+      color: #202124;
+      font-size: 0.9rem;
+      padding: 0 16px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      border-bottom: 3px solid transparent;
+      transition: border-color 0.15s;
+    }
+    .gs-nav-links a:hover,
+    .gs-nav-links a.active {
+      border-bottom-color: #1a73e8;
+      color: #1a73e8;
+    }
+
+    /* ── MAIN CONTENT WRAPPER ── */
+    .gs-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── SECTION HEADINGS ── */
+    .gs-h1 { font-size: 2.25rem; font-weight: 600; color: #202124; text-align: center; line-height: 1.3; margin-bottom: 6px; }
+    .gs-h2 { font-size: 1.5rem; font-weight: 600; color: #202124; text-align: center; line-height: 1.3; margin-bottom: 32px; }
+    .gs-h3 { font-size: 1.15rem; font-weight: 600; color: #202124; margin-bottom: 16px; padding: 0 4px; }
+
+    /* ── PRODUCT GRID ── */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 56px;
+    }
+    .product-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      overflow: hidden;
+      text-decoration: none;
+      color: #202124;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      background: #fff;
+      position: relative;
+    }
+    .product-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.12); transform: translateY(-4px); }
+    
+    .discount-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #d32f2f;
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      z-index: 1;
+    }
+    
+    .product-img {
+      width: 100%;
+      height: 250px;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+    .product-img img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    
+    .product-info { padding: 16px 20px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .product-title { font-size: 0.95rem; font-weight: 500; line-height: 1.5; color: #202124; margin-bottom: 4px; }
+    
+    .price-container { display: flex; align-items: baseline; gap: 8px; margin-top: auto; }
+    .price-new { font-size: 1.2rem; font-weight: 700; color: #d32f2f; }
+    .price-old { font-size: 0.9rem; color: #999; text-decoration: line-through; }
+    
+    .timer { font-size: 0.8rem; color: #d32f2f; font-weight: 600; margin-top: 4px; }
+    
+    .product-sold { font-size: 0.85rem; color: #5f6368; }
+    .product-stars { font-size: 0.85rem; color: #f59e0b; }
+
+    /* ── MISC LINKS & FOOTER ── */
+    .links-section { margin-bottom: 48px; padding: 0 4px; }
+    .links-list { list-style: none; display: flex; flex-direction: column; gap: 0; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; }
+    .links-list li a { display: block; padding: 14px 20px; text-decoration: none; color: #1a73e8; font-size: 0.95rem; border-bottom: 1px solid #e0e0e0; }
+    .social-section { margin-bottom: 48px; padding: 0 4px; }
+    .social-list { list-style: none; display: flex; flex-direction: column; gap: 0; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; }
+    .social-list li a { display: flex; align-items: center; gap: 12px; padding: 14px 20px; text-decoration: none; color: #1a73e8; font-size: 0.95rem; border-bottom: 1px solid #e0e0e0; }
+    .gs-footer { border-top: 1px solid #e0e0e0; text-align: center; padding: 20px 24px; font-size: 0.8rem; color: #5f6368; }
+
+    @media (max-width: 600px) {
+      .product-grid { grid-template-columns: 1fr; }
+      .product-img { height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="live-users-popup">👁️ มีคนกำลังดูหน้านี้อยู่ <strong id="user-count">20</strong> คน</div>
+
+  <nav class="gs-nav">
+    <a class="gs-nav-logo" href="index.html">
+      <img src="./ภาพ/โลโก้หมากรุก พื้นหลังสีดำ.jpg" alt="Logo" class="logo-img">
+      <span class="logo-name">มึงลองฟัง.❤️‍🔥</span>
+    </a>
+    <div class="gs-nav-links">
+      <a href="index.html" class="active">หน้าแรก</a>
+    </div>
+  </nav>
+
+  <div class="gs-page">
+    <h1 class="gs-h1">สินค้า🛒</h1>
+    <h2 class="gs-h2">ของ มึงลองฟัง.❤️‍🔥</h2>
+
+    <div class="product-grid">
+      <a class="product-card" href="planner.html">
+        <span class="discount-badge">-34%</span>
+        <div class="product-img"><img src="./ภาพ/AP Slide 1.png" alt="Planner"></div>
+        <div class="product-info">
+          <div class="product-title">📈📊Planner - วางแผนชีวิตติดตามเป้าหมาย สร้างวินัย บริหารเงิน อัปเดตฟรีตลอดชีพ</div>
+          <div class="price-container">
+            <span class="price-new">฿390</span>
+            <span class="price-old">฿590</span>
+          </div>
+          <div class="timer" id="timer1">Flash Sale: กำลังโหลด...</div>
+          <div class="product-sold">รับไปใช้งานแล้ว 783 คน</div>
+          <div class="product-stars">⭐5</div>
+        </div>
+      </a>
+      
+      <a class="product-card" href="#">
+        <div class="product-img"><img src="./ภาพ/ปก Ebook - กูเข้าใจ...มึงนะเว้ย.png" alt="Ebook"></div>
+        <div class="product-info">
+          <div class="product-title">Ebook - ฮีลใจ (แจกฟรี)</div>
+          <div class="price-container"><span class="price-new">฿ฟรี</span></div>
+          <div class="product-sold">แจกแล้ว 1652 ชิ้น</div>
+          <div class="product-stars">⭐5</div>
+        </div>
+      </a>
+      
+      <a class="product-card" href="#">
+        <div class="product-img"><img src="./ภาพ/ริสแบนด์.png" alt="ริสแบนด์"></div>
+        <div class="product-info">
+          <div class="product-title">ริสแบนด์</div>
+          <div class="price-container"><span class="price-new">฿199</span></div>
+          <div class="product-sold">ขายแล้ว 31 ชิ้น</div>
+          <div class="product-stars">⭐5</div>
+        </div>
+      </a>
+      
+      <a class="product-card" href="#">
+        <div class="product-img"><img src="./ภาพ/ปก Ebook - ชีวิตที่มึง...ไม่เสียใจภายหลัง.png" alt="Ebook"></div>
+        <div class="product-info">
+          <div class="product-title">Ebook - ชีวิตที่มึง...ไม่เสียใจภายหลัง</div>
+          <div class="price-container"><span class="price-new">฿299</span></div>
+          <div class="product-sold">ขายแล้ว 15 ชิ้น</div>
+          <div class="product-stars">⭐5</div>
+        </div>
+      </a>
+      
+      <a class="product-card" href="#">
+        <div class="product-img"><img src="./ภาพ/ปก Ebook - ปลุกไฟ...ในตัวมึง.png" alt="Ebook"></div>
+        <div class="product-info">
+          <div class="product-title">Ebook - ปลุกไฟในตัวมึง</div>
+          <div class="price-container"><span class="price-new">฿299</span></div>
+          <div class="product-sold">ขายแล้ว 5 ชิ้น</div>
+          <div class="product-stars">⭐5</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="links-section">
+      <h3 class="gs-h3">อื่นๆ</h3>
+      <ul class="links-list">
+        <li><a href="#">เรื่องราวชีวิตสั้นๆ กว่าจะมาเป็น มึงลองฟัง.❤️‍🔥</a></li>
+        <li><a href="https://ezdn.app/Youtrylisten" target="_blank">ช่องทางการโดเนทสนับสนุนช่องโดยตรง</a></li>
+        <li><a href="#">Ebook ฮีลใจฟรี</a></li>
+        <li><a href="https://www.instagram.com/youtrylisten" target="_blank">พูดคุย / ปรึกษา</a></li>
+        <li><a href="#">โปรโมชั่นพิเศษของสินค้า!!!</a></li>
+      </ul>
+    </div>
+
+    <div class="social-section">
+      <h3 class="gs-h3">ช่องทางต่างๆ ในการติดตาม</h3>
+      <ul class="social-list">
+        <li><a href="https://www.instagram.com/youtrylisten" target="_blank"><span class="social-icon">📸</span> IG : มึงลองฟัง.❤️‍🔥</a></li>
+        <li><a href="https://www.tiktok.com/@youtrylisten" target="_blank"><span class="social-icon">🎵</span> TikTok : มึงลองฟัง.❤️‍🔥</a></li>
+        <li><a href="https://www.facebook.com/share/17DBKa7eb3/" target="_blank"><span class="social-icon">📘</span> Facebook : มึงลองฟัง.❤️‍🔥</a></li>
+        <li><a href="https://youtube.com/@youtrylisten" target="_blank"><span class="social-icon">▶️</span> Youtube : มึงลองฟัง.❤️‍🔥</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <footer class="gs-footer">มึงลองฟัง.❤️‍🔥</footer>
+
+  <script>
+    /* Flash Sale Timer */
+    function updateTimer() {
+      const now = new Date();
+      let target = new Date();
+      target.setHours(6, 0, 0, 0);
+      if (now > target) target.setDate(target.getDate() + 1);
+      
+      const diff = target - now;
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById("timer1").innerHTML = `แฟลชเซล⚡ ${h} : ${m} : ${s}`;
+    }
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    /* Live Users Popup */
+    function showUserPopup() {
+      const popup = document.getElementById('live-users-popup');
+      document.getElementById('user-count').innerText = Math.floor(Math.random() * (30 - 10 + 1)) + 10;
+      popup.style.display = 'block';
+      setTimeout(() => { popup.style.display = 'none'; }, 3000);
+    }
+    setInterval(showUserPopup, 6000);
+  </script>
+</body>
+</html>
