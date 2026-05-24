@@ -1066,15 +1066,6 @@
       <button class="carousel-btn carousel-btn-next" id="nextBtn">&#8594;</button>
     </div>
  
-
-    <<div class="price-section">
-      <div class="price-row">
-        <span class="price-discount">-33.9%</span>
-        <span class="price-new">฿390.-</span>
-        <span class="price-old">฿590</span>
-        <span class="flash-sale-badge" id="flash-sale-text">⚡ กำลังโหลด...</span>
-      </div>
-
     <div class="price-section">
       <div class="stats-row">
         <span>⭐ 5 (99+ รีวิวจากผู้ใช้จริง)</span>
@@ -1085,13 +1076,6 @@
         </span>
       </div>
     </div>
-
- 
-    <a class="btn-main" href="checkout.html">
-      <span class="btn-main-top">🔥 คลิกเพื่อรับสิทธิ์ราคาพิเศษ ฿299.- เลย (เหลืออีกแค่ 5 สิทธิ์สุดท้าย)</span>
-      <span class="btn-main-sub">✅ ชำระเงินแล้ว ได้รับทุกอย่างทาง Email ทันทีภายใน 10 วิ</span>
-    </a>
- 
 
     <div class="summary-box">
       <div class="summary-title" style="font-size:1.2rem;font-weight:800;"> สรุป</div>
@@ -1184,7 +1168,24 @@
 </div>
 <footer class="gs-footer">มึงลองฟัง.❤️‍🔥</footer>
 
-
+<!-- ── FLOATING BUY BUTTON (TikTok style) ── -->
+<div id="float-cta-bar">
+  <div class="float-inner">
+    <div class="float-left">
+      <div class="float-price-row">
+        <span class="float-discount">-33.9%</span>
+        <span class="float-price-new">฿390.-</span>
+        <span class="float-price-old">฿590.-</span>
+      </div>
+      <div class="float-timer" id="float-flash-sale-text">⚡ กำลังโหลด...</div>
+    </div>
+    <a class="float-btn" href="checkout.html">
+      <span class="float-btn-top">🔥 รับสิทธิ์ราคาพิเศษเลย</span>
+      <span class="float-btn-sub">✅ ชำระเงินเสร็จแล้ว ได้รับทางอีเมลทันที</span>
+    </a>
+  </div>
+</div>
+ 
 <script>
   /* ── FLASH SALE TIMER ── */
   function updateTimer() {
@@ -1198,14 +1199,13 @@
     const m = Math.floor((diff % 3600000) / 60000);
     const s = Math.floor((diff % 60000) / 1000);
     
-    const el = document.getElementById("flash-sale-text");
-    if(el) {
-        el.innerHTML = `แฟลชเซล⚡${h} : ${m} : ${s}`;
+    const floatEl = document.getElementById("float-flash-sale-text");
+    if(floatEl) {
+        floatEl.innerHTML = `⚡แฟลชเซล ${h} : ${m} : ${s}`;
     }
   }
   setInterval(updateTimer, 1000);
   updateTimer();
-
 
   /* ── LIVE USERS POPUP (5 SEC INTERVAL) ── */
   function showUserPopup() {
