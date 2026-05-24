@@ -921,6 +921,66 @@
       .float-btn-top { font-size: 1.3rem; }
       .float-btn-sub { font-size: 0.95rem; }
     }
+    /* ── WHAT YOU GET BOX ── */
+    .wir-box {
+      background: #fff;
+      border: 1px solid #e8eaed;
+      border-radius: 12px;
+      padding: 22px 22px 18px;
+      margin-bottom: 16px;
+    }
+
+    .wir-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #ea4335;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .wir-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #202124;
+      margin-bottom: 20px;
+      line-height: 1.35;
+    }
+
+    .wir-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .wir-icon {
+      width: 38px;
+      height: 38px;
+      background: #f1f3f4;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .wir-text strong {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #202124 !important;
+      margin-bottom: 4px;
+    }
+
+    .wir-text p {
+      font-size: 0.85rem;
+      color: #5f6368;
+      line-height: 1.7;
+    }
   </style>
 </head>
 <body>
@@ -1000,7 +1060,7 @@
           
           <div class="carousel-slide">
             <div class="slide-img">
-              <span class="slide-badge price">💰มูลค่า
+              <span class="slide-badge price">💰 มูลค่า
                 ฿990.-</span>
               <img src="./ภาพ/PL โปสเตอร์.png" alt="Slide 2" loading="lazy">
             </div>
@@ -1134,17 +1194,69 @@
       <span class="btn-main-sub">✅ ชำระเงินเสร็จแล้ว ได้รับทุกอย่างทาง Email ทันที</span>
     </a>
  
+<!-- ── สิ่งที่จะได้รับ ── -->
+    <div class="wir-box">
+      <span class="wir-label" style="font-size:1.25rem;font-weight:800;text-align:center;letter-spacing:0;text-transform:none;display:block;">สรุป</span>
+      <h2 class="wir-title" style="text-align:center;">ระบบเดียว ครบทุกอย่าง<br>ที่ต้องการจริงๆ</h2>
+
+      <div class="wir-item">
+        <div class="wir-icon">📈</div>
+        <div class="wir-text">
+          <strong>Planner — วางแผน ติดตามความคืบหน้าของงานและเป้าหมาย</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#ea4335;display:block;margin-bottom:4px;">💰 มูลค่า 990.-</span>
+        </div>
+      </div>
+
+      <div class="wir-item">
+        <div class="wir-icon">✅</div>
+        <div class="wir-text">
+          <strong>Habit Tracker — สร้างและติดตามวินัย</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#ea4335;display:block;margin-bottom:4px;">💰 มูลค่า 500.-</span>
+        </div>
+      </div>
+
+      <div class="wir-item">
+        <div class="wir-icon">💰</div>
+        <div class="wir-text">
+          <strong>Money Tracker — บริหารเงิน</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#43a047;display:block;margin-bottom:4px;">🎁 โบนัสพิเศษ มูลค่า 500.-</span>
+        </div>
+      </div>
+
+      <div class="wir-item">
+        <div class="wir-icon">📊</div>
+        <div class="wir-text">
+          <strong>แดชบอร์ดสรุปรายปี — เห็นพัฒนาการทุกเรื่องของทั้งปีในหน้าเดียว</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#43a047;display:block;margin-bottom:4px;">🎁 โบนัสพิเศษ มูลค่า 500.-</span>
+        </div>
+      </div>
+
+      <div class="wir-item">
+        <div class="wir-icon">🎬</div>
+        <div class="wir-text">
+          <strong>วิดีโอสอนวิธีใช้งานสั้นๆ 6 นาที</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#43a047;display:block;margin-bottom:4px;">🎁 สิ่งที่ผมตั้งใจมอบเพิ่มให้</span>
+        </div>
+      </div>
+
+      <div class="wir-item">
+        <div class="wir-icon">🔄</div>
+        <div class="wir-text">
+          <strong>อัปเดตฟรีตลอดชีพ — ได้ทุกระบบใหม่โดยไม่ต้องเสียเงินเพิ่ม</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#43a047;display:block;margin-bottom:4px;">🎁 สิ่งที่ผมตั้งใจมอบเพิ่มให้</span>
+        </div>
+      </div>
+
+      <div class="wir-item" style="margin-bottom:0;">
+        <div class="wir-icon">💬</div>
+        <div class="wir-text">
+          <strong>ถ้าระบบช่วยอะไรไม่ได้เลย ผมพร้อมช่วยวางแผนและดูแลเต็มที่</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#43a047;display:block;margin-bottom:4px;">🎁 สิ่งที่ผมตั้งใจมอบเพิ่มให้</span>
+        </div>
+      </div>
+    </div>
 
     <div class="summary-box">
-      <div class="summary-title" style="font-size:1.2rem;font-weight:800;"> สรุป</div>
-      <p class="summary-body" style="font-weight:700;text-align:center;">ลงทุนแค่ครั้งเดียว แต่ได้ระบบที่ใช้งานได้ตลอดชีวิต + ครอบครุมทุกเรื่องสำคัญในที่เดียว + ใช้ได้ทุกอุปกรณ์และข้อมูลเชื่อมกัน ( มูลค่ารวมกว่า <span style="color:#ea4335;">1,490</span> ) + โบนัสที่ได้รับเพิ่มอีก 2 อย่าง ( มูลค่ากว่า <span style="color:#43a047;">1,000</span> )</p> 
-      <p class="summary-body" style="font-weight:700;">1. Planner — วางแผน ติดตามความคืบหน้าของงานและเป้าหมาย <span style="color:#ea4335;">( มูลค่า 990.- )</span>
-2. Habit Tracker — สร้างและติดตามวินัย <span style="color:#ea4335;">( มูลค่า 500.- )</span>
-3. Money Tracker — บริหารเงิน <span style="color:#43a047;">( โบนัสพิเศษมูลค่า 500.- )</span>
-4. แดชบอร์ดสรุปรายปี — เห็นพัฒนาการทุกเรื่องของทั้งปีในหน้าเดียว <span style="color:#43a047;">( โบนัสพิเศษมูลค่า 500.- )</span>
-5. วิดีโอสอนวิธีใช้งานสั้นๆ 6 นาที <span style="color:#43a047;">( สิ่งที่ผมตั้งใจมอบเพิ่มให้ )</span>
-6. อัปเดตฟรีตลอดชีพ — ได้ทุกระบบใหม่โดยที่ไม่ต้องเสียเงินเพิ่มแม้แต่บาทเดียว <span style="color:#43a047;">( สิ่งที่ผมตั้งใจมอบเพิ่มให้ )</span>
-7. ถ้าระบบช่วยอะไรไม่ได้เลย ปรึกษาผมได้เสมอ ผมจะช่วยวางแผนและพร้อมดูแลเต็มที่ <span style="color:#43a047;">( สิ่งที่ผมตั้งใจมอบเพิ่มให้ )</span></p>
       <p class="summary-body">   "ทำไมผมถึงดูให้มากขนาดนี้?" พูดตามตรงนะครับ มันไม่ใช่การทำโปรโมชั่น แต่มันเป็นเพราะ "ความเสียดายครับ🥺" ผมคงรู้สึกแย่และเสียดายมากแน่ๆ ถ้าคุณรับแค่ Planner ไปแล้ว แต่ช่วยจัดการชีวิตให้ดีขึ้นสักนิดไม่ได้เลยและผมไม่อยากให้งานที่ผมทุ่มเทสร้างมาหลายเดือน กลายเป็นแค่ไฟล์ขยะอีกชิ้นหนึ่งในเครื่อง ที่คุณซื้อไปแล้วไม่ได้ใช้จริงครับ🫡</p>
         <p class="summary-body">   ผมเลยตัดสินใจมัดรวมทุกอย่างที่จำเป็นต้อง "มีครบ" ตั้งแต่แรก เพื่อให้มั่นใจว่า ทุกคนที่ไว้ใจและตัดสินใจจ่ายควักเงินจ่ายสนับสนุนผมมาแล้ว จะได้รับเครื่องมือที่เพียงพอจะช่วยชีวิตให้ดีขึ้นได้จริงๆ ผมอยากให้เงินที่ของทุกคนที่ลงทุนไป มัน 'ทำงาน' ได้คุ้มค่าที่สุด และอยากให้สิ่งที่ผมตั้งใจทำขึ้นมา มันได้ทำหน้าที่ของมันอย่างเต็มที่...แค่นั้นเลยครับ🙏</p>
       <p class="summary-body">   ( ในอนาคตที่ Planner นี้มีสิ่งใหม่ๆ เพิ่ม ราคาจะเพิ่มขึ้นเรื่อยๆ เช่นกันครับ แปลว่าเห็นราคาในตอนนี้เป็นเท่าไหร่ ก็ถือเป็นราคาที่ดีและคุ้มที่สุดของตอนนี้แล้วครับ🥰 )</p>

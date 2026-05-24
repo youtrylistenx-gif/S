@@ -974,55 +974,72 @@
     }
 
     .wir-label {
-      font-size: 0.72rem;
-      font-weight: 700;
+      font-size: 1.25rem;
+      font-weight: 800;
       color: #ea4335;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
+      letter-spacing: 0;
+      text-transform: none;
       display: block;
-      margin-bottom: 8px;
+      text-align: center;
+      margin-bottom: 6px;
     }
 
     .wir-title {
       font-size: 1.15rem;
-      font-weight: 800;
+      font-weight: 700;
       color: #202124;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       line-height: 1.35;
+      text-align: center;
     }
 
     .wir-item {
       display: flex;
-      gap: 14px;
+      gap: 12px;
       align-items: flex-start;
-      margin-bottom: 18px;
+      margin-bottom: 13px;
+    }
+
+    .wir-item:last-of-type {
+      margin-bottom: 0;
     }
 
     .wir-icon {
-      width: 38px;
-      height: 38px;
+      width: 34px;
+      height: 34px;
       background: #f1f3f4;
-      border-radius: 8px;
+      border-radius: 7px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 17px;
       flex-shrink: 0;
-      margin-top: 2px;
+      margin-top: 1px;
     }
 
     .wir-text strong {
       display: block;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 700;
       color: #202124 !important;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
+      line-height: 1.35;
     }
 
     .wir-text p {
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       color: #5f6368;
-      line-height: 1.7;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      .wir-box { padding: 14px 14px 10px; }
+      .wir-label { font-size: 1.15rem; }
+      .wir-title { font-size: 1.05rem; margin-bottom: 12px; }
+      .wir-item { gap: 9px; margin-bottom: 9px; }
+      .wir-icon { width: 27px; height: 27px; font-size: 13px; border-radius: 5px; }
+      .wir-text strong { font-size: 0.84rem; }
+      .wir-text p { font-size: 0.77rem; }
     }
 
     .wir-sub-items {
@@ -1334,8 +1351,8 @@
 
     <!-- ── สิ่งที่จะได้รับ ── -->
     <div class="wir-box">
-      <span class="wir-label" style="font-size:1.25rem;font-weight:800;text-align:center;letter-spacing:0;text-transform:none;display:block;">สรุป</span>
-      <h2 class="wir-title" style="text-align:center;">ระบบเดียว ครบทุกอย่าง<br>ที่ต้องการจริงๆ</h2>
+      <span class="wir-label">สรุป</span>
+      <h2 class="wir-title">ระบบเดียว ครบทุกอย่าง<br>ที่ต้องการจริงๆ</h2>
 
       <div class="wir-item">
         <div class="wir-icon">📈</div>
