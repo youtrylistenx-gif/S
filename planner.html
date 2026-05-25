@@ -1309,7 +1309,7 @@
     </div>
 
 
-    <div class="collapse-section" style="margin-top: 20px;">
+    <div id="why-section" class="collapse-section" style="margin-top: 20px;">
       <button class="collapse-toggle" id="whyToggle">
         <span style="display:flex;flex-direction:column;gap:3px;">
           <span>🙏 เหตุผลที่ระบบนี้ไม่ฟรีนะครับ 🥺</span>
@@ -1484,6 +1484,18 @@
 <footer class="gs-footer">มึงลองฟัง.❤️‍🔥</footer>
 
 <script>
+  // ═══════════════════════════════════════════════
+  //  ตั้งค่าการแสดง/ซ่อนกล่อง
+  //  true = แสดง  |  false = ซ่อน
+  // ═══════════════════════════════════════════════
+  const SHOW_WHY_SECTION = false;   // กล่อง "เหตุผลที่ระบบนี้ไม่ฟรี"
+  // ═══════════════════════════════════════════════
+
+  (function() {
+    const whySec = document.getElementById('why-section');
+    if (whySec && !SHOW_WHY_SECTION) whySec.style.display = 'none';
+  })();
+
   /* คำนวณ % ลด + บันทึก mode, ราคา, slots ลง localStorage */
   (function() {
     // คำนวณ % ลดอัตโนมัติจาก price-new และ price-old
