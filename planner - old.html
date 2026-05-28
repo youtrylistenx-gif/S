@@ -168,15 +168,18 @@
     }
 
     .hero-videos-col {
-      flex: 1;
       display: flex;
       gap: 8px;
+      flex-shrink: 0;
     }
 
     .hero-video-wrap {
-      flex: 1;
-      min-height: 80px;
+      aspect-ratio: 9 / 16;
+      width: 22vw;
+      max-width: 280px;
       background: #000;
+      overflow: hidden;
+      border-radius: 8px;
     }
 
     .hero-video-wrap iframe {
@@ -188,13 +191,17 @@
 
     .hero-image-col {
       flex: 1;
+      display: flex;
+      align-items: center;
     }
 
     .hero-image-col img {
-      width: 100%;
-      height: auto;
+      height: 100%;
+      width: auto;
+      max-width: 100%;
       border-radius: 12px;
       display: block;
+      object-fit: contain;
     }
 
     @media (max-width: 600px) {
