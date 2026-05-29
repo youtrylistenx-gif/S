@@ -1206,6 +1206,13 @@
       .carousel-col,
       .summary-col {
         flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+        overflow: visible;
+      }
+      .carousel-col .carousel-wrap {
+        max-width: 100%;
+        overflow: hidden;
       }
     }
   </style>
@@ -1278,7 +1285,7 @@
           </div>
         </div>
         <div class="stats-row" style="margin-top:12px;">
-          <a href="#story-section" style="display:inline-flex;align-items:center;gap:5px;text-decoration:none;color:#5f6368;border-bottom:1px dashed #bbb;padding-bottom:1px;cursor:pointer;">
+          <a href="#faq-section" style="display:inline-flex;align-items:center;gap:5px;text-decoration:none;color:#5f6368;border-bottom:1px dashed #bbb;padding-bottom:1px;cursor:pointer;">
           <span style="color:#1a73e8;font-size:0.88rem;font-weight:700;border:none;border-bottom:none;">↓ คลิกเพื่อดู 99+ รีวิวจากผู้ใช้จริง ⭐ 5</span>
           </a>
           <span style="color:#dadce0;">|</span>
@@ -1306,7 +1313,7 @@
           <span class="flash-sale-badge" id="flash-sale-text">⚡ กำลังโหลด...</span>
         </div>
         <div class="stats-row" style="margin-top:10px;">
-          <a href="#story-section" style="display:inline-flex;align-items:center;gap:5px;text-decoration:none;color:#5f6368;border-bottom:1px dashed #bbb;padding-bottom:1px;cursor:pointer;">
+          <a href="#faq-section" style="display:inline-flex;align-items:center;gap:5px;text-decoration:none;color:#5f6368;border-bottom:1px dashed #bbb;padding-bottom:1px;cursor:pointer;">
           <span style="color:#1a73e8;font-size:0.88rem;font-weight:700;border:none;border-bottom:none;">↓ คลิกเพื่อดู 99+ รีวิวจากผู้ใช้จริง ⭐ 5</span>
           </a>
           <span style="color:#dadce0;">|</span>
@@ -1449,7 +1456,7 @@
     </div>
 
     <!-- ── FAQ Buttons — เรียงลำดับที่นี่ได้เลย ── -->
-    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;">
+    <div id="faq-section" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;scroll-margin-top:20vh;">
       <button class="faq-btn" data-title="❓ ได้อะไรบ้างครับ?" data-body="ได้ครบ 7 อย่างเลยครับ ทั้ง Planner วางแผนเป้าหมาย / Habit Tracker ติดตามวินัย / Money Tracker บริหารเงิน / แดชบอร์ดสรุปรายปี / วิดีโอสอนใช้งาน / อัปเดตฟรีตลอดชีพ / และผมพร้อมดูแลส่วนตัวถ้าใช้แล้วติดปัญหาครับ 🙏" style="background:#f1f3f4;border:1px solid #e0e0e0;border-radius:20px;padding:8px 18px;font-family:inherit;font-size:0.88rem;font-weight:600;color:#202124;cursor:pointer;" onmouseover="this.style.background='#e8eaed'" onmouseout="this.style.background='#f1f3f4'">❓ ได้อะไรบ้างครับ?</button>
       <button class="faq-btn" data-title="🤔 ใช้ยากไหมครับ กลัวใช้ไม่เป็น?" data-body="ไม่ยากเลยครับ ผมเซ็ตสูตรทุกอย่างไว้ให้หมดแล้ว แค่กรอกข้อมูลและติ๊ก กราฟและตัวเลขจะรันของมันเองเลยครับ และมีวิดีโอสอนใช้งานสั้นๆ 6 นาทีแนบไปให้ด้วย เปิดดูครั้งเดียวพร้อมใช้ได้เลยครับ 🥰" style="background:#f1f3f4;border:1px solid #e0e0e0;border-radius:20px;padding:8px 18px;font-family:inherit;font-size:0.88rem;font-weight:600;color:#202124;cursor:pointer;" onmouseover="this.style.background='#e8eaed'" onmouseout="this.style.background='#f1f3f4'">🤔 ใช้ยากไหมครับ?</button>
       <button class="faq-btn" data-title="📱 ใช้บนมือถือ , ไอแพดได้ไหมครับ?" data-body="สารภาพตรงๆ เลยนะครับ ถ้าคิดว่าจะใช้ผ่านมือถือเป็นหลัก อาจจะใช้งานยากนิดนึงนะครับ เพราะ Google เองออกแบบแอป Sheets มาสำหรับคอมเป็นหลัก แต่ระบบทุกอย่างก็ใช้ได้เหมือนกันหมดเลยครับ เพียงแต่บนมือถือต้องซูมและใช้นิ้วเลื่อนไปมาแทนการคลิกและเลื่อนด้วยเมาส์เท่านั้นเองครับ&#10;แต่ถ้ามีคอมอยู่แล้ว และแค่อยากหยิบมือถือมาติ๊กระหว่างวัน อันนี้ทำได้สบายๆ เลยครับ และเพราะมันเป็น Google Sheets เดียวกัน ข้อมูลทุกอย่างที่ติ๊กผ่านมือถือก็จะอัปเดตไปบนคอมให้ทันทีเลยครับ 🥰" style="background:#f1f3f4;border:1px solid #e0e0e0;border-radius:20px;padding:8px 18px;font-family:inherit;font-size:0.88rem;font-weight:600;color:#202124;cursor:pointer;" onmouseover="this.style.background='#e8eaed'" onmouseout="this.style.background='#f1f3f4'">📱 ใช้บนมือถือได้ไหมครับ?</button>
@@ -1786,13 +1793,19 @@ localStorage.setItem('ACTIVE_PROMO', ACTIVE_PROMO);
     });
   });
 
-  // ให้ summary-box สูงเท่า carousel-col ด้วย ResizeObserver
+  // ให้ summary-box สูงเท่า carousel-col เฉพาะ desktop เท่านั้น
   (function() {
     var cc = document.querySelector('.carousel-col');
     var box = document.querySelector('.summary-col .summary-box');
     if (!cc || !box) return;
 
     function sync() {
+      if (window.innerWidth <= 768) {
+        // มือถือ: reset กลับเป็นปกติ
+        box.style.maxHeight = '';
+        box.style.overflowY = '';
+        return;
+      }
       var h = cc.getBoundingClientRect().height;
       if (h > 50) {
         box.style.maxHeight = Math.round(h) + 'px';
