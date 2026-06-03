@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan Year 🌿</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --g1: #55c98d;
+      --g2: #38b076;
+      --g3: #e8f9f0;
+      --g4: #c2ead4;
+      --gtx: #145c36;
+      --bg:  #f3f7f4;
+      --s:   #ffffff;
+      --tx:  #1a201b;
+      --tx2: #6a7b70;
+      --tx3: #b2c0b8;
+      --ln:  #eaeee9;
+      --r:   20px;
+      --r2:  14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Prompt', sans-serif;
+      background: var(--bg);
+      color: var(--tx);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-thumb { background: #c0cec4; border-radius: 99px; }
+
+    /* ══════════════════════════════════════
+       NAV  — frosted glass
+    ══════════════════════════════════════ */
+    .nav {
+      position: sticky; top: 0; z-index: 999;
+      height: 62px;
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255,255,255,.6);
+      display: flex; align-items: center;
+      padding: 0 24px; gap: 14px;
+      box-shadow: 0 1px 20px rgba(0,0,0,.05);
+    }
+
+    .nav-icon {
+      width: 36px; height: 36px; border-radius: 11px;
+      background: linear-gradient(135deg,var(--g1),var(--g2));
+      box-shadow: 0 4px 12px rgba(85,201,141,.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .nav-title { font-size: 15px; font-weight: 800; color: var(--tx); }
+    .nav-sub   { font-size: 10px; color: var(--tx2); }
+    .nav-div   { width: 1px; height: 24px; background: var(--ln); }
+
+    .nav-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 14px;
+      background: var(--g3);
+      border: 1px solid var(--g4);
+      border-radius: 99px;
+      font-size: 12.5px; font-weight: 700; color: var(--gtx);
+    }
+    .nav-dot { width: 7px; height: 7px; background: var(--g1); border-radius: 50%; }
+    .nav-sp  { flex: 1; }
+
+    /* ══════════════════════════════════════
+       PAGE
+    ══════════════════════════════════════ */
+    .page { padding: 22px 20px 80px; max-width: 1400px; margin: 0 auto; }
+
+    /* ══════════════════════════════════════
+       TOP STATS ROW
+    ══════════════════════════════════════ */
+    .top-row {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 14px; margin-bottom: 24px;
+    }
+    @media(max-width:680px){ .top-row{grid-template-columns:1fr;} }
+
+    .card {
+      background: var(--s);
+      border-radius: var(--r);
+      box-shadow: 0 2px 8px rgba(0,0,0,.05), 0 8px 28px rgba(0,0,0,.06);
+      overflow: hidden;
+      transition: transform .22s, box-shadow .22s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0,0,0,.07), 0 14px 40px rgba(0,0,0,.09);
+    }
+
+    .card-hd {
+      padding: 15px 18px 13px;
+      display: flex; align-items: center; gap: 11px;
+      border-bottom: 1px solid var(--ln);
+    }
+    .card-ico {
+      width: 38px; height: 38px; border-radius: 12px;
+      background: linear-gradient(135deg,var(--g1),var(--g2));
+      box-shadow: 0 4px 10px rgba(85,201,141,.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .card-title { font-size: 14px; font-weight: 800; }
+    .card-desc  { font-size: 10px; color: var(--tx2); margin-top: 1px; }
+
+    .chart-area { padding: 14px; height: 168px; }
+
+    .bars-body { padding: 10px 18px 14px; }
+    .b-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 0; border-bottom: 1px solid var(--ln);
+    }
+    .b-row:last-of-type { border-bottom: none; }
+    .b-ico {
+      width: 28px; height: 28px; border-radius: 9px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
+    }
+    .i1{background:#fff3cd} .i2{background:#daeeff} .i3{background:#ffe0e4} .i4{background:#e8deff}
+    .b-nm  { font-size: 12.5px; font-weight: 500; flex:1; }
+    .b-trk { flex:2; height:7px; background:#edf0ed; border-radius:99px; overflow:hidden; }
+    .b-fil {
+      height:100%; width:0%; border-radius:99px;
+      background: linear-gradient(90deg,var(--g1),var(--g2));
+      transition: width .6s cubic-bezier(.4,0,.2,1);
+    }
+    .b-pct { font-size:12px; font-weight:700; color:var(--gtx); width:32px; text-align:right; }
+
+    /* ══════════════════════════════════════
+       WEEK BLOCK
+    ══════════════════════════════════════ */
+    .week-block { margin-bottom: 28px; }
+
+    .week-hdr {
+      display: flex; align-items: center; gap: 10px;
+      padding: 0 4px 12px;
+    }
+    .wk-badge {
+      font-size: 12px; font-weight: 700;
+      background: linear-gradient(135deg,var(--g1),var(--g2));
+      color: white; padding: 4px 14px; border-radius: 99px;
+      box-shadow: 0 3px 10px rgba(85,201,141,.35);
+    }
+    .wk-line  { flex:1; height:1px; background: linear-gradient(90deg,var(--g4),transparent); }
+    .wk-range { font-size: 11px; color: var(--tx2); }
+
+    /* 4-column grid per row */
+    .day-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    @media(max-width:800px){ .day-grid{grid-template-columns:repeat(2,1fr);} }
+    @media(max-width:480px){ .day-grid{grid-template-columns:1fr;} }
+
+    /* ══════════════════════════════════════
+       DAY CARD  — Instagram-level beautiful
+    ══════════════════════════════════════ */
+    .dc {
+      background: var(--s);
+      border-radius: var(--r);
+      box-shadow: 0 2px 8px rgba(0,0,0,.05), 0 6px 22px rgba(0,0,0,.06);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .dc:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(85,201,141,.15), 0 12px 36px rgba(0,0,0,.09);
+    }
+
+    .dc.off {
+      background: #f9faf9;
+      box-shadow: none;
+      opacity: .45;
+    }
+
+    /* gradient header */
+    .dh {
+      background: linear-gradient(145deg, #5dcb96 0%, #3aac77 100%);
+      padding: 14px 16px 12px;
+      position: relative; overflow: hidden;
+    }
+    .dh::before {
+      content: '';
+      position: absolute; top:-20px; right:-20px;
+      width: 80px; height: 80px;
+      background: rgba(255,255,255,.10);
+      border-radius: 50%;
+    }
+    .dh.grey {
+      background: linear-gradient(145deg,#d0d8d2,#bec8c2);
+    }
+
+    .dh-name { font-size: 10px; font-weight: 600; color: rgba(255,255,255,.8); text-transform: uppercase; letter-spacing: .06em; }
+    .dh-num  { font-size: 36px; font-weight: 800; color: white; line-height: 1; margin: 3px 0 10px; }
+
+    .dh-prog { display: flex; align-items: center; gap: 8px; }
+    .dh-bar  { flex:1; height:5px; background:rgba(255,255,255,.3); border-radius:99px; overflow:hidden; }
+    .dh-fill { height:100%; width:0%; background:white; border-radius:99px; transition:width .4s ease; }
+    .dh-pct  { font-size:11px; font-weight:800; color:white; min-width:28px; }
+
+    /* todo label */
+    .todo-lbl {
+      padding: 6px 14px 5px;
+      font-size: 9.5px; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      color: var(--g1); background: var(--g3);
+      border-bottom: 1px solid var(--g4);
+    }
+
+    /* task rows */
+    .ti {
+      display: flex; align-items: center;
+      padding: 0 14px; min-height: 38px; gap: 10px;
+      border-bottom: 1px solid #f4f6f4;
+      background: white;
+      transition: background .12s;
+    }
+    .ti:last-of-type { border-bottom: none; }
+    .ti:hover { background: var(--g3); }
+    .ti.done  { background: #f5fdf8; }
+
+    /* circle checkbox — satisfying */
+    .cb {
+      appearance: none; -webkit-appearance: none;
+      width: 20px; height: 20px; flex-shrink: 0;
+      border: 2.5px solid var(--g4);
+      border-radius: 50%; cursor: pointer;
+      background: white;
+      transition: all .18s ease;
+    }
+    .cb:hover  { border-color: var(--g1); box-shadow: 0 0 0 4px rgba(85,201,141,.14); }
+    .cb:active { transform: scale(.85); }
+    .cb:checked {
+      background: linear-gradient(135deg,var(--g1),var(--g2));
+      border-color: transparent;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-size: 55%; background-repeat: no-repeat; background-position: center;
+      box-shadow: 0 3px 10px rgba(85,201,141,.45);
+    }
+
+    .tt {
+      flex:1; min-width:0;
+      border:none; background:transparent;
+      font-family:'Prompt'; font-size:12.5px; color:var(--tx);
+      outline:none;
+    }
+    .tt::placeholder { color: #d0dbd2; }
+    .tt.x { text-decoration: line-through; color: var(--tx3); }
+
+    /* footer */
+    .df {
+      margin-top: auto;
+      background: linear-gradient(135deg,#3aac77,#2d9464);
+      display: flex;
+    }
+    .df-item {
+      flex:1; text-align:center; padding: 8px 6px;
+      border-right: 1px solid rgba(255,255,255,.15); color: white;
+    }
+    .df-item:last-child { border-right:none; }
+    .df-lbl { font-size:8.5px; opacity:.75; display:block; }
+    .df-val { font-size:16px; font-weight:800; line-height:1.2; display:block; }
+
+    /* ══════════════════════════════════════
+       BOTTOM TABS
+    ══════════════════════════════════════ */
+    .tabs {
+      position:fixed; bottom:0; left:0; right:0; z-index:900;
+      height:54px;
+      background: rgba(255,255,255,.90);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-top: 1px solid rgba(255,255,255,.7);
+      box-shadow: 0 -4px 20px rgba(0,0,0,.06);
+      display:flex; align-items:stretch; overflow-x:auto;
+    }
+    .tabs::-webkit-scrollbar{ height:0; }
+
+    .tab {
+      padding:0 16px;
+      display:flex; align-items:center; gap:4px;
+      cursor:pointer; white-space:nowrap;
+      font-family:'Prompt'; font-size:12px;
+      color:var(--tx2); flex-shrink:0;
+      border-top:2.5px solid transparent;
+      transition:all .15s; user-select:none;
+    }
+    .tab:hover  { background:var(--g3); color:var(--gtx); }
+    .tab.active { background:var(--g3); color:var(--gtx); font-weight:700; border-top-color:var(--g1); }
+    .lock { font-size:8px; opacity:.25; }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-icon">🌿</div>
+    <div>
+      <div class="nav-title">Plan Year</div>
+      <div class="nav-sub">ระบบติดตามเป้าหมาย วินัย และการเงิน</div>
+    </div>
+    <div class="nav-div"></div>
+    <div class="nav-pill"><span class="nav-dot"></span><span id="mlabel">มกราคม 2026</span></div>
+    <div class="nav-sp"></div>
+  </nav>
+
+  <!-- PAGE -->
+  <div class="page">
+
+    <div class="top-row">
+      <div class="card">
+        <div class="card-hd">
+          <div class="card-ico">📋</div>
+          <div><div class="card-title">PLANNER</div><div class="card-desc">ความคืบหน้ารายสัปดาห์</div></div>
+        </div>
+        <div class="chart-area"><canvas id="wc"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="card-ico">📊</div>
+          <div><div class="card-title">สรุปรายเดือน</div><div class="card-desc">ภาพรวมความสำเร็จแต่ละหมวด</div></div>
+        </div>
+        <div class="bars-body">
+          <div class="b-row"><div class="b-ico i1">🎯</div><span class="b-nm">เป้าหมาย</span><div class="b-trk"><div class="b-fil" id="fg"></div></div><span class="b-pct" id="pg">0%</span></div>
+          <div class="b-row"><div class="b-ico i2">💼</div><span class="b-nm">งาน</span><div class="b-trk"><div class="b-fil" id="fw"></div></div><span class="b-pct" id="pw">0%</span></div>
+          <div class="b-row"><div class="b-ico i3">❤️</div><span class="b-nm">ความสัมพันธ์</span><div class="b-trk"><div class="b-fil" id="fr"></div></div><span class="b-pct" id="pr">0%</span></div>
+          <div class="b-row"><div class="b-ico i4">🌙</div><span class="b-nm">อื่นๆ</span><div class="b-trk"><div class="b-fil" id="fo"></div></div><span class="b-pct" id="po">0%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="wr"></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" data-m="-1">แดชบอร์ด</div>
+    <div class="tab" data-m="0"><span class="lock">🔒</span>M1</div>
+    <div class="tab" data-m="1"><span class="lock">🔒</span>M2</div>
+    <div class="tab" data-m="2"><span class="lock">🔒</span>M3</div>
+    <div class="tab" data-m="3"><span class="lock">🔒</span>M4</div>
+    <div class="tab" data-m="4"><span class="lock">🔒</span>M5</div>
+    <div class="tab" data-m="5"><span class="lock">🔒</span>M6</div>
+    <div class="tab" data-m="6"><span class="lock">🔒</span>M7</div>
+    <div class="tab" data-m="7"><span class="lock">🔒</span>M8</div>
+    <div class="tab" data-m="8"><span class="lock">🔒</span>M9</div>
+    <div class="tab" data-m="9"><span class="lock">🔒</span>M10</div>
+    <div class="tab" data-m="10"><span class="lock">🔒</span>M11</div>
+    <div class="tab" data-m="11"><span class="lock">🔒</span>M12</div>
+  </div>
+
+<script>
+const DN=['จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์','อาทิตย์'];
+const THU=3;
+const MO=[
+  {n:'มกราคม',d:31,s:3},{n:'กุมภาพันธ์',d:28,s:6},{n:'มีนาคม',d:31,s:6},
+  {n:'เมษายน',d:30,s:2},{n:'พฤษภาคม',d:31,s:4},{n:'มิถุนายน',d:30,s:0},
+  {n:'กรกฎาคม',d:31,s:2},{n:'สิงหาคม',d:31,s:5},{n:'กันยายน',d:30,s:1},
+  {n:'ตุลาคม',d:31,s:3},{n:'พฤศจิกายน',d:30,s:6},{n:'ธันวาคม',d:31,s:1},
+];
+const TPD=10;
+let wChart=null, curM=0;
+
+function build(mIdx){
+  curM=mIdx<0?0:mIdx;
+  const mo=MO[curM];
+  document.getElementById('mlabel').textContent=mo.n+' 2026';
+  const wrap=document.getElementById('wr');
+  wrap.innerHTML='';
+
+  const first=1-((mo.s-THU+7)%7);
+  let st=first, wk=1;
+
+  while(st<=mo.d){
+    const d1=Math.max(1,st), d2=Math.min(mo.d,st+6);
+    const wb=mk('div','week-block');
+
+    const wh=mk('div','week-hdr');
+    wh.innerHTML=`<span class="wk-badge">สัปดาห์ที่ ${wk}</span><div class="wk-line"></div><span class="wk-range">${d1}–${d2} ${mo.n}</span>`;
+    wb.appendChild(wh);
+
+    // 4 cols per row
+    for(let row=0;row<2;row++){
+      const grid=mk('div','day-grid');
+      for(let col=0;col<4;col++){
+        const c=row*4+col;
+        const date=st+c, di=(THU+c)%7;
+        const dc=mk('div','dc');
+
+        if(c>=7||date<1||date>mo.d){
+          dc.classList.add('off');
+          if(c<7){
+            const h=mk('div','dh grey');
+            h.innerHTML=`<div class="dh-name">${DN[di]}</div><div class="dh-num">—</div>`;
+            dc.appendChild(h);
+          }
+        } else {
+          const id=`m${curM}d${date}`;
+          const h=mk('div','dh');
+          h.innerHTML=`
+            <div class="dh-name">${DN[di]}</div>
+            <div class="dh-num">${date}</div>
+            <div class="dh-prog">
+              <div class="dh-bar"><div class="dh-fill" id="b-${id}"></div></div>
+              <span class="dh-pct" id="p-${id}">0%</span>
+            </div>`;
+          dc.appendChild(h);
+
+          const lbl=mk('div','todo-lbl'); lbl.textContent='สิ่งที่ต้องทำ';
+          dc.appendChild(lbl);
+
+          for(let t=0;t<TPD;t++){
+            const row2=mk('div','ti'); row2.dataset.id=id;
+            const cb=document.createElement('input'); cb.type='checkbox'; cb.className='cb';
+            const txt=document.createElement('input'); txt.type='text'; txt.className='tt';
+            cb.addEventListener('change',()=>{ txt.classList.toggle('x',cb.checked); row2.classList.toggle('done',cb.checked); upd(id); });
+            txt.addEventListener('input',()=>upd(id));
+            row2.appendChild(cb); row2.appendChild(txt);
+            dc.appendChild(row2);
+          }
+
+          const f=mk('div','df');
+          f.innerHTML=`
+            <div class="df-item"><span class="df-lbl">ทั้งหมด</span><span class="df-val" id="t-${id}">0</span></div>
+            <div class="df-item"><span class="df-lbl">สำเร็จ</span><span class="df-val" id="d-${id}">0</span></div>
+            <div class="df-item"><span class="df-lbl">ยังไม่สำเร็จ</span><span class="df-val" id="u-${id}">0</span></div>`;
+          dc.appendChild(f);
+        }
+        grid.appendChild(dc);
+      }
+      wb.appendChild(grid);
+      if(row===0) wb.appendChild(Object.assign(mk('div'),{style:'height:12px'}));
+    }
+
+    wrap.appendChild(wb);
+    st+=7; wk++;
+  }
+}
+
+function mk(t,c){const e=document.createElement(t);if(c)e.className=c;return e;}
+
+function upd(id){
+  const rows=document.querySelectorAll(`.ti[data-id="${id}"]`);
+  let tot=0,done=0;
+  rows.forEach(r=>{const v=r.querySelector('.tt').value.trim(),c=r.querySelector('.cb');if(v||c.checked){tot++;if(c.checked)done++;}});
+  const pct=tot>0?Math.round(done/tot*100):0;
+  const g=s=>document.getElementById(s);
+  g(`p-${id}`)&&(g(`p-${id}`).textContent=pct+'%');
+  g(`b-${id}`)&&(g(`b-${id}`).style.width=pct+'%');
+  g(`t-${id}`)&&(g(`t-${id}`).textContent=tot);
+  g(`d-${id}`)&&(g(`d-${id}`).textContent=done);
+  g(`u-${id}`)&&(g(`u-${id}`).textContent=tot-done);
+  uChart(); uBars();
+}
+
+function initChart(){
+  const ctx=document.getElementById('wc').getContext('2d');
+  wChart=new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:['สัปดาห์ที่ 1','สัปดาห์ที่ 2','สัปดาห์ที่ 3','สัปดาห์ที่ 4','สัปดาห์ที่ 5'],
+      datasets:[{data:[0,0,0,0,0],borderColor:'#55c98d',backgroundColor:'rgba(85,201,141,.07)',borderWidth:2.5,tension:.4,fill:true,pointRadius:5,pointBackgroundColor:'#55c98d',pointBorderColor:'#fff',pointBorderWidth:2.5}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>(c.parsed.y*100).toFixed(0)+'%'},backgroundColor:'#145c36',padding:10,cornerRadius:10,titleFont:{family:'Prompt'},bodyFont:{family:'Prompt'}}},
+      scales:{y:{min:0,max:1,ticks:{stepSize:.25,callback:v=>v.toFixed(2),font:{family:'Prompt',size:9}},grid:{color:'#f0f3f0'}},x:{ticks:{font:{family:'Prompt',size:9}},grid:{display:false}}}
+    }
+  });
+}
+
+function uChart(){
+  const wbs=document.querySelectorAll('.week-block'),data=[];
+  wbs.forEach(w=>{const ps=w.querySelectorAll('[id^="p-"]');if(!ps.length){data.push(0);return;}let s=0,n=0;ps.forEach(p=>{const v=parseFloat(p.textContent)/100;if(!isNaN(v)){s+=v;n++;}});data.push(n>0?+((s/n).toFixed(3)):0);});
+  while(data.length<5)data.push(0);
+  wChart.data.datasets[0].data=data.slice(0,5);wChart.update('none');
+}
+
+function uBars(){
+  let tot=0,done=0;
+  document.querySelectorAll('.ti').forEach(r=>{const v=r.querySelector('.tt').value.trim(),c=r.querySelector('.cb');if(v||c.checked){tot++;if(c.checked)done++;}});
+  const pct=tot>0?Math.round(done/tot*100):0;
+  [['fg','pg'],['fw','pw'],['fr','pr'],['fo','po']].forEach(([f,p])=>{document.getElementById(f).style.width=pct+'%';document.getElementById(p).textContent=pct+'%';});
+}
+
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    build(parseInt(t.dataset.m));
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+build(0); initChart();
+</script>
+</body>
+</html>
