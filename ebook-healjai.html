@@ -79,16 +79,15 @@
       → ความสูง hero = 16.875vw × (16/9) ≈ 30vw
       ล็อค ebook image ให้กว้าง 55% + สูง 30vw เหมือนกัน
     */
+    /* desktop: 55% × 30vw — เท่ากับ planner (video ดัน hero ≈ 30vw) */
     .hero-image-col { flex: 0 0 55%; min-width: 0; height: 30vw; }
     .hero-image-col img {
       width: 100%; height: 100%; border-radius: 12px;
       display: block; object-fit: contain; object-position: center;
     }
+    /* mobile: 53vw — เท่ากับ planner แสดง AP Slide 1 (1366×768) ที่ 95vw กว้าง */
     @media (max-width: 768px) {
-      .hero-image-col { flex: 0 0 80%; height: auto; aspect-ratio: 9 / 13; }
-    }
-    @media (max-width: 480px) {
-      .hero-image-col { flex: 0 0 100%; }
+      .hero-image-col { flex: 0 0 100%; height: 53vw; }
     }
 
     /* ── FREE PRICE SECTION ── */
