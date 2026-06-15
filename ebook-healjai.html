@@ -101,6 +101,7 @@
     .price-free-badge {
       font-size: 0.9rem; font-weight: 700; background: #34a853; color: #fff;
       padding: 3px 12px; border-radius: 4px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.25);
     }
     .price-new { font-size: 1.8rem; font-weight: 800; color: #34a853; }
     .price-old { font-size: 1rem; color: #9aa0a6; text-decoration: line-through; }
@@ -189,9 +190,14 @@
       padding: 13px 22px; background: linear-gradient(135deg, #34a853 0%, #1e7e34 100%);
       color: #fff; border: none; border-radius: 10px; font-family: inherit;
       font-size: 0.92rem; font-weight: 800; cursor: pointer; white-space: nowrap;
-      box-shadow: 0 4px 12px rgba(52,168,83,0.35); transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(52,168,83,0.35);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+      animation: ctaScale 2.4s ease-in-out infinite;
     }
-    .email-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(52,168,83,0.45); }
+    .email-submit:hover {
+      transform: scale(1.04); box-shadow: 0 8px 22px rgba(52,168,83,0.5);
+      animation: none; transition: transform 0.2s ease;
+    }
     .email-note { font-size: 0.78rem; color: #9aa0a6; margin-top: 6px; }
     @media (max-width: 480px) {
       .email-row { flex-direction: column; }
@@ -336,10 +342,10 @@
     <!-- ── Price / Free section ── -->
     <div class="price-section">
       <div class="price-row">
-        <span class="price-free-badge">แจกฟรี 100%</span>
-        <span class="price-new">฿ฟรี</span>
+        <span class="price-free-badge">แจกฟรี</span>
+        <span class="price-new">฿0</span>
       </div>
-      <p class="product-title-line" style="font-size:1.05rem;color:#202124;font-weight:600;">📖 Ebook — "กูเข้าใจ...มึงนะเว้ย ❤️‍🔥" — คำพูดจากคนที่เคยอยู่ในช่วงเวลาเดียวกัน</p>
+      <p class="product-title-line" style="font-size:1.05rem;color:#202124;font-weight:600;">📖 Ebook — กูเข้าใจ...มึงนะเว้ย — คำพูดจากคนที่เคยอยู่ในช่วงเวลาเดียวกัน</p>
       <div class="stats-row" style="margin-top:12px;">
         <a href="#reviews-section" style="display:inline-flex;align-items:center;gap:5px;text-decoration:none;color:#5f6368;border-bottom:1px dashed #bbb;padding-bottom:1px;cursor:pointer;">
           <span style="color:#1a73e8;font-size:0.88rem;font-weight:700;">↓ คลิกเพื่อดู 99+ รีวิวจากผู้ที่อ่านแล้ว ⭐ 5</span>
@@ -359,7 +365,7 @@
         <input type="email" class="email-input" placeholder="...@gmail.com" />
         <button class="email-submit">คลิกเพื่อรับ Ebook ฟรีเลย 🎁</button>
       </div>
-      <p class="email-note">ผมตั้งใจแจกฟรี 100% ไม่มีค่าใช้จ่ายใดๆ ผมจะส่งให้ทาง Email ทันทีเลยครับ 🥰</p>
+      <p class="email-note">ผมตั้งใจแจกฟรีไม่มีค่าใช้จ่ายใดๆ และผมจะส่งให้ทาง Email ทันทีเลยครับ 🥰</p>
     </div>
 
     <!-- ── Description box ── -->
