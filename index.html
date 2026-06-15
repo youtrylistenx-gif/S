@@ -177,13 +177,79 @@
     .idx-slots-bar { width: 100%; height: 8px; background: #f1f3f4; border-radius: 99px; overflow: hidden; }
     .idx-slots-bar-fill { height: 100%; background: linear-gradient(90deg, #f44336, #b71c1c); border-radius: 99px; transition: width 0.6s ease; }
 
-    /* ── MISC LINKS & FOOTER ── */
-    .links-section { margin-bottom: 48px; padding: 0 4px; }
-    .links-list { list-style: none; display: flex; flex-direction: column; gap: 0; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; }
-    .links-list li a { display: block; padding: 14px 20px; text-decoration: none; color: #1a73e8; font-size: 0.95rem; border-bottom: 1px solid #e0e0e0; }
+    /* ── QUICK LINKS (top of page) ── */
+    .quicklinks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 36px;
+      justify-content: center;
+    }
+    .qlink {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      border: 1.5px solid #dadce0;
+      border-radius: 999px;
+      padding: 11px 22px;
+      text-decoration: none;
+      color: #202124;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+    .qlink:hover {
+      background: #202124;
+      color: #fff;
+      border-color: #202124;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.16);
+    }
+    @media (max-width: 600px) {
+      .qlink { font-size: 0.82rem; padding: 9px 16px; }
+    }
+
+    /* ── SOCIAL BUTTONS ── */
     .social-section { margin-bottom: 48px; padding: 0 4px; }
-    .social-list { list-style: none; display: flex; flex-direction: column; gap: 0; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; }
-    .social-list li a { display: flex; align-items: center; gap: 12px; padding: 14px 20px; text-decoration: none; color: #1a73e8; font-size: 0.95rem; border-bottom: 1px solid #e0e0e0; }
+    .social-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 14px;
+      padding: 14px 28px;
+      text-decoration: none;
+      color: #fff;
+      font-size: 0.92rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      min-width: 180px;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      letter-spacing: 0.01em;
+    }
+    .social-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.28);
+      filter: brightness(1.08);
+    }
+    .social-btn-ig {
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+    .social-btn-tt { background: #010101; }
+    .social-btn-fb { background: #1877F2; }
+    .social-btn-yt { background: #FF0000; }
+    @media (max-width: 600px) {
+      .social-btn { min-width: calc(50% - 6px); font-size: 0.84rem; padding: 12px 16px; }
+    }
     .gs-footer { border-top: 1px solid #e0e0e0; text-align: center; padding: 20px 24px; font-size: 0.8rem; color: #5f6368; }
 
     @media (max-width: 600px) {
@@ -209,6 +275,15 @@
   </nav>
 
   <div class="gs-page">
+
+    <div class="quicklinks">
+      <a href="#" class="qlink">📖 เรื่องราวชีวิตของผม</a>
+      <a href="https://ezdn.app/Youtrylisten" target="_blank" class="qlink">❤️‍🔥 โดเนทสนับสนุนช่อง</a>
+      <a href="#" class="qlink">📚 Ebook ฮีลใจ (ฟรี)</a>
+      <a href="https://www.instagram.com/youtrylisten" target="_blank" class="qlink">💬 พูดคุย / ปรึกษา</a>
+      <a href="#" class="qlink">🔥 โปรโมชั่นพิเศษ</a>
+    </div>
+
     <h1 class="gs-h1">สินค้า🛒</h1>
     <h2 class="gs-h2">ของ มึงลองฟัง.❤️‍🔥</h2>
 
@@ -237,7 +312,7 @@
         </div>
       </a>
       
-      <a class="product-card" href="#">
+      <a class="product-card" href="ebook-healjai.html">
         <div class="product-img"><img src="./ภาพ/ปก Ebook - กูเข้าใจ...มึงนะเว้ย.png" alt="Ebook"></div>
         <div class="product-info">
           <div class="product-title">Ebook - ฮีลใจ (แจกฟรี)</div>
@@ -278,25 +353,14 @@
       </a>
     </div>
 
-    <div class="links-section">
-      <h3 class="gs-h3">อื่นๆ</h3>
-      <ul class="links-list">
-        <li><a href="#">เรื่องราวชีวิตสั้นๆ กว่าจะมาเป็น มึงลองฟัง.❤️‍🔥</a></li>
-        <li><a href="https://ezdn.app/Youtrylisten" target="_blank">ช่องทางการโดเนทสนับสนุนช่องโดยตรง</a></li>
-        <li><a href="#">Ebook ฮีลใจฟรี</a></li>
-        <li><a href="https://www.instagram.com/youtrylisten" target="_blank">พูดคุย / ปรึกษา</a></li>
-        <li><a href="#">โปรโมชั่นพิเศษของสินค้า!!!</a></li>
-      </ul>
-    </div>
-
     <div class="social-section">
       <h3 class="gs-h3">ช่องทางต่างๆ ในการติดตาม</h3>
-      <ul class="social-list">
-        <li><a href="https://www.instagram.com/youtrylisten" target="_blank"><span class="social-icon">📸</span> IG : มึงลองฟัง.❤️‍🔥</a></li>
-        <li><a href="https://www.tiktok.com/@youtrylisten" target="_blank"><span class="social-icon">🎵</span> TikTok : มึงลองฟัง.❤️‍🔥</a></li>
-        <li><a href="https://www.facebook.com/share/17DBKa7eb3/" target="_blank"><span class="social-icon">📘</span> Facebook : มึงลองฟัง.❤️‍🔥</a></li>
-        <li><a href="https://youtube.com/@youtrylisten" target="_blank"><span class="social-icon">▶️</span> Youtube : มึงลองฟัง.❤️‍🔥</a></li>
-      </ul>
+      <div class="social-btns">
+        <a href="https://www.instagram.com/youtrylisten" target="_blank" class="social-btn social-btn-ig">📸 Instagram</a>
+        <a href="https://www.tiktok.com/@youtrylisten" target="_blank" class="social-btn social-btn-tt">🎵 TikTok</a>
+        <a href="https://www.facebook.com/share/17DBKa7eb3/" target="_blank" class="social-btn social-btn-fb">📘 Facebook</a>
+        <a href="https://youtube.com/@youtrylisten" target="_blank" class="social-btn social-btn-yt">▶️ YouTube</a>
+      </div>
     </div>
   </div>
 
