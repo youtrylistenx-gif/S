@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>มึงลองฟัง.❤️‍🔥 — เรื่องราวชีวิต</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Prompt", Arial, sans-serif;
+      font-size: 16px;
+      color: #202124;
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    .gs-nav {
+      height: 64px; background: #fff; border-bottom: 1px solid #e0e0e0;
+      position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .gs-nav-inner {
+      max-width: 900px; margin: 0 auto; padding: 0 24px;
+      height: 100%; display: flex; align-items: center; gap: 12px;
+    }
+    .gs-nav-logo {
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+      text-decoration: none; color: #202124;
+    }
+    .gs-nav-logo .logo-img { height: 32px; width: 32px; object-fit: contain; }
+    .logo-name { font-size: 0.72rem; font-weight: 600; color: #202124; white-space: nowrap; }
+    .gs-nav-links { margin-left: 8px; display: flex; align-items: center; }
+    .gs-nav-links a {
+      text-decoration: none; color: #202124; font-size: 0.9rem; padding: 0 16px;
+      height: 64px; display: flex; align-items: center;
+      border-bottom: 3px solid transparent; transition: border-color 0.15s;
+    }
+    .gs-nav-links a:hover, .gs-nav-links a.active { border-bottom-color: #1a73e8; color: #1a73e8; }
+
+    .btn-back {
+      margin-left: auto; display: flex; align-items: center; gap: 6px;
+      text-decoration: none; color: #5f6368; font-size: 0.88rem; padding: 7px 14px;
+      border: 1px solid #e0e0e0; border-radius: 20px; transition: background 0.15s; white-space: nowrap;
+    }
+    .btn-back:hover { background: #f1f3f4; color: #202124; }
+
+    /* ── PAGE ── */
+    .story-page {
+      max-width: 640px; margin: 0 auto; padding: 48px 24px 100px;
+    }
+    @media (max-width: 768px) {
+      .story-page { padding: 32px 20px 80px; }
+    }
+
+    /* ── HEADER ── */
+    .story-eyebrow {
+      font-size: 0.8rem; font-weight: 600; color: #34a853; letter-spacing: 0.08em;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .story-title {
+      font-size: 2rem; font-weight: 800; color: #202124; line-height: 1.25;
+      margin-bottom: 8px;
+    }
+    @media (max-width: 480px) { .story-title { font-size: 1.55rem; } }
+    .story-subtitle {
+      font-size: 0.95rem; color: #5f6368; font-weight: 400; margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    /* ── DIVIDER ── */
+    .story-divider {
+      width: 40px; height: 3px; background: #34a853; border-radius: 2px;
+      margin-bottom: 36px;
+    }
+
+    /* ── HERO PHOTO ── */
+    .story-photo-wrap {
+      margin-bottom: 36px; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .story-photo-wrap img {
+      width: 100%; display: block; object-fit: cover; max-height: 420px;
+      object-position: center top;
+    }
+    .story-photo-caption {
+      font-size: 0.8rem; color: #9aa0a6; text-align: center;
+      margin-top: 10px; margin-bottom: 36px;
+    }
+
+    /* ── STANZAS ── */
+    .story-body { display: flex; flex-direction: column; gap: 0; }
+
+    .stanza {
+      padding: 20px 0;
+      border-bottom: 1px solid #f1f3f4;
+    }
+    .stanza:last-child { border-bottom: none; }
+
+    .stanza p {
+      font-size: 1.05rem; font-weight: 400; color: #202124;
+      line-height: 1.9; white-space: pre-wrap;
+    }
+
+    /* stanza types */
+    .stanza-highlight p {
+      font-size: 1.1rem; font-weight: 700; color: #202124;
+    }
+    .stanza-quote {
+      background: #f0fff4; border-left: 3px solid #34a853;
+      border-radius: 0 10px 10px 0; padding: 20px 24px !important;
+      margin: 4px 0;
+    }
+    .stanza-quote p {
+      font-size: 1.05rem; font-weight: 600; color: #1e7e34; font-style: italic;
+    }
+    .stanza-closing {
+      padding: 28px 0 0 !important; border-bottom: none !important;
+    }
+    .stanza-closing p {
+      font-size: 1rem; color: #5f6368; line-height: 1.9;
+    }
+
+    /* ── SIGN-OFF ── */
+    .story-signoff {
+      margin-top: 40px; padding-top: 28px;
+      border-top: 1px solid #e8eaed;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .signoff-logo {
+      width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+    }
+    .signoff-text { font-size: 0.92rem; color: #5f6368; line-height: 1.6; }
+    .signoff-name { font-weight: 700; color: #202124; font-size: 1rem; }
+
+    /* ── FOOTER ── */
+    .gs-footer {
+      border-top: 1px solid #e0e0e0; text-align: center;
+      padding: 18px 24px; font-size: 0.8rem; color: #5f6368;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="gs-nav">
+  <div class="gs-nav-inner">
+    <a class="gs-nav-logo" href="index.html">
+      <img src="./ภาพ/โลโก้หมากรุก พื้นหลังสีดำ.jpg" alt="Logo" class="logo-img">
+      <span class="logo-name">มึงลองฟัง.❤️‍🔥</span>
+    </a>
+    <div class="gs-nav-links">
+      <a href="story.html" class="active">เรื่องราวของผม</a>
+    </div>
+    <a href="index.html" class="btn-back">← ย้อนกลับ</a>
+  </div>
+</nav>
+
+<div class="story-page">
+
+  <p class="story-eyebrow">เรื่องราวชีวิต</p>
+  <h1 class="story-title">หลายคนเริ่มจากศูนย์<br>กูเริ่มจากติดลบ</h1>
+  <p class="story-subtitle">นี่คือเรื่องราวของเด็กบ้านนอกคนหนึ่ง<br>ที่ตัดสินใจว่าความจนจะจบลงที่รุ่นตัวเอง</p>
+  <div class="story-divider"></div>
+
+  <div class="story-photo-wrap">
+    <img src="./รูปส่วนตัว/ตอนเด็ก.jpg" alt="ภาพตอนเด็ก">
+  </div>
+  <p class="story-photo-caption">ภาพตอนเด็กๆ — ก่อนที่ทุกอย่างจะเปลี่ยนไป</p>
+
+  <div class="story-body">
+
+    <div class="stanza">
+      <p>วัยเด็กที่ต้องเดินไปทุกที่
+วันเด็กที่ไม่มีค่าขนม
+วัยเด็กที่ไร้ซึ่งงานเลี้ยงวันเกิด</p>
+    </div>
+
+    <div class="stanza stanza-highlight">
+      <p>แค่เด็กบ้านนอกที่เรียนจบไม่สูง
+แค่เด็กคนนึงที่บอกตัวเองว่า</p>
+    </div>
+
+    <div class="stanza stanza-quote">
+      <p>"ความจนแม่งต้องจบลงที่รุ่นกู"</p>
+    </div>
+
+    <div class="stanza stanza-highlight">
+      <p>แค่เด็กคนนึงที่อยากทำทุกอย่าง
+เพื่อ "พ่อกับแม่"</p>
+    </div>
+
+    <div class="stanza">
+      <p>วัยเด็กจนวัย 15 กับการอดมื้อกินมื้อ
+การนอนมองเพดานมืดๆ
+คิดเรื่องทุกอย่างคืนแล้วคืนเล่า</p>
+    </div>
+
+    <div class="stanza">
+      <p>วัย 16 กับค่าแรงวันละ 50
+วัย 17 กับเงินเดือน 3500</p>
+    </div>
+
+    <div class="stanza stanza-highlight">
+      <p>วัย 18 กับการสูญเสียแม่
+ความเสียใจที่แม่งไม่สามารถ
+"บรรยายออกมาเป็นคำพูดได้..."</p>
+    </div>
+
+    <div class="stanza">
+      <p>วัย 19 กับการลุกขึ้นสู้
+แม้ยังเจ็บปวด แตกสลาย
+แม้ยังมองไม่เห็นหนทางของชีวิต</p>
+    </div>
+
+    <div class="stanza stanza-highlight">
+      <p>สู้โดยที่แม่งไม่มีอะไรจะเสีย
+แค่ทำในสิ่งที่เชื่อและเชื่อในสิ่งที่ทำ</p>
+    </div>
+
+    <div class="stanza">
+      <p>สู่วัย 20 ของการมีชีวิตที่ดีขึ้น
+สู่การเป็นคนที่ส่งต่อ "แรงบันดาลใจ"</p>
+    </div>
+
+    <div class="stanza">
+      <p>สู่การกลายเป็น — มึงลองฟัง.❤️‍🔥
+แบรนด์ที่ใช้เรื่องราวของตัวเอง
+มาเป็นเครื่องพิสูจน์ว่า
+ไม่ว่าจะมาจากจุดไหน
+มึงเปลี่ยนชีวิตของตัวเองได้</p>
+    </div>
+
+    <div class="stanza stanza-quote">
+      <p>"มึงคือปฏิหาริย์ในชีวิตของตัวเอง"</p>
+    </div>
+
+    <div class="stanza stanza-closing">
+      <p>มึงลองฟัง.❤️‍🔥 กูแค่พูดในสิ่งที่มึงอาจไม่เคยได้ยินจากใคร
+แต่ใจถึงแม่งต้องการได้ยินมันมาตลอด.</p>
+    </div>
+
+  </div>
+
+  <div class="story-signoff">
+    <img src="./ภาพ/โลโก้หมากรุก พื้นหลังสีดำ.jpg" alt="Logo" class="signoff-logo">
+    <div>
+      <div class="signoff-name">มึงลองฟัง.❤️‍🔥</div>
+      <div class="signoff-text">Youtrylisten</div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="gs-footer">มึงลองฟัง.❤️‍🔥</footer>
+
+<script src="settings.js"></script>
+</body>
+</html>
