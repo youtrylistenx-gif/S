@@ -414,11 +414,84 @@
 <footer class="gs-footer">มึงลองฟัง.❤️‍🔥</footer>
 
 
-<script>
-  /* placeholder — no carousel */
-  (function() {
-  });
-</script>
 <script src="settings.js"></script>
+<script>
+(function () {
+  // ★ วาง URL ที่ได้จากการ Deploy Apps Script ตรงนี้
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9ZgkrbnEMbhMBI_CEQwPTlZhngvqxdp5EZRkRs7UlxX4IwPjLW1knD7Fsn3WlrU8i5w/exec';
+
+  var submitBtn  = document.querySelector('.email-submit');
+  var emailInput = document.querySelector('.email-input');
+  var formWrap   = document.querySelector('.email-form-wrap');
+
+  if (!submitBtn || !emailInput || !formWrap) return;
+
+  submitBtn.addEventListener('click', function () {
+    var email = emailInput.value.trim();
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showMsg('กรุณากรอก Email ให้ถูกต้องก่อนนะครับ 😊', '#e53935');
+      emailInput.focus();
+      return;
+    }
+
+    // loading state
+    submitBtn.disabled      = true;
+    submitBtn.textContent   = 'กำลังส่ง...';
+    submitBtn.style.animation = 'none';
+    clearMsg();
+
+    fetch(SCRIPT_URL, {
+      method:  'POST',
+      mode:    'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body:    JSON.stringify({ email: email }),
+    })
+      .then(function () {
+        showSuccess();
+      })
+      .catch(function () {
+        resetBtn();
+        showMsg('เชื่อมต่อไม่ได้ กรุณาลองใหม่ครับ 🙏', '#e53935');
+      });
+  });
+
+  // กด Enter ในช่อง email ก็ส่งได้เลย
+  emailInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') submitBtn.click();
+  });
+
+  function showSuccess() {
+    formWrap.innerHTML =
+      '<div style="text-align:center;padding:24px 0;">' +
+        '<div style="font-size:2.8rem;margin-bottom:12px;">📬</div>' +
+        '<p style="font-size:1.05rem;font-weight:700;color:#34a853;margin-bottom:8px;">' +
+          'ส่งแล้วครับ! เช็ค Email ได้เลย 🎉</p>' +
+        '<p style="font-size:0.88rem;color:#666;">' +
+          'ถ้าไม่เจอใน Inbox ลองเช็คโฟลเดอร์ Spam ด้วยนะครับ 🙏</p>' +
+      '</div>';
+  }
+
+  function showMsg(text, color) {
+    clearMsg();
+    var p = document.createElement('p');
+    p.className = 'form-msg';
+    p.style.cssText = 'font-size:0.85rem;margin-top:10px;color:' + color + ';';
+    p.textContent = text;
+    formWrap.appendChild(p);
+  }
+
+  function clearMsg() {
+    var old = formWrap.querySelector('.form-msg');
+    if (old) old.remove();
+  }
+
+  function resetBtn() {
+    submitBtn.disabled      = false;
+    submitBtn.textContent   = 'คลิกเพื่อรับ Ebook ฟรีเลย 🎁';
+    submitBtn.style.animation = 'ctaScale 2.4s ease-in-out infinite';
+  }
+}());
+</script>
 </body>
 </html>
