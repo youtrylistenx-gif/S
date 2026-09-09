@@ -359,7 +359,7 @@
         <div class="product-info">
           <div class="product-title">Ebook - ปลุกไฟในตัวมึง (แจกฟรี)</div>
           <div class="price-container"><span class="price-new">฿ฟรี</span></div>
-          <div class="product-sold">อ่านแล้ว 128 ชิ้น</div>
+          <div class="product-sold" id="plukfai-reader-count" style="display:none;"></div>
           <div class="product-stars">⭐5</div>
         </div>
       </a>
@@ -385,5 +385,23 @@
   </script>
   <script src="settings.js"></script>
   <script>applyPriceConfig();</script>
+  <script>
+    // ดึงจำนวนผู้อ่าน "ปลุกไฟในตัวมึง" ตัวจริงมาโชว์ ให้ตรงกับหน้า ebook-plukfai.html
+    // (ใช้ WEB_APP_URL เดียวกับที่ตั้งไว้ในไฟล์นั้น ถ้าเปลี่ยน URL ต้องแก้ทั้ง 2 ที่ให้ตรงกัน)
+    (function () {
+      var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyxvA7Oihjtqois1eLutGg_Orq5pM1AFbtd8EeV_yGjTCREfKAIZbbYdPwz44QAqgiT/exec';
+      var el = document.getElementById('plukfai-reader-count');
+      if (!el) return;
+      fetch(WEB_APP_URL + '?action=getStats')
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data && data.ok) {
+            el.textContent = 'อ่านแล้ว ' + Number(data.readerCount).toLocaleString() + ' ชิ้น';
+            el.style.display = 'block';
+          }
+        })
+        .catch(function () {});
+    }());
+  </script>
 </body>
 </html>

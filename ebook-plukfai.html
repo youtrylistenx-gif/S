@@ -68,36 +68,24 @@
     .ebook-page { max-width: 75vw; margin: 0 auto; padding: 24px 0 110px; }
     @media (max-width: 768px) { .ebook-page { max-width: 95vw; padding: 16px 0 110px; } }
 
-    /* ── MODE TOGGLE ── */
-    .mode-toggle {
-      display: flex; gap: 6px; background: #f1f3f4; border-radius: 14px; padding: 5px;
-      margin-bottom: 28px;
+    /* ── STATS LINE ── */
+    .plukfai-stats {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-size: 0.88rem; color: #5f6368; margin-bottom: 20px; flex-wrap: wrap;
     }
-    .mode-btn {
-      flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px;
-      padding: 12px 10px; border: none; border-radius: 10px; background: transparent;
-      font-family: inherit; font-size: 0.88rem; font-weight: 700; color: #5f6368;
-      cursor: pointer; transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+    .plukfai-stats .stats-sep { color: #dadce0; }
+    .plukfai-stats .stats-star { color: #f59e0b; font-weight: 600; }
+    .live-dot {
+      display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+      background: #34a853; position: relative; flex-shrink: 0;
     }
-    .mode-btn.active { background: #fff; color: #ea580c; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    @media (max-width: 420px) { .mode-btn { font-size: 0.78rem; padding: 10px 6px; } }
-
-    /* ── SCROLL VIEWER ── */
-    #scroll-viewer { display: flex; flex-direction: column; gap: 18px; align-items: center; }
-    .book-page-card {
-      border-radius: 10px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.12);
-      border: 1px solid #eceff1; background: rgba(32,33,36,0.15);
-      width: 60%; margin: 0 auto; display: flex; justify-content: center; align-items: center;
-      padding: 20px;
+    .live-dot::after {
+      content: ""; position: absolute; inset: -3px; border-radius: 50%;
+      background: #34a853; opacity: 0.4; animation: pulse 1.6s ease-out infinite;
     }
-    @media (max-width: 768px) { .book-page-card { width: 100%; } }
-    .book-page-card img { width: 100%; display: block; }
-    .book-page-num {
-      text-align: center; font-size: 0.75rem; color: #9aa0a6; margin-top: 6px; margin-bottom: 2px;
-    }
+    @keyframes pulse { 0% { transform: scale(1); opacity: .5; } 70% { transform: scale(2); opacity: 0; } 100% { transform: scale(2.2); opacity: 0; } }
 
     /* ── FLIP VIEWER ── */
-    #flip-viewer { display: none; }
     .flip-stage {
       position: relative; border-radius: 10px; overflow: hidden;
       box-shadow: 0 6px 24px rgba(0,0,0,0.16); border: 1px solid #eceff1;
@@ -107,12 +95,12 @@
     }
     @media (max-width: 768px) { .flip-stage { width: 100%; } }
     .flip-stage img { width: 100%; display: block; user-select: none; -webkit-user-drag: none; }
-    /* จอคอม: ให้ทั้งโหมดเลื่อนอ่านต่อเนื่องและเปิดทีละหน้า แสดงภาพขนาดเท่ากัน จัดกึ่งกลาง และพอดีจอไม่ต้องเลื่อน */
+    /* จอคอม: จำกัดขนาดภาพให้จัดกึ่งกลาง และพอดีจอไม่ต้องเลื่อน */
     @media (min-width: 769px) {
-      .book-page-card, .flip-stage {
+      .flip-stage {
         width: fit-content; max-width: 60%; align-items: center;
       }
-      .book-page-card img, .flip-stage img {
+      .flip-stage img {
         width: auto; height: auto; max-width: 100%; max-height: calc(66vh - 65px);
       }
     }
@@ -147,6 +135,46 @@
     .flip-controls button:disabled { opacity: 0.35; cursor: default; }
     .flip-page-indicator { font-size: 0.9rem; font-weight: 700; color: #202124; min-width: 90px; text-align: center; }
     .flip-slider { width: 100%; margin-top: 14px; accent-color: #ea580c; }
+
+    /* ── REVIEW WRITE ── */
+    .review-write-section {
+      margin-top: 40px; padding: 24px; background: #f8f9fa; border-radius: 16px; border: 1px solid #e8eaed;
+    }
+    .review-write-heading { font-size: 1rem; font-weight: 800; color: #202124; margin-bottom: 16px; text-align: center; }
+    .review-input, .review-textarea {
+      width: 100%; padding: 13px 16px; border: 1.5px solid #dadce0; border-radius: 12px;
+      font-family: inherit; font-size: 0.92rem; color: #202124; outline: none;
+      transition: border-color 0.2s; margin-bottom: 12px; resize: vertical; display: block;
+    }
+    .review-input:focus, .review-textarea:focus { border-color: #ea580c; }
+    .review-rating-row { display: flex; justify-content: center; gap: 6px; margin-bottom: 14px; }
+    .review-star-btn {
+      background: none; border: none; font-size: 1.8rem; color: #dadce0; cursor: pointer;
+      transition: color 0.15s, transform 0.15s; line-height: 1; padding: 0;
+    }
+    .review-star-btn:hover { transform: scale(1.15); }
+    .review-star-btn.active { color: #f59e0b; }
+    .review-submit-btn {
+      width: 100%; padding: 14px; background: linear-gradient(135deg, #ea580c 0%, #9a3412 100%);
+      color: #fff; border: none; border-radius: 12px; font-family: inherit; font-size: 0.95rem; font-weight: 800;
+      cursor: pointer; transition: transform 0.15s;
+    }
+    .review-submit-btn:hover { transform: translateY(-2px); }
+    .review-submit-btn:disabled { opacity: 0.6; cursor: default; transform: none; }
+    .review-note { text-align: center; font-size: 0.85rem; margin-top: 10px; display: none; }
+
+    /* ── REVIEWS DISPLAY ── */
+    .reviews-display-section { margin-top: 40px; display: none; }
+    .reviews-display-heading { font-size: 1.05rem; font-weight: 800; color: #202124; margin-bottom: 16px; text-align: center; }
+    .reviews-list { display: flex; flex-direction: column; gap: 12px; }
+    .review-card {
+      background: #fff; border: 1px solid #eceff1; border-radius: 12px; padding: 16px 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .review-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; gap: 10px; }
+    .review-card-name { font-weight: 700; color: #202124; font-size: 0.92rem; }
+    .review-card-stars { color: #f59e0b; font-size: 0.85rem; white-space: nowrap; }
+    .review-card-text { font-size: 0.9rem; color: #3c4043; line-height: 1.7; white-space: pre-wrap; }
 
     /* ── SIGN-OFF ── */
     .story-signoff {
@@ -203,15 +231,13 @@
 
   <!-- ── Reader ── -->
   <div id="reader">
-    <div class="mode-toggle">
-      <button type="button" id="mode-flip-btn" class="mode-btn">📖 เปิดทีละหน้า</button>
-      <button type="button" id="mode-scroll-btn" class="mode-btn active">📜 เลื่อนอ่านต่อเนื่อง</button>
+    <div class="plukfai-stats" id="plukfai-stats" style="display:none;">
+      <span class="live-dot"></span>
+      <span id="reader-count-text"></span>
+      <span class="stats-sep">·</span>
+      <span class="stats-star">⭐ 5</span>
     </div>
 
-    <!-- โหมดเลื่อนอ่านต่อเนื่อง -->
-    <div id="scroll-viewer"></div>
-
-    <!-- โหมดเปิดทีละหน้า -->
     <div id="flip-viewer">
       <div class="flip-stage">
         <div class="flip-inner">
@@ -226,6 +252,28 @@
       </div>
       <input type="range" id="flip-slider" class="flip-slider" min="1" max="91" value="1" step="1">
     </div>
+  </div>
+
+  <!-- ── เขียนรีวิว ── -->
+  <div class="review-write-section">
+    <p class="review-write-heading">📖 อ่านจบแล้ว? เขียนรีวิวให้กำลังใจกันหน่อย</p>
+    <input type="text" id="review-name" class="review-input" placeholder="ชื่อ/ชื่อเล่นของมึง (ไม่ใส่ก็ได้)">
+    <div class="review-rating-row" id="review-rating-row">
+      <button type="button" class="review-star-btn" data-val="1" aria-label="1 ดาว">★</button>
+      <button type="button" class="review-star-btn" data-val="2" aria-label="2 ดาว">★</button>
+      <button type="button" class="review-star-btn" data-val="3" aria-label="3 ดาว">★</button>
+      <button type="button" class="review-star-btn" data-val="4" aria-label="4 ดาว">★</button>
+      <button type="button" class="review-star-btn" data-val="5" aria-label="5 ดาว">★</button>
+    </div>
+    <textarea id="review-text" class="review-textarea" rows="4" placeholder="เล่าความรู้สึกหลังอ่านจบให้ฟังหน่อย..."></textarea>
+    <button type="button" id="review-submit-btn" class="review-submit-btn">ส่งรีวิว</button>
+    <p class="review-note" id="review-note"></p>
+  </div>
+
+  <!-- ── รีวิวจากผู้อ่าน (แสดงเฉพาะที่อนุมัติแล้ว) ── -->
+  <div class="reviews-display-section" id="reviews-display-section">
+    <p class="reviews-display-heading">รีวิวจากผู้อ่าน</p>
+    <div class="reviews-list" id="reviews-list"></div>
   </div>
 
   <div class="story-signoff">
@@ -260,25 +308,6 @@
     var num = String(n).padStart(2, '0');
     return IMG_DIR + IMG_PREFIX + num + '.png';
   }
-
-  /* ── Build scroll viewer (lazy-loaded) ── */
-  var scrollViewer = document.getElementById('scroll-viewer');
-  var scrollFrag = document.createDocumentFragment();
-  for (var i = 1; i <= PAGE_COUNT; i++) {
-    var card = document.createElement('div');
-    card.className = 'book-page-card';
-    var img = document.createElement('img');
-    img.src = pageSrc(i);
-    img.alt = 'ปลุกไฟในตัวมึง หน้า ' + i;
-    img.loading = 'lazy';
-    card.appendChild(img);
-    scrollFrag.appendChild(card);
-    var cap = document.createElement('div');
-    cap.className = 'book-page-num';
-    cap.textContent = 'หน้า ' + i + ' / ' + PAGE_COUNT;
-    scrollFrag.appendChild(cap);
-  }
-  scrollViewer.appendChild(scrollFrag);
 
   /* ── Flip viewer state ── */
   var flipImg       = document.getElementById('flip-img');
@@ -343,33 +372,8 @@
   nextBtns.forEach(function (b) { b.addEventListener('click', function () { goTo(currentPage + 1); }); });
   flipSlider.addEventListener('input', function () { goTo(parseInt(flipSlider.value, 10)); });
 
-  /* ── Mode switching ── */
-  var modeScrollBtn = document.getElementById('mode-scroll-btn');
-  var modeFlipBtn   = document.getElementById('mode-flip-btn');
-  var flipViewerEl  = document.getElementById('flip-viewer');
-
-  function setMode(mode) {
-    if (mode === 'flip') {
-      scrollViewer.style.display = 'none';
-      flipViewerEl.style.display = 'block';
-      modeFlipBtn.classList.add('active');
-      modeScrollBtn.classList.remove('active');
-      renderFlip();
-    } else {
-      scrollViewer.style.display = 'flex';
-      flipViewerEl.style.display = 'none';
-      modeScrollBtn.classList.add('active');
-      modeFlipBtn.classList.remove('active');
-    }
-    try { localStorage.setItem('plukfai_view_mode', mode); } catch (e) {}
-  }
-
-  modeScrollBtn.addEventListener('click', function () { setMode('scroll'); });
-  modeFlipBtn.addEventListener('click', function () { setMode('flip'); });
-
-  /* keyboard nav for flip mode */
+  /* keyboard nav */
   document.addEventListener('keydown', function (e) {
-    if (flipViewerEl.style.display === 'none') return;
     if (e.key === 'ArrowLeft') goTo(currentPage - 1);
     if (e.key === 'ArrowRight') goTo(currentPage + 1);
   });
@@ -391,9 +395,163 @@
     }
   }, { passive: true });
 
-  var savedMode = null;
-  try { savedMode = localStorage.getItem('plukfai_view_mode'); } catch (e) {}
-  setMode(savedMode === 'flip' ? 'flip' : 'scroll');
+  renderFlip();
+}());
+</script>
+
+<script>
+(function () {
+  /* ═══════════════════════════════════════════════════════════
+     นับผู้อ่าน + ระบบรีวิว — เชื่อมกับ Google Apps Script
+     วิธี deploy backend: ดูใน ebook-plukfai-tracking-gas.js
+     ═══════════════════════════════════════════════════════════ */
+  var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyxvA7Oihjtqois1eLutGg_Orq5pM1AFbtd8EeV_yGjTCREfKAIZbbYdPwz44QAqgiT/exec';
+  var urlReady = WEB_APP_URL.indexOf('http') === 0;
+
+  /* ── นับผู้อ่านไม่ซ้ำเครื่อง (เก็บ id ไว้ใน localStorage) ── */
+  function trackReader() {
+    if (!urlReady) return;
+    try {
+      var id = localStorage.getItem('plukfai_reader_id');
+      if (!id) {
+        id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+             : ('r-' + Date.now() + '-' + Math.random().toString(36).slice(2));
+        localStorage.setItem('plukfai_reader_id', id);
+      }
+      if (!localStorage.getItem('plukfai_reader_sent')) {
+        fetch(WEB_APP_URL, {
+          method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ type: 'reader', readerId: id }),
+        });
+        localStorage.setItem('plukfai_reader_sent', '1');
+      }
+    } catch (e) {}
+  }
+
+  /* ── ดึงจำนวนผู้อ่านจริงมาแสดง (ไม่มีเลขปลอมค้างไว้ก่อน โผล่ก็ต่อเมื่อได้ค่าจริงแล้วเท่านั้น) ── */
+  function loadStats() {
+    if (!urlReady) return;
+    fetch(WEB_APP_URL + '?action=getStats')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var textEl = document.getElementById('reader-count-text');
+        var statsEl = document.getElementById('plukfai-stats');
+        if (data && data.ok && textEl) {
+          textEl.textContent = 'อ่านแล้ว ' + Number(data.readerCount).toLocaleString() + ' คน';
+          if (statsEl) statsEl.style.display = 'flex';
+        }
+      })
+      .catch(function () {});
+  }
+
+  /* ── ฟอร์มส่งรีวิว ── */
+  function initReviewForm() {
+    var nameInput = document.getElementById('review-name');
+    var textArea  = document.getElementById('review-text');
+    var starBtns  = Array.prototype.slice.call(document.querySelectorAll('.review-star-btn'));
+    var submitBtn = document.getElementById('review-submit-btn');
+    var noteEl    = document.getElementById('review-note');
+    var rating = 5;
+
+    function renderStars() {
+      starBtns.forEach(function (b) {
+        b.classList.toggle('active', parseInt(b.getAttribute('data-val'), 10) <= rating);
+      });
+    }
+    renderStars();
+    starBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        rating = parseInt(b.getAttribute('data-val'), 10);
+        renderStars();
+      });
+    });
+
+    function showNote(text, color) {
+      noteEl.textContent = text;
+      noteEl.style.color = color;
+      noteEl.style.display = 'block';
+    }
+
+    submitBtn.addEventListener('click', function () {
+      var name = nameInput.value.trim();
+      var text = textArea.value.trim();
+      if (!text) { showNote('เขียนรีวิวสักหน่อยนะครับ 🥺', '#ea4335'); return; }
+      if (!urlReady) { showNote('ระบบรีวิวยังไม่พร้อมใช้งานตอนนี้ครับ 🙏', '#ea4335'); return; }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'กำลังส่ง...';
+
+      var settled = false;
+      function onDone(msg, color) {
+        if (settled) return;
+        settled = true;
+        showNote(msg, color);
+        nameInput.value = ''; textArea.value = ''; rating = 5; renderStars();
+        submitBtn.disabled = false; submitBtn.textContent = 'ส่งรีวิว';
+      }
+
+      // Apps Script บางทีตอบช้า (หลายวินาที) — ตั้ง timeout กันปุ่มค้าง
+      // ไม่ได้แปลว่าส่งไม่สำเร็จ เพราะ mode:no-cors ทำให้เช็คผลจริงไม่ได้อยู่แล้ว
+      var timeoutId = setTimeout(function () {
+        onDone('ส่งแล้วครับ แต่ระบบตอบช้ากว่าปกติ รีวิวน่าจะเข้าไปแล้วนะครับ 🙏', '#188038');
+      }, 10000);
+
+      fetch(WEB_APP_URL, {
+        method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ type: 'review', name: name || 'ไม่ระบุชื่อ', rating: rating, text: text }),
+      }).then(function () {
+        clearTimeout(timeoutId);
+        onDone('ส่งรีวิวสำเร็จ! รอแอดมินตรวจสอบก่อนขึ้นแสดงนะครับ 🙏', '#188038');
+      }).catch(function () {
+        clearTimeout(timeoutId);
+        onDone('ส่งไม่สำเร็จ ลองใหม่อีกครั้งครับ', '#ea4335');
+      });
+    });
+  }
+
+  /* ── โหลดรีวิวที่อนุมัติแล้วมาแสดง ── */
+  function loadReviews() {
+    if (!urlReady) return;
+    fetch(WEB_APP_URL + '?action=getReviews')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data || !data.ok || !data.reviews || !data.reviews.length) return;
+        var section = document.getElementById('reviews-display-section');
+        var list = document.getElementById('reviews-list');
+        list.innerHTML = '';
+        data.reviews.forEach(function (rev) {
+          var stars = '⭐'.repeat(Math.max(1, Math.min(5, rev.rating || 5)));
+          var card = document.createElement('div');
+          card.className = 'review-card';
+
+          var top = document.createElement('div');
+          top.className = 'review-card-top';
+          var nameEl = document.createElement('span');
+          nameEl.className = 'review-card-name';
+          nameEl.textContent = rev.name || 'ไม่ระบุชื่อ';
+          var starsEl = document.createElement('span');
+          starsEl.className = 'review-card-stars';
+          starsEl.textContent = stars;
+          top.appendChild(nameEl);
+          top.appendChild(starsEl);
+
+          var textEl = document.createElement('div');
+          textEl.className = 'review-card-text';
+          textEl.textContent = rev.text || '';
+
+          card.appendChild(top);
+          card.appendChild(textEl);
+          list.appendChild(card);
+        });
+        section.style.display = 'block';
+      })
+      .catch(function () {});
+  }
+
+  trackReader();
+  loadStats();
+  initReviewForm();
+  loadReviews();
 }());
 </script>
 </body>
