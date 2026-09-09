@@ -83,11 +83,11 @@
     @media (max-width: 420px) { .mode-btn { font-size: 0.78rem; padding: 10px 6px; } }
 
     /* ── SCROLL VIEWER ── */
-    #scroll-viewer { display: flex; flex-direction: column; gap: 18px; }
+    #scroll-viewer { display: flex; flex-direction: column; gap: 18px; align-items: center; }
     .book-page-card {
       border-radius: 10px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.12);
       border: 1px solid #eceff1; background: #f8f9fa;
-      width: 80%; margin: 0 auto;
+      width: 60%; margin: 0 auto; display: flex; justify-content: center;
     }
     @media (max-width: 768px) { .book-page-card { width: 100%; } }
     .book-page-card img { width: 100%; display: block; }
@@ -101,10 +101,19 @@
       position: relative; border-radius: 10px; overflow: hidden;
       box-shadow: 0 6px 24px rgba(0,0,0,0.16); border: 1px solid #eceff1;
       background: #f8f9fa; min-height: 200px;
-      width: 80%; margin: 0 auto;
+      width: 60%; margin: 0 auto;
     }
     @media (max-width: 768px) { .flip-stage { width: 100%; } }
     .flip-stage img { width: 100%; display: block; user-select: none; -webkit-user-drag: none; }
+    /* จอคอม: ให้ทั้งโหมดเลื่อนอ่านต่อเนื่องและเปิดทีละหน้า แสดงภาพขนาดเท่ากัน และพอดีจอไม่ต้องเลื่อน */
+    @media (min-width: 769px) {
+      .book-page-card, .flip-stage {
+        width: auto; max-width: 60%;
+      }
+      .book-page-card img, .flip-stage img {
+        width: auto; height: auto; max-width: 100%; max-height: 66vh;
+      }
+    }
 
     .flip-controls {
       display: flex; align-items: center; justify-content: center; gap: 14px;
@@ -168,8 +177,8 @@
   <!-- ── Reader ── -->
   <div id="reader">
     <div class="mode-toggle">
-      <button type="button" id="mode-scroll-btn" class="mode-btn active">📜 เลื่อนอ่านต่อเนื่อง</button>
       <button type="button" id="mode-flip-btn" class="mode-btn">📖 เปิดทีละหน้า</button>
+      <button type="button" id="mode-scroll-btn" class="mode-btn active">📜 เลื่อนอ่านต่อเนื่อง</button>
     </div>
 
     <!-- โหมดเลื่อนอ่านต่อเนื่อง -->
