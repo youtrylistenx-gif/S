@@ -117,6 +117,23 @@
       }
     }
 
+    /* ── FLIP ANIMATION (แอนิเมชันพลิกหน้าหนังสือ) ── */
+    .flip-inner {
+      position: relative; display: block; width: 100%; line-height: 0;
+      perspective: 1800px;
+    }
+    @media (min-width: 769px) { .flip-inner { display: inline-block; width: auto; } }
+    #flip-flap {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      display: none; pointer-events: none;
+      backface-visibility: hidden; transform-style: preserve-3d;
+      transition: transform 0.55s cubic-bezier(0.45, 0, 0.2, 1), box-shadow 0.55s ease;
+    }
+    #flip-flap.flap-next { transform-origin: left center; }
+    #flip-flap.flap-prev { transform-origin: right center; }
+    #flip-flap.flap-animate.flap-next { transform: rotateY(-95deg); box-shadow: 12px 0 30px rgba(0,0,0,0.35); }
+    #flip-flap.flap-animate.flap-prev { transform: rotateY(95deg); box-shadow: -12px 0 30px rgba(0,0,0,0.35); }
+
     .flip-controls {
       display: flex; align-items: center; justify-content: center; gap: 14px;
       margin-top: 16px;
@@ -197,7 +214,10 @@
     <!-- โหมดเปิดทีละหน้า -->
     <div id="flip-viewer">
       <div class="flip-stage">
-        <img id="flip-img" src="" alt="หน้าหนังสือ">
+        <div class="flip-inner">
+          <img id="flip-img" src="" alt="หน้าหนังสือ">
+          <img id="flip-flap" src="" alt="" aria-hidden="true">
+        </div>
       </div>
       <div class="flip-controls">
         <button type="button" id="flip-prev-btn" aria-label="หน้าก่อนหน้า">‹</button>
@@ -262,11 +282,13 @@
 
   /* ── Flip viewer state ── */
   var flipImg       = document.getElementById('flip-img');
+  var flipFlap       = document.getElementById('flip-flap');
   var flipIndicator = document.getElementById('flip-indicator');
   var flipSlider     = document.getElementById('flip-slider');
   var prevBtns = [document.getElementById('flip-prev-btn')];
   var nextBtns = [document.getElementById('flip-next-btn')];
   var currentPage = 1;
+  var flipAnimTimer = null;
 
   function preload(n) {
     if (n < 1 || n > PAGE_COUNT) return;
@@ -284,9 +306,37 @@
     preload(currentPage - 1);
   }
 
+  /* เล่นแอนิเมชันพลิกหน้า: หน้าเก่าพลิกทับด้านบน เผยหน้าใหม่ที่อยู่ข้างล่าง */
+  function animateFlip(oldSrc, direction) {
+    if (flipAnimTimer) { clearTimeout(flipAnimTimer); }
+    flipFlap.classList.remove('flap-animate', 'flap-next', 'flap-prev');
+    flipFlap.src = oldSrc;
+    flipFlap.style.display = 'block';
+    void flipFlap.offsetWidth; // force reflow ก่อนเริ่มเปลี่ยน class
+    flipFlap.classList.add(direction === 'next' ? 'flap-next' : 'flap-prev');
+    void flipFlap.offsetWidth;
+    flipFlap.classList.add('flap-animate');
+
+    var finished = false;
+    function finish() {
+      if (finished) return;
+      finished = true;
+      flipFlap.removeEventListener('transitionend', finish);
+      flipFlap.style.display = 'none';
+      flipFlap.classList.remove('flap-animate', 'flap-next', 'flap-prev');
+    }
+    flipFlap.addEventListener('transitionend', finish);
+    flipAnimTimer = setTimeout(finish, 650); // fallback กันเคส transitionend ไม่ยิง
+  }
+
   function goTo(n) {
-    currentPage = Math.min(PAGE_COUNT, Math.max(1, n));
+    var target = Math.min(PAGE_COUNT, Math.max(1, n));
+    if (target === currentPage) return;
+    var direction = target > currentPage ? 'next' : 'prev';
+    var oldSrc = flipImg.src;
+    currentPage = target;
     renderFlip();
+    if (oldSrc) animateFlip(oldSrc, direction);
   }
 
   prevBtns.forEach(function (b) { b.addEventListener('click', function () { goTo(currentPage - 1); }); });
