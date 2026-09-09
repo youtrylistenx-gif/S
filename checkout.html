@@ -375,6 +375,14 @@
       white-space: nowrap;
     }
     .btn-back:hover { background: #f1f3f4; color: #202124; }
+    /* ── NAV (ขยายขนาดแถบด้านบน เฉพาะจอคอม) ── */
+    @media (min-width: 769px) {
+      .gs-nav { height: 88px; }
+      .gs-nav-logo .logo-img { height: 44px; width: 44px; }
+      .logo-name { font-size: 0.88rem; font-weight: 700; }
+      .gs-nav-links a { font-size: 1.05rem; font-weight: 700; height: 88px; }
+      .btn-back { font-size: 1rem; font-weight: 700; padding: 10px 18px; }
+    }
   </style>
 </head>
 <body>
