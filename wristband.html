@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>มึงลองฟัง.❤️‍🔥 — ริสแบนด์</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET STYLE ── */
+    html { scroll-behavior: smooth; }
+
+    * { line-height: 1.5 !important; }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Prompt", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.1;
+      color: #202124;
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: "kern" 1;
+      -webkit-text-stroke: 0.2px;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── LIVE USERS POPUP (POSITIONED TOP CENTER) ── */
+    #live-users-popup {
+      position: fixed;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffffff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border: 1px solid #e0e0e0;
+      z-index: 9999;
+      font-size: 0.8rem;
+      display: none;
+      white-space: nowrap;
+    }
+
+    /* ── NAV ── */
+    .gs-nav {
+      height: 64px;
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .gs-nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .gs-nav-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      text-decoration: none;
+      color: #202124;
+    }
+
+    .gs-nav-logo .logo-img {
+      height: 32px;
+      width: 32px;
+      object-fit: contain;
+    }
+
+    .logo-name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #202124;
+      white-space: nowrap;
+    }
+
+
+
+    .logo-placeholder {
+      height: 32px;
+      width: 32px;
+      border-radius: 4px;
+      background: #f1f3f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .gs-nav-links {
+      margin-left: 8px;
+      display: flex;
+      align-items: center;
+    }
+
+    .gs-nav-links a {
+      text-decoration: none;
+      color: #202124;
+      font-size: 0.9rem;
+      padding: 0 16px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      border-bottom: 3px solid transparent;
+      transition: border-color 0.15s;
+    }
+
+    .gs-nav-links a:hover,
+    .gs-nav-links a.active {
+      border-bottom-color: #1a73e8;
+      color: #1a73e8;
+    }
+
+    .btn-back {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: #5f6368;
+      font-size: 0.88rem;
+      padding: 7px 14px;
+      border: 1px solid #e0e0e0;
+      border-radius: 20px;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-back:hover {
+      background: #f1f3f4;
+      color: #202124;
+    }
+
+    /* ── PAGE LAYOUT ── */
+    .gs-page {
+      max-width: 75vw;
+      margin: 0 auto;
+      padding: 24px 0 110px;
+    }
+
+    @media (max-width: 768px) {
+      .gs-page {
+        max-width: 95vw;
+        padding: 16px 0 110px;
+      }
+    }
+
+    .inner {
+      padding: 0;
+    }
+
+    /* ── HERO VIDEO ── */
+    .hero-layout {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      align-items: stretch;
+    }
+
+    .hero-videos-col {
+      flex: 0 0 45%;
+      display: flex;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .hero-video-wrap {
+      flex: 1;
+      aspect-ratio: 9 / 16;
+      background: #000;
+      overflow: hidden;
+      border-radius: 8px;
+      min-width: 0;
+    }
+
+    .hero-video-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .hero-image-col {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero-image-col img {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      display: block;
+      object-fit: contain;
+      object-position: center;
+    }
+
+    @media (max-width: 600px) {
+      .hero-layout {
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 15px;
+      }
+      .hero-videos-col {
+        gap: 6px;
+      }
+      .hero-video-wrap {
+        flex: 1;
+        aspect-ratio: 9 / 16;
+        overflow: hidden;
+      }
+    }
+
+    /* ── กล่องหลักให้มีความกว้างเท่ากันทั้งหมด ── */
+    .collapse-section, .summary-box, .price-section {
+      width: 100%;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 20px;
+    }
+
+    /* ── CAROUSEL SECTION ── */
+    /* หัวข้อใหม่เหนือจุดสไลด์ */
+    #carousel-indicator-title {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #202124;
+      margin-top: 20px;
+      margin-bottom: 5px;
+    }
+    #carousel-indicator-title span {
+      color: #ea4335;
+    }
+
+    .carousel-wrap {
+      position: relative;
+      margin-bottom: 8px;
+      width: 100%;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .carousel-viewport {
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid #e8eaed;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+    }
+
+    .slide-img {
+      position: relative;
+      width: 100%;
+      background: #f1f3f4;
+    }
+
+    .slide-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ── BADGE ทรงป้าย 6 เหลี่ยมแนวนอน + เชือกห้อย ── */
+    .slide-badge {
+      position: absolute;
+      top: 14px;
+      right: 10px;
+      padding: 20px 44px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #fff;
+      z-index: 3;
+      white-space: pre-line;
+      letter-spacing: 0.03em;
+      line-height: 1.3;
+      text-align: center;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.45);
+      clip-path: polygon(
+        22px 0,
+        calc(100% - 22px) 0,
+        100% 50%,
+        calc(100% - 22px) 100%,
+        22px 100%,
+        0 50%
+      );
+      filter:
+        drop-shadow(0 22px 34px rgba(0,0,0,0.55))
+        drop-shadow(0 8px 14px rgba(0,0,0,0.32))
+        drop-shadow(0 2px 4px rgba(0,0,0,0.22));
+    }
+    /* รูเจาะป้าย — อยู่ใกล้ปลายแหลมขวา */
+    .slide-badge::before {
+      content: "";
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 11px;
+      height: 11px;
+      background: radial-gradient(circle at 30% 30%, #1f1f1f, #000);
+      border-radius: 50%;
+      box-shadow:
+        inset 0 2px 3px rgba(0,0,0,0.65),
+        inset 0 -1px 0 rgba(255,255,255,0.05);
+    }
+    /* เส้นเชือกห้อยลงจากขอบบนของภาพมาถึงรูเจาะ */
+    .slide-img::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 39px;
+      width: 2.5px;
+      height: 44px;
+      background: linear-gradient(to bottom, #a17a4d 0%, #c19569 100%);
+      border-radius: 2px;
+      transform: rotate(-8deg);
+      transform-origin: bottom center;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.28);
+      z-index: 2;
+    }
+    /* ปมเชือกเล็กๆ ตรงปลายบน */
+    .slide-img::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 36px;
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle at 30% 30%, #c19569, #6e4f2c);
+      border-radius: 50%;
+      box-shadow:
+        0 1.5px 3px rgba(0,0,0,0.32),
+        inset 0 -1px 1px rgba(0,0,0,0.2);
+      z-index: 3;
+    }
+    .slide-badge.price {
+      background: #e53935;
+    }
+    .slide-badge.bonus {
+      background: #43a047;
+    }
+    /* iPad / แท็บเล็ต — ลดจากขนาดเดสก์ทอป ~20% */
+    @media (max-width: 1024px) and (min-width: 601px) {
+      .slide-badge {
+        top: 11px;
+        right: 8px;
+        padding: 16px 36px;
+        font-size: 1.08rem;
+        clip-path: polygon(
+          18px 0,
+          calc(100% - 18px) 0,
+          100% 50%,
+          calc(100% - 18px) 100%,
+          18px 100%,
+          0 50%
+        );
+      }
+      .slide-badge::before {
+        right: 19px;
+        width: 9px;
+        height: 9px;
+      }
+      .slide-img::before {
+        right: 31px;
+        width: 2px;
+        height: 35px;
+      }
+      .slide-img::after {
+        right: 29px;
+        width: 6px;
+        height: 6px;
+      }
+    }
+    /* มือถือ (iPhone, Android) — ลดจากขนาดมือถือเดิม ~20% */
+    @media (max-width: 600px) {
+      .slide-badge {
+        top: 8px;
+        right: 6px;
+        padding: 10px 22px;
+        font-size: 0.76rem;
+        clip-path: polygon(
+          12px 0,
+          calc(100% - 12px) 0,
+          100% 50%,
+          calc(100% - 12px) 100%,
+          12px 100%,
+          0 50%
+        );
+      }
+      .slide-badge::before {
+        right: 13px;
+        width: 6px;
+        height: 6px;
+      }
+      .slide-img::before {
+        right: 21px;
+        width: 1.5px;
+        height: 24px;
+      }
+      .slide-img::after {
+        right: 19px;
+        width: 5px;
+        height: 5px;
+      }
+    }
+
+    .slide-body {
+      padding: 18px 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .slide-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #202124;
+      line-height: 1.4;
+    }
+
+    .slide-desc {
+      font-size: 0.9rem;
+      color: #3c4043;
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
+
+    .slide-value {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 0.8rem;
+      background: #fff3e0;
+      color: #e65100;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+      align-self: flex-start;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 35%;
+      transform: translateY(-50%);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #ea4335;
+      border: none;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      transition: background 0.15s, transform 0.15s;
+      user-select: none;
+    }
+
+    .carousel-btn:hover {
+      background: #c0392b;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .carousel-btn-prev { left: 10px; }
+    .carousel-btn-next { right: 10px; }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin: 5px 0 24px;
+    }
+
+    .carousel-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #dadce0;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .carousel-dot.active {
+      background: #ea4335;
+      transform: scale(1.35);
+    }
+
+    /* ── PRICE SECTION ── */
+    .price-section {
+      background: #fff;
+      border: 1px solid #e8eaed;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .price-discount {
+      font-size: 0.9rem;
+      font-weight: 700;
+      background: #ea4335;
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+
+    .price-new {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #202124;
+    }
+
+    .price-old {
+      font-size: 1rem;
+      color: #9aa0a6;
+      text-decoration: line-through;
+    }
+
+    .flash-sale-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #fff1f0;
+      color: #d32f2f;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 1px solid #ffcdd2;
+    }
+
+    .slots-wrap {
+      margin-top: 12px;
+    }
+    .slots-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: #202124;
+      font-weight: 700;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .slots-label strong {
+      color: #202124;
+    }
+    .slots-bar {
+      width: 100%;
+      height: 10px;
+      background: #f1f3f4;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .slots-bar-fill {
+      height: 100%;
+      width: 90%;
+      background: linear-gradient(90deg, #f44336, #b71c1c);
+      border-radius: 99px;
+      position: relative;
+    }
+    .slots-bar-fill::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 30px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 99px;
+      animation: pulse 1.6s ease-out infinite;
+    }
+
+    .product-title {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: #5f6368;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .stats-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      color: #5f6368;
+      flex-wrap: wrap;
+    }
+
+    .live-dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #34a853;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .live-dot::after {
+      content: "";
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: #34a853;
+      opacity: 0.4;
+      animation: pulse 1.6s ease-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: .5; }
+      70% { transform: scale(2); opacity: 0; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+
+    /* ── CALL TO ACTION BUTTON ── */
+    .btn-main {
+      display: block;
+      background: linear-gradient(135deg, #f44336 0%, #b71c1c 100%);
+      color: #fff;
+      font-family: inherit;
+      border-radius: 12px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 28px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(234,67,53,0.4);
+      overflow: hidden;
+      padding: 0;
+      animation: ctaScale 2.4s ease-in-out infinite;
+      width: 100%;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-main:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 24px rgba(234,67,53,0.55);
+      transition: transform 0.2s ease;
+      animation: none;
+    }
+
+    .btn-main-top {
+      display: block;
+      padding: 16px 24px 5px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    }
+
+    .btn-main-sub {
+      display: block;
+      padding: 0 24px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.92);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+
+    @keyframes ctaScale {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.025); }
+    }
+
+    /* ── 4. SUMMARY BOX ── */
+    .summary-box {
+      background: #fffbf0;
+      border: 1px solid #ffe082;
+      border-radius: 12px;
+      padding: 22px 22px 18px;
+    }
+
+    .summary-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ea4335;
+      text-align: center;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .summary-body {
+      font-size: 0.92rem;
+      color: #202124;
+      line-height: 1.8;
+      margin-bottom: 10px;
+      white-space: pre-wrap;
+      text-align: center;
+    }
+
+    /* ── ตัวหนา (strong) ในเนื้อหาทุกกล่อง → สีแดง ── */
+    .collapse-inner strong,
+    .summary-body strong,
+    .slide-desc strong,
+    .slide-title strong {
+      color: #ea4335;
+    }
+
+    .summary-link {
+      color: #ea4335;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .summary-link:hover {
+      text-decoration: underline;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e8eaed;
+      margin: 4px auto 16px;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    /* ── 5-6. COLLAPSIBLE ACCORDION ── */
+    .collapse-section {
+      border: 1px solid #e8eaed;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .collapse-toggle {
+      width: 100%;
+      background: #f8f9fa;
+      border: none;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #202124;
+      text-align: left;
+      transition: background 0.15s;
+    }
+
+    .collapse-toggle:hover {
+      background: #f1f3f4;
+    }
+
+    .collapse-arrow {
+      font-size: 0.75rem;
+      transition: transform 0.3s;
+      flex-shrink: 0;
+      margin-left: 12px;
+    }
+
+    .collapse-toggle.open .collapse-arrow {
+      transform: rotate(180deg);
+    }
+
+    .collapse-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .collapse-body.open {
+      max-height: 2000px;
+    }
+
+    .collapse-inner {
+      padding: 18px 20px 22px;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: #202124;
+      white-space: pre-wrap;
+    }
+
+    /* ── 7. REVIEWS MASONRY ── */
+    .reviews-section {
+      margin-top: 8px;
+      width: 100%;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .review-heading {
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 4px;
+      color: #202124;
+    }
+
+    .review-stars {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #f59e0b;
+      margin-bottom: 24px;
+    }
+
+    .review-masonry {
+      column-count: 3;
+      column-gap: 12px;
+      width: 100%;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .review-item {
+      background: #fff;
+      border: 1px solid #e8eaed;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      display: inline-block;
+      width: 100%;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      transition: transform 0.2s ease;
+    }
+
+    .review-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .review-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ── FOOTER ── */
+    .gs-footer {
+      border-top: 1px solid #e0e0e0;
+      text-align: center;
+      padding: 18px 24px;
+      font-size: 0.8rem;
+      color: #5f6368;
+      margin-top: 32px;
+    }
+
+    /* ── DESKTOP ONLY ── */
+    @media (min-width: 1025px) {
+      .wir-label       { font-size: 1.13rem; }
+      .wir-title       { font-size: 1.1rem; }
+      .wir-text strong { font-size: 0.88rem; }
+      .wir-text p      { font-size: 0.76rem; }
+      .wir-text span   { font-size: 0.86rem !important; }
+      .wir-sub-item    { font-size: 0.74rem; }
+      .wir-bonus-title { font-size: 0.9rem; }
+      .wir-bonus p     { font-size: 0.77rem; }
+      .wir-bonus-item  { font-size: 0.74rem; }
+      .wir-bonus-note  { font-size: 0.70rem; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .review-masonry { column-count: 2; column-gap: 10px; }
+      .review-item { margin-bottom: 10px; }
+    }
+
+    @media (max-width: 480px) {
+      .review-masonry { column-count: 2; column-gap: 8px; }
+      .review-item { margin-bottom: 8px; border-radius: 8px; }
+    }
+
+    /* ── FAQ scroll offset: คอม 20vh / มือถือ 10vh ── */
+    #faq-section { scroll-margin-top: 20vh; }
+    @media (max-width: 768px) {
+      #faq-section { scroll-margin-top: 10vh; }
+    }
+
+    /* ── FLOATING CTA BAR (TikTok style, dark) ── */
+    #float-cta-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #2a2a2a;
+      border-top: 1px solid #1a1a1a;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.35);
+      z-index: 9000;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .float-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .float-left {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 0;
+      gap: 3px;
+    }
+    .float-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+    .float-discount {
+      background: #ea4335;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      line-height: 1.3;
+    }
+    .float-price-new {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #ff5252;
+      line-height: 1;
+    }
+    .float-price-old {
+      font-size: 0.78rem;
+      color: #bdbdbd;
+      text-decoration: line-through;
+    }
+    .float-timer {
+      font-size: 0.75rem;
+      color: #ffab40;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .float-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      background: linear-gradient(135deg, #f44336 0%, #b71c1c 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 18px;
+      font-family: inherit;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(234,67,53,0.45);
+      animation: ctaScale 2.4s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    .float-btn-top {
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+    }
+    .float-btn-sub {
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.92);
+    }
+    .float-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 22px rgba(234,67,53,0.55);
+      animation: none;
+    }
+    @media (max-width: 420px) {
+      .float-inner { padding: 8px 12px; gap: 8px; }
+      .float-price-new { font-size: 1.15rem; }
+      .float-discount { font-size: 0.7rem; padding: 2px 6px; }
+      .float-btn { padding: 9px 14px; }
+      .float-btn-top { font-size: 0.85rem; }
+      .float-btn-sub { font-size: 0.58rem; }
+    }
+    @media (min-width: 1025px) {
+      .float-inner { padding: 16px 24px; gap: 18px; }
+      .float-left { gap: 5px; }
+      .float-discount { font-size: 0.88rem; padding: 3px 10px; border-radius: 5px; }
+      .float-price-new { font-size: 1.7rem; }
+      .float-price-old { font-size: 0.95rem; }
+      .float-timer { font-size: 0.88rem; }
+      .float-btn { padding: 16px 34px; border-radius: 14px; gap: 5px; }
+      .float-btn-top { font-size: 1.3rem; }
+      .float-btn-sub { font-size: 0.95rem; }
+    }
+    /* ── WHAT YOU GET BOX ── */
+    .wir-box {
+      background: #fff;
+      border: 1px solid #e8eaed;
+      border-radius: 12px;
+      padding: 22px 22px 18px;
+      margin-bottom: 16px;
+    }
+
+    .wir-label {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #ea4335;
+      letter-spacing: 0;
+      text-transform: none;
+      display: block;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .wir-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #202124;
+      margin-bottom: 18px;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .wir-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 13px;
+    }
+
+    .wir-item:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .wir-icon {
+      width: 34px;
+      height: 34px;
+      background: #f1f3f4;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .wir-text strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #202124 !important;
+      margin-bottom: 2px;
+      line-height: 1.35;
+    }
+
+    .wir-text p {
+      font-size: 0.84rem;
+      color: #5f6368;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      .wir-box { padding: 14px 14px 10px; }
+      .wir-label { font-size: 1.15rem; }
+      .wir-title { font-size: 1.1rem; margin-bottom: 12px; }
+      .wir-item { gap: 9px; margin-bottom: 9px; }
+      .wir-icon { width: 27px; height: 27px; font-size: 13px; border-radius: 5px; }
+      .wir-text strong { font-size: 0.88rem; }
+      .wir-text p { font-size: 0.77rem; }
+      .wir-text span { font-size: 0.79rem !important; }
+    }
+
+    .wir-sub-items {
+      margin-top: 8px;
+      padding-left: 2px;
+    }
+
+    .wir-sub-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      font-size: 0.82rem;
+      color: #5f6368;
+      margin-bottom: 5px;
+      line-height: 1.55;
+    }
+
+    .wir-sub-item::before {
+      content: "→";
+      color: #ea4335;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .wir-divider {
+      border: none;
+      border-top: 1px dashed #e0e0e0;
+      margin: 20px 0;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .wir-bonus {
+      background: #fffbf0;
+      border: 1px solid #ffe082;
+      border-radius: 10px;
+      padding: 18px 18px 16px;
+    }
+
+    .wir-bonus-tag {
+      display: inline-block;
+      background: #f5c518;
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .wir-bonus-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #202124;
+      margin-bottom: 8px;
+    }
+
+    .wir-bonus p {
+      font-size: 0.85rem;
+      color: #5f6368;
+      line-height: 1.7;
+    }
+
+    .wir-bonus-list {
+      margin-top: 10px;
+    }
+
+    .wir-bonus-item {
+      font-size: 0.82rem;
+      color: #5f6368;
+      margin-bottom: 6px;
+      display: flex;
+      gap: 7px;
+      line-height: 1.55;
+    }
+
+    .wir-bonus-item::before {
+      content: "✓";
+      color: #43a047;
+      flex-shrink: 0;
+    }
+
+    .wir-bonus-note {
+      margin-top: 12px;
+      font-size: 0.78rem;
+      color: #9e9e9e;
+    }
+
+    /* ── FAQ Buttons ── */
+    .faq-btn-style {
+      background: #fff;
+      border: 2px solid #5f6368;
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #202124;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .faq-btn-style:hover {
+      background: #202124;
+      color: #fff;
+      border-color: #202124;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.22);
+      transform: translateY(-2px);
+    }
+
+    /* ── Carousel + Summary row ── */
+    .carousel-summary-row {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      margin-top: 20px;
+    }
+    .carousel-col {
+      flex: 0 0 60%;
+      min-width: 0;
+    }
+    .summary-col {
+      flex: 0 0 calc(40% - 10px);
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    @media (max-width: 768px) {
+      .carousel-summary-row {
+        flex-direction: column;
+        gap: 16px;
+      }
+      .carousel-col,
+      .summary-col {
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+        overflow: visible;
+      }
+      .carousel-col .carousel-wrap {
+        max-width: 100%;
+        overflow: hidden;
+      }
+    }
+    /* ── NAV (ขยายขนาดแถบด้านบน เฉพาะจอคอม) ── */
+    @media (min-width: 769px) {
+      .gs-nav { height: 88px; }
+      .gs-nav-logo .logo-img { height: 44px; width: 44px; }
+      .logo-name { font-size: 0.88rem; font-weight: 700; }
+      .gs-nav-links a { font-size: 1.05rem; font-weight: 700; height: 88px; }
+      .btn-back { font-size: 1rem; font-weight: 700; padding: 10px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="live-users-popup">👁️ มีคนกำลังดูหน้านี้อยู่ <strong id="user-count">20</strong> คน</div>
+
+<nav class="gs-nav">
+  <div class="gs-nav-inner">
+    <a class="gs-nav-logo" href="index.html">
+      <img src="./ภาพ/โลโก้หมากรุก พื้นหลังสีดำ.jpg" alt="Logo" class="logo-img">
+      <span class="logo-name">มึงลองฟัง.❤️‍🔥</span>
+    </a>
+    <div class="gs-nav-links">
+      <a href="wristband.html" class="active">ริสแบนด์</a>
+    </div>
+    <a href="index.html" class="btn-back">← ย้อนกลับ</a>
+  </div>
+</nav>
+
+<div class="gs-page">
+
+  <!-- ── Hero: ภาพริสแบนด์ ── -->
+  <div class="hero-layout" style="justify-content:center;">
+    <div class="hero-image-col" style="flex:0 0 auto;max-width:460px;margin:0 auto;">
+      <img src="./ภาพ/ริสแบนด์.png" alt="ริสแบนด์ มึงลองฟัง.❤️‍🔥">
+    </div>
+  </div>
+
+  <div class="inner">
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!--  ราคาริสแบนด์ — ราคาคงที่ ไม่มีโปร/ส่วนลด -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div id="wristband-price">
+      <div class="price-section">
+        <div class="price-row">
+          <span class="price-new">฿199.-</span>
+        </div>
+        <p class="product-title" style="font-size:1.05rem;color:#202124;font-weight:600;">🧡 ริสแบนด์มึงลองฟัง.❤️‍🔥 — "กูคือปาฏิหาริย์ในชีวิตของตัวเอง" ซิลิโคนแท้ ใส่ได้ทุกวัน เตือนใจทุกครั้งที่มอง</p>
+        <div class="stats-row" style="margin-top:12px;">
+          <span style="display:inline-flex;align-items:center;gap:6px;">
+            <span style="color:#202124;font-size:0.9rem;font-weight:700;">⭐5</span>
+          </span>
+          <span style="color:#dadce0;">|</span>
+          <span style="display:inline-flex;align-items:center;gap:8px;white-space:nowrap;">
+            <span>ขายไปแล้ว 31 เส้นครับ🧡</span>
+          </span>
+        </div>
+      </div>
+      <a class="btn-main" href="checkout-wristband.html">
+        <span class="btn-main-top">คลิกเพื่อสั่งซื้อ ฿199.-</span>
+        <span class="btn-main-sub"> ( กรอกที่อยู่จัดส่ง แล้วรอรับของถึงบ้านได้เลยครับ )</span>
+      </a>
+    </div>
+
+    <!-- ── สิ่งที่จะได้รับ ── -->
+    <div class="carousel-summary-row">
+    <div class="carousel-col">
+
+    <div id="carousel-indicator-title" style="margin-top:0;">สิ่งที่จะได้รับ</div>
+
+    <div class="wir-box" style="margin-top:10px;">
+      <span class="wir-label">ริสแบนด์</span>
+      <h2 class="wir-title" style="font-size:1.01rem;">ริสแบนด์ซิลิโคนแท้ สีส้มแบรนด์ "มึงลองฟัง.❤️‍🔥" สกรีนข้อความ "กูคือปาฏิหาริย์ในชีวิตของตัวเอง" ใส่เตือนใจตัวเองได้ทุกวัน</h2>
+      <div class="wir-item">
+        <div class="wir-icon">🧡</div>
+        <div class="wir-text">
+          <strong>ริสแบนด์มึงลองฟัง.❤️‍🔥 จำนวน 1 เส้น</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#ea4335;display:block;margin-bottom:4px;">ซิลิโคนแท้ ยืดหยุ่น ใส่สบาย ไม่ระคายผิว</span>
+        </div>
+      </div>
+      <div class="wir-item">
+        <div class="wir-icon">📏</div>
+        <div class="wir-text">
+          <strong>ไซซ์เดียว ใส่ได้ทั้งผู้ชายและผู้หญิง</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#43a047;display:block;margin-bottom:4px;">ยางยืดหยุ่น ปรับรับข้อมือได้หลายขนาด</span>
+        </div>
+      </div>
+      <div class="wir-item">
+        <div class="wir-icon">🚚</div>
+        <div class="wir-text">
+          <strong>จัดส่งฟรีถึงบ้าน ทั่วประเทศ</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#43a047;display:block;margin-bottom:4px;">แพ็คของและจัดส่งภายใน 1-2 วันทำการหลังยืนยันสลิป</span>
+        </div>
+      </div>
+      <div class="wir-item" style="margin-bottom:0;">
+        <div class="wir-icon">💬</div>
+        <div class="wir-text">
+          <strong>ปัญหาระหว่างจัดส่งหรือของเสียหาย ทักมาได้เลย ดูแลให้เต็มที่</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#43a047;display:block;margin-bottom:4px;">ผมรับผิดชอบทุกออเดอร์เองครับ🫡</span>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- end carousel col -->
+    <div class="summary-col">
+
+    <!-- ── กล่องสรุป ── -->
+    <div class="summary-box" style="margin-top:0; box-sizing:border-box;">
+      <p style="font-size:1.35rem;font-weight:800;color:#202124;text-align:center;margin-bottom:6px;">สรุป</p>
+      <p style="font-size:1.1rem;font-weight:800;color:#2e7d32;text-align:center;margin-bottom:14px;line-height:1.6;">ริสแบนด์มึงลองฟัง.❤️‍🔥 ราคา [ 199.- ] จัดส่งฟรีถึงบ้านนะครับ🧡</p>
+
+      <p class="summary-body">ทุกเส้นเป็นซิลิโคนแท้ สกรีนคมชัด ไม่ลอกไม่ซีดง่าย ใส่เตือนใจตัวเองได้ทุกวัน ว่า "กูคือปาฏิหาริย์ในชีวิตของตัวเอง"</p>
+
+      <p class="summary-body">สั่งวันนี้ แจ้งสลิปแล้วรอแพ็คของ 1-2 วันทำการ จากนั้นจัดส่งให้ถึงบ้านทันที</p>
+
+      <p class="summary-body">ถ้าอยากได้...คลิกที่ปุ่มสีแดง <a class="summary-link" href="checkout-wristband.html" style="font-weight:700;">&gt; คลิกเพื่อสั่งซื้อ 199.- &lt;</a> ได้เลยนะครับ☺️</p>
+
+      <p class="summary-body" style="font-size:0.82rem;font-weight:400;color:#202124;">ผมใส่ทุกช่องทางชำระเงินที่สะดวกที่สุดให้แล้วครับ ชำระเงินและแจ้งที่อยู่จัดส่งเสร็จ ผมจะรีบแพ็คและส่งให้ทันทีเลยครับ🫡</p>
+
+      <p class="summary-body" style="font-size:0.82rem;font-weight:400;color:#202124;margin-bottom:18px;">ถ้าลังเลหรือติดปัญหาตรงไหนเพิ่มเติม สามารถถามผมทางแชทเพจได้เลยนะครับ ยินดีช่วยมากๆ ครับ🥰</p>
+    </div>
+
+    <!-- ── FAQ Buttons — เรียงลำดับที่นี่ได้เลย ── -->
+    <div id="faq-section" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;">
+      <button class="faq-btn faq-btn-style" data-title="🧵 ทำจากวัสดุอะไร แข็งแรงไหม?" data-body="เป็นซิลิโคนแท้ครับ ยืดหยุ่นดี ใส่สบาย ไม่ระคายผิว ทนทานใส่ได้นาน สกรีนลายไม่ลอกไม่ซีดง่ายครับ 🧡">🧵 ทำจากวัสดุอะไร?</button>
+      <button class="faq-btn faq-btn-style" data-title="📏 มีไซซ์ไหนบ้าง ใส่ได้ทุกคนไหม?" data-body="เป็นไซซ์เดียวครับ แต่ตัวยางมีความยืดหยุ่นสูง ปรับรับข้อมือได้หลายขนาด ใส่ได้ทั้งผู้ชายและผู้หญิงเลยครับ 🙏">📏 มีไซซ์ไหนบ้าง?</button>
+      <button class="faq-btn faq-btn-style" data-title="📦 สั่งแล้วได้รับของนานแค่ไหน?" data-body="หลังโอนเงินและแจ้งสลิปพร้อมที่อยู่จัดส่งในหน้าชำระเงินแล้ว ผมจะเช็คข้อมูลและแพ็คของภายใน 1-2 วันทำการ จากนั้นจัดส่งให้ทันทีครับ ถ้านานกว่านี้ยังไม่ได้รับ ทักแชทมาถามได้เลยนะครับ 🫡">📦 ได้รับของนานแค่ไหน?</button>
+      <button class="faq-btn faq-btn-style" data-title="🚚 ค่าจัดส่งคิดเพิ่มไหม?" data-body="ไม่มีค่าใช้จ่ายเพิ่มเลยครับ ราคา 199.- นี้รวมค่าจัดส่งถึงบ้านให้แล้วครับ 🧡">🚚 ค่าส่งคิดเพิ่มไหม?</button>
+      <button class="faq-btn faq-btn-style" data-title="😟 ของเสียหายหรือไม่ตรงปก ทำยังไง?" data-body="ทักแชทมาบอกผมได้เลยครับ ส่งรูปสินค้าที่ได้รับมาให้ดู แล้วผมจะรับผิดชอบดูแลให้เต็มที่ครับ ไม่ต้องกังวลเลย 🥰">😟 ของเสียหายทำยังไง?</button>
+    </div><!-- end 40% col -->
+    </div><!-- end flex row -->
+    </div>
+
+    <!-- Single FAQ Modal (ใช้ร่วมกัน) -->
+    <div id="faq-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;padding:20px;">
+      <div style="background:#fff;border-radius:16px;padding:28px 24px 24px;max-width:520px;width:100%;max-height:80vh;overflow-y:auto;position:relative;box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+        <button onclick="document.getElementById('faq-modal').style.display='none'" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.3rem;cursor:pointer;color:#5f6368;line-height:1;">✕</button>
+        <p id="faq-modal-title" style="font-size:1rem;font-weight:700;color:#202124;margin-bottom:14px;"></p>
+        <p id="faq-modal-body" style="font-size:0.92rem;color:#202124;line-height:1.8;white-space:pre-wrap;"></p>
+      </div>
+    </div>
+
+
+
+
+    <!-- ── เรื่องราวที่มาของริสแบนด์เส้นนี้ ── -->
+    <div id="story-section" class="collapse-section" style="margin-top: 12px; scroll-margin-top: 80px;">
+      <button class="collapse-toggle" id="storyToggle">
+        <span style="display:flex;flex-direction:column;gap:3px;">
+          <span>เรื่องราวที่มาของริสแบนด์เส้นนี้ 🧡</span>
+          <span style="font-size:0.75rem;color:#1a73e8;font-weight:500;">คลิกเพื่ออ่าน ›</span>
+        </span>
+        <span class="collapse-arrow">▼</span>
+      </button>
+      <div class="collapse-body" id="storyBody">
+        <div class="collapse-inner">   "กูคือปาฏิหาริย์ในชีวิตของตัวเอง" ประโยคนี้ผมเขียนขึ้นมาจากสิ่งที่ผมอยากบอกตัวเองซ้ำๆ ในวันที่รู้สึกท้อ รู้สึกไม่เชื่อมั่นในตัวเองครับ
+.
+   เพราะสุดท้ายแล้ว ไม่มีใครมาเปลี่ยนชีวิตเราได้จริงๆ นอกจากตัวเราเอง และทุกก้าวเล็กๆ ที่เราลงมือทำเอง มันคือปาฏิหาริย์ที่เราสร้างขึ้นมาด้วยมือของเราเองทั้งนั้นครับ
+.
+   ผมเลยอยากทำริสแบนด์เส้นนี้ขึ้นมา ให้เป็นเหมือนของเตือนใจเล็กๆ ที่ใส่ติดตัวได้ทุกวัน เผื่อวันไหนที่รู้สึกท้อหรือหมดไฟ พอก้มลงมามองที่ข้อมือ จะได้นึกขึ้นได้ว่า...เรายังลุยต่อได้ และเราคือคนที่จะพาตัวเองไปได้ไกลกว่านี้แน่นอนครับ🫡🧡</div>
+      </div>
+    </div>
+
+    <!-- ── เหตุผลที่ริสแบนด์นี้ไม่ฟรี ── -->
+    <div id="why-section" class="collapse-section" style="margin-top: 20px;">
+      <button class="collapse-toggle" id="whyToggle">
+        <span style="display:flex;flex-direction:column;gap:3px;">
+          <span>🙏 เหตุผลที่ริสแบนด์นี้ไม่แจกฟรีนะครับ 🥺</span>
+          <span style="font-size:0.75rem;color:#1a73e8;font-weight:500;">คลิกเพื่ออ่าน ›</span>
+        </span>
+        <span class="collapse-arrow">▼</span>
+      </button>
+      <div class="collapse-body" id="whyBody">
+        <div class="collapse-inner">   ริสแบนด์ทุกเส้นเป็นของจริง ผลิตจริง มีต้นทุนค่าวัสดุ ค่าสกรีน และค่าจัดส่งถึงบ้านทุกออเดอร์ครับ ราคา 199.- ที่ตั้งไว้ ผมคิดจากต้นทุนจริงล้วนๆ ไม่ได้เอากำไรเข้าตัวเยอะเลยครับ
+.
+   ตั้งใจทำให้ทุกเส้นที่ส่งออกไป มีคุณภาพดีที่สุดเท่าที่จะทำได้ และอยากให้ทุกคนที่ใส่ ได้ใส่ด้วยความรู้สึกดีๆ จริงๆ ครับ🫡🙏</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<footer class="gs-footer">มึงลองฟัง.❤️‍🔥</footer>
+
+<script src="settings.js"></script>
+<script>
+
+  /* ── KEYBOARD SCROLL ── */
+  document.addEventListener('keydown', function(e) {
+    const tag = e.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+    if (e.code === 'Enter' && (tag === 'BUTTON' || tag === 'A')) return;
+    if (e.code === 'Space') {
+      e.preventDefault();
+      window.scrollBy({ top: window.innerHeight * 0.85, behavior: 'smooth' });
+    } else if (e.code === 'Enter') {
+      e.preventDefault();
+      window.scrollBy({ top: 80, behavior: 'smooth' });
+    }
+  });
+
+  const toggles = ["storyToggle|storyBody", "whyToggle|whyBody"];
+  toggles.forEach(s => {
+    const [tid, bid] = s.split("|");
+    const t = document.getElementById(tid);
+    const b = document.getElementById(bid);
+    t.onclick = () => { b.classList.toggle("open"); t.classList.toggle("open"); };
+  });
+
+  // FAQ single modal
+  document.querySelectorAll('.faq-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.getElementById('faq-modal-title').textContent = btn.dataset.title;
+      document.getElementById('faq-modal-body').textContent = btn.dataset.body;
+      document.getElementById('faq-modal').style.display = 'flex';
+    });
+  });
+
+  // ให้ summary-box สูงเท่า carousel-col เฉพาะ desktop เท่านั้น
+  (function() {
+    var cc = document.querySelector('.carousel-col');
+    var box = document.querySelector('.summary-col .summary-box');
+    if (!cc || !box) return;
+
+    function sync() {
+      if (window.innerWidth <= 768) {
+        // มือถือ: reset กลับเป็นปกติ
+        box.style.maxHeight = '';
+        box.style.overflowY = '';
+        return;
+      }
+      var h = cc.getBoundingClientRect().height;
+      if (h > 50) {
+        box.style.maxHeight = Math.round(h) + 'px';
+        box.style.overflowY = 'auto';
+      }
+    }
+
+    if (window.ResizeObserver) {
+      new ResizeObserver(sync).observe(cc);
+    }
+    window.addEventListener('resize', sync);
+    window.addEventListener('load', sync);
+    setTimeout(sync, 200);
+    setTimeout(sync, 800);
+  })();
+
+</script>
+</body>
+</html>
