@@ -62,13 +62,42 @@
       border: 1.5px solid #eceff1; border-radius: 14px; padding: 16px 20px;
       background: #f8f9fa; transition: border-color 0.2s, background 0.2s;
     }
-    .reward-tier.tier-active { border-color: #ea580c; background: #fff7ed; }
     .reward-tier-amount {
       flex-shrink: 0; width: 84px; text-align: center; font-weight: 800; font-size: 1.05rem;
-      color: #ea580c; border-right: 1.5px dashed #dadce0; padding-right: 16px;
+      color: #5f6368; border-right: 1.5px dashed #dadce0; padding-right: 16px;
     }
     .reward-tier-desc { font-size: 0.92rem; color: #202124; line-height: 1.6; }
-    .reward-tier-desc b { color: #ea580c; }
+    .reward-tier-desc b { color: #202124; }
+
+    /* ริสแบนด์ = โทนส้ม */
+    .reward-tier[data-tier="199"] { border-color: #fdba74; background: #fff7ed; }
+    .reward-tier[data-tier="199"] .reward-tier-amount { color: #ea580c; border-right-color: #fdba74; }
+    .reward-tier[data-tier="199"] .item-wristband { color: #ea580c; }
+    .reward-tier[data-tier="199"].tier-active { border-color: #ea580c; box-shadow: 0 0 0 2px rgba(234,88,12,0.18); }
+
+    /* Planner = โทนเขียว */
+    .reward-tier[data-tier="399"] { border-color: #a8d5b5; background: #f0fff4; }
+    .reward-tier[data-tier="399"] .reward-tier-amount { color: #188038; border-right-color: #a8d5b5; }
+    .reward-tier[data-tier="399"] .item-wristband { color: #ea580c; }
+    .reward-tier[data-tier="399"] .item-planner { color: #188038; }
+    .reward-tier[data-tier="399"].tier-active { border-color: #188038; box-shadow: 0 0 0 2px rgba(24,128,56,0.18); }
+
+    .reward-tier[data-tier="0"].tier-active { border-color: #9aa0a6; background: #f1f3f4; }
+
+    /* ── DETAIL LINKS (ดูรายละเอียดของแถม) ── */
+    .detail-links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 4px; }
+    .detail-link {
+      display: inline-flex; align-items: center; gap: 6px; background: #fff; border: 1.5px solid #dadce0;
+      border-radius: 999px; padding: 9px 18px; text-decoration: none; color: #202124;
+      font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease; white-space: nowrap;
+    }
+    .detail-link:hover { background: #202124; color: #fff; border-color: #202124; transform: translateY(-2px); }
+
+    .detail-link.link-wristband { color: #ea580c; border-color: #fdba74; background: #fff7ed; }
+    .detail-link.link-wristband:hover { background: #ea580c; color: #fff; border-color: #ea580c; }
+
+    .detail-link.link-planner { color: #188038; border-color: #a8d5b5; background: #f0fff4; }
+    .detail-link.link-planner:hover { background: #188038; color: #fff; border-color: #188038; }
 
     /* ── DONATE TYPE SELECTOR ── */
     .sp-section-title { font-size: 1rem; font-weight: 800; color: #202124; margin: 32px 0 14px; }
@@ -107,7 +136,11 @@
 
     .error-text { color: #ea4335; font-size: 0.8rem; display: none; margin-top: 4px; margin-left: 4px; }
 
-    #shipping-fields, #cumulative-note-field { display: none; }
+    #shipping-fields, #cumulative-note-field, #free-name-field { display: none; }
+
+    .field-row { display: flex; gap: 12px; }
+    .field-row > div { flex: 1; min-width: 0; }
+    @media (max-width: 480px) { .field-row { flex-direction: column; gap: 0; } }
 
     /* ── PAYMENT CARD (เหมือน checkout.html) ── */
     .payment-card {
@@ -165,6 +198,26 @@
     .success-body { font-size: 0.92rem; color: #5f6368; line-height: 1.8; }
 
     .gs-footer { border-top: 1px solid #e0e0e0; text-align: center; padding: 18px 24px; font-size: 0.8rem; color: #5f6368; margin-top: 40px; }
+
+    /* ── CUMULATIVE-TOTAL POPUP ── */
+    .sp-popup-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+      z-index: 9999; align-items: center; justify-content: center; padding: 20px;
+    }
+    .sp-popup-overlay.show { display: flex; }
+    .sp-popup-box {
+      background: #fff; border-radius: 18px; padding: 32px 24px 24px; max-width: 360px; width: 100%;
+      text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+    .sp-popup-icon { font-size: 2.6rem; margin-bottom: 12px; line-height: 1; }
+    .sp-popup-msg { font-size: 0.92rem; color: #202124; line-height: 1.7; margin-bottom: 20px; }
+    .sp-popup-ok {
+      width: 100%; padding: 12px; border: none; border-radius: 12px; font-family: inherit;
+      font-size: 0.9rem; font-weight: 700; color: #fff; cursor: pointer; transition: transform 0.15s;
+      background: linear-gradient(135deg, #ea580c 0%, #9a3412 100%);
+    }
+    .sp-popup-ok:hover { transform: translateY(-2px); }
+    .sp-popup-box.is-error .sp-popup-ok { background: linear-gradient(135deg, #ea4335 0%, #9a1e12 100%); }
   </style>
 </head>
 <body>
@@ -181,63 +234,74 @@
 
 <div class="sp-page" id="form-content">
 
-  <h1 class="sp-title">สนับสนุนเล่มนี้เท่าไหร่ก็ได้ ตามใจมึงเลย</h1>
+  <h1 class="sp-title">อยากโดเนทเป็นการขอบคุณและสนับสนุนเท่าไหร่ก็ได้ ตามใจมึงเลยเว้ย</h1>
   <p class="sp-subtitle">
-    กูไม่กล้าการันตีว่าเล่มนี้จะเปลี่ยนชีวิตมึงได้แค่ไหน แต่ทุกตัวอักษรกูตั้งใจเขียนมันจริงๆ
-    ถ้าเล่มนี้ช่วยมึงได้ไม่มากก็น้อย จะโดเนทเท่าไหร่ก็ได้ตามที่มึงสบายใจ ไม่มีขั้นต่ำ ไม่บังคับเลยนะเว้ย
+    กูอาจไม่กล้าการันตีว่าสิ่งที่กูเขียนจะเปลี่ยนชีวิตมึงได้แน่นอน แต่กูกล้าการันตีว่าทุกตัวอักษร ทุกคำ ทุกประดยค กูตั้งใจเขียนมันจริงๆ และกูเชื่อว่ามมึงเองก็สัมผัสได้ถึงความตั้งใจของกูเหมือนกัน ถ้ามึงอยากสนับสนุนกู กูขอบคุณมึงจากใจจริงๆ จะโดเนทเท่าไหร่ก็ได้ตามที่มึงสบายใจ ไม่มีขั้นต่ำ ไม่บังคับเลยเว้ย และกูขอบคุณอีกครั้ง จากใจจริงๆ 🤝🫡🙏❤️‍🔥
   </p>
 
   <div class="reward-ladder">
     <div class="reward-tier" data-tier="0">
-      <div class="reward-tier-amount">฿เท่าไหร่ก็ได้</div>
-      <div class="reward-tier-desc">อ่านเล่มนี้ได้ฟรีอยู่แล้ว โดเนทเท่าไหร่ก็ได้ตามใจ กูขอบคุณสุดหัวใจเว้ย 🙏</div>
+      <div class="reward-tier-amount">฿โดเนทตามความอยากให้</div>
+      <div class="reward-tier-desc">โดเนทเท่าไหร่ก็ได้ ตามที่มึงรู้สึกอยากจะให้ กูขอบคุณสุดหัวใจเว้ย 🙏</div>
     </div>
     <div class="reward-tier" data-tier="199">
-      <div class="reward-tier-amount">฿199+</div>
-      <div class="reward-tier-desc">รับ <b>ริสแบนด์</b> ส่งฟรีถึงบ้าน 🎁</div>
+      <div class="reward-tier-amount">โดเนทถึง ฿199+</div>
+      <div class="reward-tier-desc">รับ <b class="item-wristband">🧡 ริสแบนด์</b> ของช่อง มึงลองฟัง.❤️‍🔥 ส่งฟรีถึงบ้าน 🎁</div>
     </div>
     <div class="reward-tier" data-tier="399">
-      <div class="reward-tier-amount">฿399+</div>
-      <div class="reward-tier-desc">รับ <b>ริสแบนด์ + Planner ฟรี</b> (มูลค่า 1,490.-) 🎁🔥</div>
+      <div class="reward-tier-amount">โดเนทถึง ฿399+</div>
+      <div class="reward-tier-desc">รับ <b class="item-wristband">🧡 ริสแบนด์</b> + <b class="item-planner">💚 Planner ฟรี</b> (ราคาโปร 299.-) 🎁🔥</div>
     </div>
   </div>
 
-  <p class="sp-section-title">มึงอยากโดเนทแบบไหน?</p>
+  <div class="detail-links">
+    <a href="./ภาพ/ริสแบนด์.png" target="_blank" class="detail-link link-wristband">🧡 ดูรายละเอียดริสแบนด์</a>
+    <a href="planner.html" target="_blank" class="detail-link link-planner">💚 ดูรายละเอียด Planner</a>
+  </div>
+
+  <p class="sp-section-title">มึงต้องการโดเนทแบบไหน?</p>
   <div class="donate-type-group" id="donate-type-group">
     <label class="donate-type-option" data-type="free">
       <input type="radio" name="donate-type" value="free" checked>
       <span>
         <span class="donate-type-label">โดเนทตามใจ (ไม่ขอรับของแถม)</span>
-        <span class="donate-type-sub">อยากสนับสนุนเฉยๆ ไม่ต้องส่งของแถมกลับมาก็ได้</span>
+        <span class="donate-type-sub">แค้อยากสนับสนุนเฉยๆ ไม่ต้องส่งของแถมกลับมาก็ได้</span>
       </span>
     </label>
     <label class="donate-type-option" data-type="single">
       <input type="radio" name="donate-type" value="single">
       <span>
-        <span class="donate-type-label">โอนครบยอดในครั้งเดียว ขอรับของแถม</span>
-        <span class="donate-type-sub">โอนรอบเดียวถึงขั้นที่อยากได้ของแถม (199 หรือ 399 ขึ้นไป)</span>
+        <span class="donate-type-label">โดเนทครบยอดในครั้งเดียว ขอรับของแถม</span>
+        <span class="donate-type-sub">โดเนทรอบเดียวในจำนวนที่ได้รับของแถม (199 หรือ 399 ขึ้นไป)</span>
       </span>
     </label>
     <label class="donate-type-option" data-type="cumulative">
       <input type="radio" name="donate-type" value="cumulative">
       <span>
-        <span class="donate-type-label">เคยโอนสะสมมาหลายรอบแล้ว ครบยอด ขอรับของแถม</span>
-        <span class="donate-type-sub">โอนแยกหลายครั้งแล้วยอดรวมครบขั้น จะแจ้งยอดสะสมให้แอดมินเช็คให้</span>
+        <span class="donate-type-label">ขอโดเนทสะสมมาหลายรอบ แล้วถ้าครบยอด ขอรับของแถม</span>
+        <span class="donate-type-sub">โดเนทแยกหลายครั้งแล้วยอดรวมครบ จะแจ้งยอดสะสมให้แอดมินเช็คให้</span>
       </span>
     </label>
   </div>
 
+  <div id="free-name-field">
+    <label><span class="label-icon">🙋</span><span class="label-bold">ชื่อ/ชื่อเล่นของมึง (ไม่บังคับ)</span></label>
+    <input type="text" id="free-name" placeholder="ชื่อเล่น">
+  </div>
+
   <label>
-    <span class="label-icon">💵</span><span class="label-bold">ยอดที่โอนรอบนี้ (฿)</span>
+    <span class="label-icon">💵</span><span class="label-bold" id="amount-label">ยอดโดเนทรอบนี้ (฿)</span>
   </label>
-  <input type="number" id="amount" placeholder="ระบุยอดที่โอนรอบนี้" min="0">
+  <input type="number" id="amount" placeholder="ระบุยอดโดเนท" min="0">
   <div id="amount-error" class="error-text"></div>
   <div class="amount-live-hint" id="amount-hint"></div>
 
   <div id="cumulative-note-field">
-    <label><span class="label-icon">🧾</span><span class="label-bold">ยอดสะสมทั้งหมดที่โอนมา</span></label>
-    <p class="field-hint">เล่าให้กูฟังหน่อยว่าโอนกี่ครั้ง วันไหนบ้าง ยอดรวมทั้งหมดเท่าไหร่ กูจะเช็คให้นะ</p>
-    <textarea id="cumulative-note" rows="3" placeholder="เช่น โอนวันที่ 1/9 จำนวน 100 บาท + วันนี้อีก 150 บาท รวม 250 บาท"></textarea>
+    <label><span class="label-icon">🙋</span><span class="label-bold">ชื่อ/ชื่อเล่นของมึง (ใช้เช็คยอดสะสม)</span></label>
+    <p class="field-hint">⚠️ สำคัญมาก! ใช้ชื่อเดียวกันทุกครั้งที่โอน เพื่อให้สามารถรวมยอดสะสมของมึงได้ถูกต้อง</p>
+    <input type="text" id="cumulative-name" placeholder="ตั้งชื่อที่จำง่าย แล้วใช้ชื่อเดิมทุกรอบ">
+    <div id="cumulative-name-error" class="error-text"></div>
+    <button type="button" class="btn-copy" id="check-total-btn" style="margin-top:10px;">🔍 เช็คยอดสะสมของมึง</button>
   </div>
 
   <div id="shipping-fields">
@@ -246,16 +310,45 @@
     <input type="text" id="ship-name" placeholder="ชื่อ-นามสกุลที่จะให้จัดส่งถึง">
     <div id="ship-name-error" class="error-text"></div>
 
-    <label><span class="label-icon">📍</span><span class="label-bold">ที่อยู่จัดส่ง</span></label>
-    <textarea id="ship-address" rows="3" placeholder="บ้านเลขที่ ถนน ตำบล/แขวง อำเภอ/เขต จังหวัด รหัสไปรษณีย์"></textarea>
-    <div id="ship-address-error" class="error-text"></div>
+    <label><span class="label-icon">🏠</span><span class="label-bold">บ้านเลขที่ / หมู่บ้าน / ซอย</span></label>
+    <input type="text" id="ship-addr1" placeholder="เช่น 99/1 หมู่ 4 ซอยสุขใจ 5">
+    <div id="ship-addr1-error" class="error-text"></div>
+
+    <label><span class="label-icon">🛣️</span><span class="label-bold">ถนน (ถ้ามี)</span></label>
+    <input type="text" id="ship-street" placeholder="ชื่อถนน">
+
+    <div class="field-row">
+      <div>
+        <label><span class="label-icon">📍</span><span class="label-bold">ตำบล/แขวง</span></label>
+        <input type="text" id="ship-subdistrict" placeholder="ตำบล/แขวง">
+        <div id="ship-subdistrict-error" class="error-text"></div>
+      </div>
+      <div>
+        <label><span class="label-icon">📍</span><span class="label-bold">อำเภอ/เขต</span></label>
+        <input type="text" id="ship-district" placeholder="อำเภอ/เขต">
+        <div id="ship-district-error" class="error-text"></div>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div>
+        <label><span class="label-icon">🗺️</span><span class="label-bold">จังหวัด</span></label>
+        <input type="text" id="ship-province" placeholder="จังหวัด">
+        <div id="ship-province-error" class="error-text"></div>
+      </div>
+      <div>
+        <label><span class="label-icon">📮</span><span class="label-bold">รหัสไปรษณีย์</span></label>
+        <input type="text" id="ship-zipcode" inputmode="numeric" maxlength="5" placeholder="รหัสไปรษณีย์">
+        <div id="ship-zipcode-error" class="error-text"></div>
+      </div>
+    </div>
 
     <label><span class="label-icon">📱</span><span class="label-bold">เบอร์โทรติดต่อ</span></label>
     <input type="tel" id="ship-phone" placeholder="เบอร์โทรสำหรับติดต่อจัดส่ง">
     <div id="ship-phone-error" class="error-text"></div>
   </div>
 
-  <label><span class="label-icon">📧</span><span class="label-bold">อีเมลติดต่อกลับ</span></label>
+  <label><span class="label-icon">📧</span><span class="label-bold" id="email-label">อีเมลติดต่อกลับ</span></label>
   <input type="email" id="email" placeholder="ชื่ออีเมลของมึง@gmail.com">
   <div id="email-error" class="error-text"></div>
 
@@ -280,6 +373,7 @@
       <button type="button" class="btn-copy" onclick="copyText('0619273586', 'คัดลอกเลขพร้อมเพย์แล้วครับ 🎉')">📋 คัดลอกเลขพร้อมเพย์</button>
       <div class="qr-container">
         <img src="./ภาพ/QR.png" class="qr-img" alt="QR Code">
+        <button class="btn-copy" onclick="downloadQR()" style="margin-top:12px;">💾 ดาวน์โหลด QR Code</button>
       </div>
     </div>
   </div>
@@ -299,6 +393,14 @@
 
 <footer class="gs-footer">มึงลองฟัง.❤️‍🔥</footer>
 
+<div class="sp-popup-overlay" id="sp-popup-overlay">
+  <div class="sp-popup-box" id="sp-popup-box">
+    <div class="sp-popup-icon" id="sp-popup-icon">📊</div>
+    <p class="sp-popup-msg" id="sp-popup-msg"></p>
+    <button type="button" class="sp-popup-ok" id="sp-popup-ok">ตกลง</button>
+  </div>
+</div>
+
 <script>
   function copyText(text, msg) {
     var el = document.createElement('textarea');
@@ -308,6 +410,23 @@
     document.execCommand('copy');
     document.body.removeChild(el);
     alert(msg);
+  }
+
+  async function downloadQR() {
+    try {
+      const response = await fetch("./ภาพ/QR.png");
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "QR-PromptPay-มึงลองฟัง.png";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (err) {
+      alert("ดาวน์โหลดไม่สำเร็จ กรุณาแคปหน้าจอหรือบันทึกภาพด้วยตัวเองครับ 🙏");
+    }
   }
 
   function previewFile(input) {
@@ -324,13 +443,19 @@
   }
 
   (function () {
-    var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyxvA7Oihjtqois1eLutGg_Orq5pM1AFbtd8EeV_yGjTCREfKAIZbbYdPwz44QAqgiT/exec';
+    var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz4g4FL8k7nL7ZH1tkh3jcrHbAOwcSjRrMNFiIA4tt42rFx0BnyrXEEzkgdSwO8JbHJvA/exec';
+    // ชื่อนี้ต้องตรงกับที่ใช้ในหลังบ้าน (ebook-plukfai-tracking-gas.js) — ถ้าทำหน้าโดเนทให้อีบุ๊คเล่มอื่น
+    // (ฮีลใจ / ชีวิตที่มึงไม่เสียใจภายหลัง) แค่ก็อปไฟล์นี้แล้วเปลี่ยนค่านี้ให้ตรงชื่อเล่ม ใช้ URL เดิมได้เลย
+    var EBOOK_NAME = 'ปลุกไฟในตัวมึง';
 
     var typeOptions = Array.prototype.slice.call(document.querySelectorAll('.donate-type-option'));
     var amountInput = document.getElementById('amount');
     var amountHint  = document.getElementById('amount-hint');
     var shippingFields = document.getElementById('shipping-fields');
     var cumulativeField = document.getElementById('cumulative-note-field');
+    var freeNameField = document.getElementById('free-name-field');
+    var emailLabel = document.getElementById('email-label');
+    var amountLabel = document.getElementById('amount-label');
     var rewardTiers = Array.prototype.slice.call(document.querySelectorAll('.reward-tier'));
 
     function currentType() {
@@ -351,10 +476,24 @@
       });
 
       cumulativeField.style.display = (type === 'cumulative') ? 'block' : 'none';
+      freeNameField.style.display = (type === 'free') ? 'block' : 'none';
+      amountLabel.textContent = (type === 'cumulative') ? 'ยอดที่โดเนทรอบนี้ (฿)' : 'ยอดโดเนทสนับสนุน (฿)';
+
+      // โอนครั้งเดียว ล็อคขั้นต่ำ 199 กันลูกค้าโอนต่ำกว่าที่จะได้ของแถมโดยไม่ตั้งใจ
+      amountInput.min = (type === 'single') ? '199' : '0';
+      amountInput.placeholder = (type === 'single') ? 'ระบุยอดโดเนท (ขั้นต่ำ 199)' : 'ระบุยอดโดเนท';
 
       var n = parseFloat(amountInput.value) || 0;
       var tier = tierForAmount(n);
       var wantsReward = (type === 'single' || type === 'cumulative');
+
+      if (type === 'free') {
+        emailLabel.textContent = 'อีเมลติดต่อกลับเพื่อส่งคำขอบคุณจากเรา';
+      } else if (wantsReward && tier === 399) {
+        emailLabel.textContent = 'อีเมลติดต่อกลับและรับ Planner';
+      } else {
+        emailLabel.textContent = 'อีเมลติดต่อกลับ';
+      }
 
       rewardTiers.forEach(function (el) {
         var t = parseInt(el.getAttribute('data-tier'), 10);
@@ -370,13 +509,13 @@
         if (n <= 0) amountHint.classList.remove('show');
       } else if (tier === 399) {
         amountHint.classList.add('tier-399');
-        amountHint.textContent = '🎉 ยอดนี้ได้รับ: ริสแบนด์ + Planner ฟรี';
+        amountHint.innerHTML = '🎉 ยอดนี้ได้รับ: <b style="color:#ea580c">🧡 ริสแบนด์</b> + <b style="color:#188038">💚 Planner</b> ฟรี';
       } else if (tier === 199) {
         amountHint.classList.add('tier-199');
-        amountHint.textContent = '🎁 ยอดนี้ได้รับ: ริสแบนด์';
+        amountHint.innerHTML = '🎁 ยอดโดเนทนี้ได้รับ: <b style="color:#ea580c">🧡 ริสแบนด์</b>';
       } else {
         amountHint.classList.add('tier-none');
-        amountHint.textContent = n > 0 ? 'ยอดนี้ยังไม่ถึงขั้นรับของแถม (ขั้นแรกคือ ฿199)' : '';
+        amountHint.textContent = n > 0 ? 'ยอดนี้ยังไม่ถึงยอดที่ได้รับของแถมครับ (ขั้นแรกคือ ฿199)' : '';
         if (n <= 0) amountHint.classList.remove('show');
       }
     }
@@ -401,6 +540,63 @@
       document.querySelectorAll('.error-text').forEach(function (el) { el.style.display = 'none'; el.textContent = ''; });
     }
 
+    /* ── ป็อปอัพเช็คยอดสะสม ── */
+    var spPopupOverlay = document.getElementById('sp-popup-overlay');
+    var spPopupBox = document.getElementById('sp-popup-box');
+    var spPopupIcon = document.getElementById('sp-popup-icon');
+    var spPopupMsg = document.getElementById('sp-popup-msg');
+    var spPopupOk = document.getElementById('sp-popup-ok');
+
+    function showSpPopup(msg, isError) {
+      spPopupBox.classList.toggle('is-error', !!isError);
+      spPopupIcon.textContent = isError ? '❌' : '📊';
+      spPopupMsg.textContent = msg;
+      spPopupOverlay.classList.add('show');
+    }
+    spPopupOk.addEventListener('click', function () { spPopupOverlay.classList.remove('show'); });
+    spPopupOverlay.addEventListener('click', function (e) { if (e.target === spPopupOverlay) spPopupOverlay.classList.remove('show'); });
+
+    var checkTotalBtn = document.getElementById('check-total-btn');
+    checkTotalBtn.addEventListener('click', function () {
+      var name = document.getElementById('cumulative-name').value.trim();
+      document.getElementById('cumulative-name-error').style.display = 'none';
+      if (!name) {
+        document.getElementById('cumulative-name-error').textContent = '❌ กรอกชื่อก่อนถึงจะเช็คยอดได้ครับ';
+        document.getElementById('cumulative-name-error').style.display = 'block';
+        return;
+      }
+
+      checkTotalBtn.disabled = true;
+      checkTotalBtn.textContent = '⏳ กำลังเช็ค...';
+
+      fetch(WEB_APP_URL + '?action=getCumulativeTotal&name=' + encodeURIComponent(name))
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          checkTotalBtn.disabled = false;
+          checkTotalBtn.textContent = '🔍 เช็คยอดสะสมของตัวเอง';
+          if (!data || !data.ok) { showSpPopup('เช็คยอดไม่สำเร็จ ลองใหม่อีกครั้งนะครับ', true); return; }
+
+          var total = data.total || 0;
+          var tier = data.tier || 0;
+          var msg;
+          if (total <= 0) {
+            msg = 'ยังไม่พบยอดสะสมของชื่อ "' + name + '" ครับ ลองเช็คว่าพิมพ์ชื่อตรงกับตอนโอนทุกครั้งมั้ยนะครับ🥺🙏';
+          } else if (tier >= 399) {
+            msg = 'ชื่อ "' + name + '" สะสมได้ ' + total + ' บาทแล้วครับ 🎉 ครบขั้นรับ ริสแบนด์ + Planner แล้วนะ!';
+          } else if (tier >= 199) {
+            msg = 'ชื่อ "' + name + '" สะสมได้ ' + total + ' บาทแล้วครับ 🎁 ครบขั้นรับริสแบนด์แล้วนะ!';
+          } else {
+            msg = 'ชื่อ "' + name + '" สะสมได้ ' + total + ' บาทแล้วครับ ยังไม่ถึงขั้นรับของแถม (ขั้นแรกคือ 199 บาท)';
+          }
+          showSpPopup(msg, false);
+        })
+        .catch(function () {
+          checkTotalBtn.disabled = false;
+          checkTotalBtn.textContent = '🔍 เช็คยอดสะสมของตัวเอง';
+          showSpPopup('เช็คยอดไม่สำเร็จ ลองใหม่อีกครั้งนะครับ', true);
+        });
+    });
+
     document.getElementById('submit-btn').addEventListener('click', function () {
       clearErrs();
       var type = currentType();
@@ -411,16 +607,30 @@
       var fileInput = document.getElementById('file');
       var valid = true;
 
-      if (amount <= 0) { showErr('amount-error', '❌ กรอกยอดที่โอนด้วยนะครับ'); valid = false; }
-      if (!email) { showErr('email-error', '❌ กรอกอีเมลติดต่อกลับด้วยนะครับ'); valid = false; }
-      if (!fileInput.files[0]) { showErr('file-error', '❌ ยังไม่ได้แนบรูปสลิปครับ'); valid = false; }
+      if (amount <= 0) { showErr('amount-error', '❌ กรอกยอดที่โดเนทด้วยนะครับ🥰🙏'); valid = false; }
+      else if (type === 'single' && amount < 199) { showErr('amount-error', '❌ โอนครั้งเดียวต้องขั้นต่ำ 199 บาทนะครับ ถ้าน้อยกว่านี้เลือก "โดเนทตามใจ" แทนได้🥰🙏'); valid = false; }
+      if (!email) { showErr('email-error', '❌ กรอกอีเมลติดต่อกลับด้วยนะครับ🥰🙏'); valid = false; }
+      if (!fileInput.files[0]) { showErr('file-error', '❌ ยังไม่ได้แนบรูปสลิปครับ🥰🙏'); valid = false; }
+
+      if (type === 'cumulative') {
+        var cumName = document.getElementById('cumulative-name').value.trim();
+        if (!cumName) { showErr('cumulative-name-error', '❌ กรอกชื่อ/ชื่อเล่นด้วยครับ (เพื่อใช้เช็คยอดสะสม)'); valid = false; }
+      }
 
       if (wantsReward && tier >= 199) {
         var shipName = document.getElementById('ship-name').value.trim();
-        var shipAddress = document.getElementById('ship-address').value.trim();
+        var shipAddr1 = document.getElementById('ship-addr1').value.trim();
+        var shipSubdistrict = document.getElementById('ship-subdistrict').value.trim();
+        var shipDistrict = document.getElementById('ship-district').value.trim();
+        var shipProvince = document.getElementById('ship-province').value.trim();
+        var shipZipcode = document.getElementById('ship-zipcode').value.trim();
         var shipPhone = document.getElementById('ship-phone').value.trim();
         if (!shipName) { showErr('ship-name-error', '❌ กรอกชื่อผู้รับของแถมด้วยครับ'); valid = false; }
-        if (!shipAddress) { showErr('ship-address-error', '❌ กรอกที่อยู่จัดส่งด้วยครับ'); valid = false; }
+        if (!shipAddr1) { showErr('ship-addr1-error', '❌ กรอกบ้านเลขที่ด้วยครับ'); valid = false; }
+        if (!shipSubdistrict) { showErr('ship-subdistrict-error', '❌ กรอกตำบล/แขวงด้วยครับ'); valid = false; }
+        if (!shipDistrict) { showErr('ship-district-error', '❌ กรอกอำเภอ/เขตด้วยครับ'); valid = false; }
+        if (!shipProvince) { showErr('ship-province-error', '❌ กรอกจังหวัดด้วยครับ'); valid = false; }
+        if (!shipZipcode) { showErr('ship-zipcode-error', '❌ กรอกรหัสไปรษณีย์ด้วยครับ'); valid = false; }
         if (!shipPhone) { showErr('ship-phone-error', '❌ กรอกเบอร์โทรด้วยครับ'); valid = false; }
       }
 
@@ -430,14 +640,32 @@
       btn.disabled = true;
       btn.textContent = '⏳ กำลังส่งข้อมูล...';
 
+      var shipAddr1 = document.getElementById('ship-addr1').value.trim();
+      var shipStreet = document.getElementById('ship-street').value.trim();
+      var shipSubdistrict = document.getElementById('ship-subdistrict').value.trim();
+      var shipDistrict = document.getElementById('ship-district').value.trim();
+      var shipProvince = document.getElementById('ship-province').value.trim();
+      var shipZipcode = document.getElementById('ship-zipcode').value.trim();
+      var fullAddress = [
+        shipAddr1,
+        shipStreet ? ('ถ.' + shipStreet) : '',
+        shipSubdistrict ? ('ต.' + shipSubdistrict) : '',
+        shipDistrict ? ('อ.' + shipDistrict) : '',
+        shipProvince ? ('จ.' + shipProvince) : '',
+        shipZipcode
+      ].filter(Boolean).join(' ');
+
       var payload = {
         type: 'support',
+        ebook: EBOOK_NAME,
         donateType: type,
         amount: amount,
         email: email,
-        cumulativeNote: type === 'cumulative' ? document.getElementById('cumulative-note').value.trim() : '',
+        name: type === 'free' ? document.getElementById('free-name').value.trim()
+          : type === 'cumulative' ? document.getElementById('cumulative-name').value.trim()
+          : '',
         shipName: document.getElementById('ship-name').value.trim(),
-        shipAddress: document.getElementById('ship-address').value.trim(),
+        shipAddress: fullAddress,
         shipPhone: document.getElementById('ship-phone').value.trim(),
       };
 
@@ -464,9 +692,9 @@
                 '<div class="success-title">ส่งข้อมูลสำเร็จ!</div>' +
                 '<p class="success-body">ขอบคุณที่สนับสนุนกันจริงๆ นะเว้ย 🙏<br><br>' +
                 (wantsReward
-                  ? 'ถ้ายอดถึงขั้นรับของแถม กูจะรีบจัดส่งให้เร็วที่สุดเลยครับ<br><br>'
+                  ? 'ถ้ายอดถึงขั้นรับของแถมแล้ว กูจะรีบจัดส่งให้เร็วที่สุดเลย<br><br>'
                   : '') +
-                'ถ้ามีคำถามหรือของแถมไม่มาสักที ทักมาที่เพจได้เลยนะครับ 🙏</p>' +
+                'ถ้ามีคำถามหรือของแถมไม่มาสักที ทักมาที่เพจได้เลยเว้ยย 🙏</p>' +
               '</div>';
           }).catch(function () {
             btn.disabled = false;

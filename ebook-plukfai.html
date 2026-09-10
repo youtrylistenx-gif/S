@@ -169,6 +169,7 @@
       transition: border-color 0.2s; margin-bottom: 12px; resize: vertical; display: block;
     }
     .review-input:focus, .review-textarea:focus { border-color: #ea580c; }
+    .review-rating-label { text-align: center; font-size: 0.85rem; color: #5f6368; margin: 0 0 4px; }
     .review-rating-row { display: flex; justify-content: center; gap: 6px; margin-bottom: 14px; }
     .review-star-btn {
       background: none; border: none; font-size: 1.8rem; color: #dadce0; cursor: pointer;
@@ -183,7 +184,28 @@
     }
     .review-submit-btn:hover { transform: translateY(-2px); }
     .review-submit-btn:disabled { opacity: 0.6; cursor: default; transform: none; }
-    .review-note { text-align: center; font-size: 0.85rem; margin-top: 10px; display: none; }
+    /* ── REVIEW POPUP ── */
+    .review-popup-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+      z-index: 9999; align-items: center; justify-content: center; padding: 20px;
+      animation: popupFadeIn 0.2s ease;
+    }
+    .review-popup-overlay.show { display: flex; }
+    .review-popup-box {
+      background: #fff; border-radius: 18px; padding: 32px 24px 24px; max-width: 340px; width: 100%;
+      text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.3); animation: popupPopIn 0.25s ease;
+    }
+    .review-popup-icon { font-size: 2.6rem; margin-bottom: 12px; line-height: 1; }
+    .review-popup-msg { font-size: 0.95rem; color: #202124; line-height: 1.6; margin-bottom: 20px; }
+    .review-popup-ok {
+      width: 100%; padding: 12px; border: none; border-radius: 12px; font-family: inherit;
+      font-size: 0.9rem; font-weight: 700; color: #fff; cursor: pointer;
+      background: linear-gradient(135deg, #ea580c 0%, #9a3412 100%); transition: transform 0.15s;
+    }
+    .review-popup-ok:hover { transform: translateY(-2px); }
+    .review-popup-box.is-error .review-popup-ok { background: linear-gradient(135deg, #ea4335 0%, #9a1e12 100%); }
+    @keyframes popupFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes popupPopIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
     /* ── REVIEWS DISPLAY ── */
     .reviews-display-section { margin-top: 40px; display: none; }
@@ -258,7 +280,7 @@
       <span class="live-dot"></span>
       <span>อ่านแล้ว <span data-plukfai-readers>8</span> คน</span>
       <span class="stats-sep">·</span>
-      <span class="stats-star">⭐ 5</span>
+      <span class="stats-star">คะแนน ⭐ 5</span>
     </div>
 
     <div id="flip-viewer">
@@ -279,14 +301,15 @@
 
   <!-- ── สนับสนุนเล่มนี้ ── -->
   <a href="plukfai-support.html" class="support-banner">
-    <span class="support-banner-title">❤️‍🔥 อยากสนับสนุนเล่มนี้?</span>
-    <span class="support-banner-sub">โดเนทเท่าไหร่ก็ได้ตามใจ ถึงขั้นรับของแถมฟรี (ริสแบนด์ / Planner) →</span>
+    <span class="support-banner-title">❤️‍🔥 อ่านแล้วรู้สึกประทับใจและอยากสนับสนุน?</span>
+    <span class="support-banner-sub">สามารถโดเนทเท่าไหร่ก็ได้ และมีของแถมให้ฟรี (ริสแบนด์ / Planner) →</span>
   </a>
 
   <!-- ── เขียนรีวิว ── -->
   <div class="review-write-section">
-    <p class="review-write-heading">📖 อ่านจบแล้ว? เขียนรีวิวให้กำลังใจกันหน่อย</p>
-    <input type="text" id="review-name" class="review-input" placeholder="ชื่อ/ชื่อเล่นของมึง (ไม่ใส่ก็ได้)">
+    <p class="review-write-heading">📖 อ่านจบแล้วรู้สึกยังไง? เขียนรีวิวได้เลยเว้ย</p>
+    <input type="text" id="review-name" class="review-input" placeholder="ชื่อเล่นของมึง (ไม่ใส่ก็ได้)">
+    <p class="review-rating-label">ให้คะแนนกี่ดาว</p>
     <div class="review-rating-row" id="review-rating-row">
       <button type="button" class="review-star-btn" data-val="1" aria-label="1 ดาว">★</button>
       <button type="button" class="review-star-btn" data-val="2" aria-label="2 ดาว">★</button>
@@ -296,7 +319,6 @@
     </div>
     <textarea id="review-text" class="review-textarea" rows="4" placeholder="เล่าความรู้สึกหลังอ่านจบให้ฟังหน่อย..."></textarea>
     <button type="button" id="review-submit-btn" class="review-submit-btn">ส่งรีวิว</button>
-    <p class="review-note" id="review-note"></p>
   </div>
 
   <!-- ── รีวิวจากผู้อ่าน (แสดงเฉพาะที่อนุมัติแล้ว) ── -->
@@ -325,6 +347,14 @@
 </div>
 
 <footer class="gs-footer">มึงลองฟัง.❤️‍🔥</footer>
+
+<div class="review-popup-overlay" id="review-popup-overlay">
+  <div class="review-popup-box" id="review-popup-box">
+    <div class="review-popup-icon" id="review-popup-icon">✅</div>
+    <p class="review-popup-msg" id="review-popup-msg"></p>
+    <button type="button" class="review-popup-ok" id="review-popup-ok">ตกลง</button>
+  </div>
+</div>
 
 <script src="settings.js"></script>
 <script>
@@ -436,6 +466,7 @@
      ═══════════════════════════════════════════════════════════ */
   var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyxvA7Oihjtqois1eLutGg_Orq5pM1AFbtd8EeV_yGjTCREfKAIZbbYdPwz44QAqgiT/exec';
   var urlReady = WEB_APP_URL.indexOf('http') === 0;
+  var EBOOK_NAME = 'ปลุกไฟในตัวมึง'; // ชื่อนี้ต้องตรงกับที่ใช้ในหลังบ้าน (ebook-plukfai-tracking-gas.js)
 
   /* ── นับผู้อ่านไม่ซ้ำเครื่อง (เก็บ id ไว้ใน localStorage) ── */
   function trackReader() {
@@ -450,7 +481,7 @@
       if (!localStorage.getItem('plukfai_reader_sent')) {
         fetch(WEB_APP_URL, {
           method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify({ type: 'reader', readerId: id }),
+          body: JSON.stringify({ type: 'reader', readerId: id, ebook: EBOOK_NAME }),
         });
         localStorage.setItem('plukfai_reader_sent', '1');
       }
@@ -463,7 +494,6 @@
     var textArea  = document.getElementById('review-text');
     var starBtns  = Array.prototype.slice.call(document.querySelectorAll('.review-star-btn'));
     var submitBtn = document.getElementById('review-submit-btn');
-    var noteEl    = document.getElementById('review-note');
     var rating = 5;
 
     function renderStars() {
@@ -479,45 +509,57 @@
       });
     });
 
-    function showNote(text, color) {
-      noteEl.textContent = text;
-      noteEl.style.color = color;
-      noteEl.style.display = 'block';
+    var popupOverlay = document.getElementById('review-popup-overlay');
+    var popupBox     = document.getElementById('review-popup-box');
+    var popupIcon    = document.getElementById('review-popup-icon');
+    var popupMsg     = document.getElementById('review-popup-msg');
+    var popupOk      = document.getElementById('review-popup-ok');
+
+    function showPopup(text, isError) {
+      popupBox.classList.toggle('is-error', !!isError);
+      popupIcon.textContent = isError ? '❌' : '✅';
+      popupMsg.textContent = text;
+      popupOverlay.classList.add('show');
     }
+    function hidePopup() { popupOverlay.classList.remove('show'); }
+    popupOk.addEventListener('click', hidePopup);
+    popupOverlay.addEventListener('click', function (e) {
+      if (e.target === popupOverlay) hidePopup();
+    });
 
     submitBtn.addEventListener('click', function () {
       var name = nameInput.value.trim();
       var text = textArea.value.trim();
-      if (!text) { showNote('เขียนรีวิวสักหน่อยนะครับ 🥺', '#ea4335'); return; }
-      if (!urlReady) { showNote('ระบบรีวิวยังไม่พร้อมใช้งานตอนนี้ครับ 🙏', '#ea4335'); return; }
+      if (!text) { showPopup('ต้องเขียนรีวิวลงไปก่อนนะครับ 🥺', true); return; }
+      if (!urlReady) { showPopup('ระบบรีวิวยังไม่พร้อมใช้งานตอนนี้ครับ 🙏', true); return; }
 
       submitBtn.disabled = true;
       submitBtn.textContent = 'กำลังส่ง...';
 
       var settled = false;
-      function onDone(msg, color) {
+      function onDone(msg, isError) {
         if (settled) return;
         settled = true;
-        showNote(msg, color);
-        nameInput.value = ''; textArea.value = ''; rating = 5; renderStars();
+        showPopup(msg, isError);
+        if (!isError) { nameInput.value = ''; textArea.value = ''; rating = 5; renderStars(); }
         submitBtn.disabled = false; submitBtn.textContent = 'ส่งรีวิว';
       }
 
       // Apps Script บางทีตอบช้า (หลายวินาที) — ตั้ง timeout กันปุ่มค้าง
       // ไม่ได้แปลว่าส่งไม่สำเร็จ เพราะ mode:no-cors ทำให้เช็คผลจริงไม่ได้อยู่แล้ว
       var timeoutId = setTimeout(function () {
-        onDone('ส่งแล้วครับ แต่ระบบตอบช้ากว่าปกติ รีวิวน่าจะเข้าไปแล้วนะครับ 🙏', '#188038');
+        onDone('ส่งแล้วครับ แต่ระบบตอบช้ากว่าปกติ รีวิวน่าจะเข้าไปแล้วนะครับ 🙏', false);
       }, 10000);
 
       fetch(WEB_APP_URL, {
         method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify({ type: 'review', name: name || 'ไม่ระบุชื่อ', rating: rating, text: text }),
+        body: JSON.stringify({ type: 'review', name: name || 'ไม่ระบุชื่อ', rating: rating, text: text, ebook: EBOOK_NAME }),
       }).then(function () {
         clearTimeout(timeoutId);
-        onDone('ส่งรีวิวสำเร็จ! รอแอดมินตรวจสอบก่อนขึ้นแสดงนะครับ 🙏', '#188038');
+        onDone('ส่งรีวิวสำเร็จ! รอแอดมินตรวจสอบก่อนขึ้นแสดงนะครับ 🙏', false);
       }).catch(function () {
         clearTimeout(timeoutId);
-        onDone('ส่งไม่สำเร็จ ลองใหม่อีกครั้งครับ', '#ea4335');
+        onDone('ส่งไม่สำเร็จ ลองใหม่อีกครั้งครับ', true);
       });
     });
   }
@@ -525,7 +567,7 @@
   /* ── โหลดรีวิวที่อนุมัติแล้วมาแสดง ── */
   function loadReviews() {
     if (!urlReady) return;
-    fetch(WEB_APP_URL + '?action=getReviews')
+    fetch(WEB_APP_URL + '?action=getReviews&ebook=' + encodeURIComponent(EBOOK_NAME))
       .then(function (r) { return r.json(); })
       .then(function (data) {
         if (!data || !data.ok || !data.reviews || !data.reviews.length) return;
