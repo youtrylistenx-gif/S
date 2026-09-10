@@ -141,11 +141,22 @@
       display: block; margin-top: 40px; padding: 20px 22px; border-radius: 16px;
       background: linear-gradient(135deg, #ea580c 0%, #9a3412 100%);
       text-decoration: none; box-shadow: 0 4px 16px rgba(234,88,12,0.3);
-      transition: transform 0.15s;
+      animation: ctaScale 2.4s ease-in-out infinite;
     }
-    .support-banner:hover { transform: translateY(-2px); }
-    .support-banner-title { display: block; color: #fff; font-size: 1.05rem; font-weight: 800; margin-bottom: 4px; }
-    .support-banner-sub { display: block; color: rgba(255,255,255,0.9); font-size: 0.85rem; line-height: 1.6; }
+    .support-banner:hover {
+      transform: scale(1.04); box-shadow: 0 8px 24px rgba(234,88,12,0.45);
+      transition: transform 0.2s ease; animation: none;
+    }
+    @keyframes ctaScale {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.025); }
+    }
+    .support-banner-title {
+      display: block; color: #fff; font-size: 1.05rem; font-weight: 300; margin-bottom: 4px;
+    }
+    .support-banner-sub {
+      display: block; color: rgba(255,255,255,0.95); font-size: 0.85rem; line-height: 1.6; font-weight: 300;
+    }
 
     /* ── REVIEW WRITE ── */
     .review-write-section {
@@ -167,8 +178,8 @@
     .review-star-btn.active { color: #f59e0b; }
     .review-submit-btn {
       width: 100%; padding: 14px; background: linear-gradient(135deg, #ea580c 0%, #9a3412 100%);
-      color: #fff; border: none; border-radius: 12px; font-family: inherit; font-size: 0.95rem; font-weight: 800;
-      cursor: pointer; transition: transform 0.15s;
+      color: #fff; border: none; border-radius: 12px; font-family: inherit; font-size: 0.95rem; font-weight: 400;
+      cursor: pointer; transition: transform 0.15s; text-shadow: 0 1px 3px rgba(0,0,0,0.25);
     }
     .review-submit-btn:hover { transform: translateY(-2px); }
     .review-submit-btn:disabled { opacity: 0.6; cursor: default; transform: none; }
@@ -204,6 +215,7 @@
       display: inline-flex; align-items: center; gap: 8px; border-radius: 12px; padding: 12px 22px;
       text-decoration: none; color: #fff; font-size: 0.88rem; font-weight: 700;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.15s;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.25);
     }
     .follow-btn:hover { transform: translateY(-2px); }
     .follow-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
