@@ -435,6 +435,25 @@ function sendThankYouEmail(email, bodyText) {
     MailApp.sendEmail(email, '❤️‍🔥 ขอบคุณที่สนับสนุนมึงลองฟัง.❤️‍🔥 นะครับ', bodyText);
   } catch (err) {
     logNotifyError(err);
+    notifyThankYouEmailFailed(email, err);
+  }
+}
+
+// ส่งอีเมลขอบคุณลูกค้าไม่สำเร็จ (เช่น พิมพ์อีเมลผิด) — แจ้งเตือนแอดมินทันที จะได้ติดต่อลูกค้าเองได้
+function notifyThankYouEmailFailed(customerEmail, err) {
+  try {
+    MailApp.sendEmail(
+      NOTIFY_EMAIL,
+      '⚠️ ส่งอีเมลขอบคุณลูกค้าไม่สำเร็จ',
+      'มีลูกค้าโดเนทเข้ามาแล้ว แต่ระบบส่งอีเมลขอบคุณกลับไปหาเขาไม่สำเร็จครับ\n\n' +
+      'อีเมลลูกค้า: ' + (customerEmail || '-') + '\n' +
+      'สาเหตุ: ' + ((err && err.message) || err) + '\n\n' +
+      'รบกวนเช็คในชีท (แท็บ Support ที่เกี่ยวข้อง) แล้วติดต่อลูกค้าคนนี้เองโดยตรงแทนนะครับ ' +
+      '(ข้อมูลการโดเนทของเขายังบันทึกลงชีทปกติ ไม่ได้หายไปไหน)'
+    );
+  } catch (err2) {
+    // ถ้าแม้แต่อีเมลแจ้งเตือนก็ส่งไม่ได้ (เช่น โควต้าอีเมลของสคริปต์หมดทั้งระบบ) ก็ได้แค่จด log ไว้
+    logNotifyError(err2);
   }
 }
 
