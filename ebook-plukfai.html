@@ -136,6 +136,17 @@
     .flip-page-indicator { font-size: 0.9rem; font-weight: 700; color: #202124; min-width: 90px; text-align: center; }
     .flip-slider { width: 100%; margin-top: 14px; accent-color: #ea580c; }
 
+    /* ── SUPPORT BANNER ── */
+    .support-banner {
+      display: block; margin-top: 40px; padding: 20px 22px; border-radius: 16px;
+      background: linear-gradient(135deg, #ea580c 0%, #9a3412 100%);
+      text-decoration: none; box-shadow: 0 4px 16px rgba(234,88,12,0.3);
+      transition: transform 0.15s;
+    }
+    .support-banner:hover { transform: translateY(-2px); }
+    .support-banner-title { display: block; color: #fff; font-size: 1.05rem; font-weight: 800; margin-bottom: 4px; }
+    .support-banner-sub { display: block; color: rgba(255,255,255,0.9); font-size: 0.85rem; line-height: 1.6; }
+
     /* ── REVIEW WRITE ── */
     .review-write-section {
       margin-top: 40px; padding: 24px; background: #f8f9fa; border-radius: 16px; border: 1px solid #e8eaed;
@@ -231,9 +242,9 @@
 
   <!-- ── Reader ── -->
   <div id="reader">
-    <div class="plukfai-stats" id="plukfai-stats" style="display:none;">
+    <div class="plukfai-stats">
       <span class="live-dot"></span>
-      <span id="reader-count-text"></span>
+      <span>อ่านแล้ว <span data-plukfai-readers>8</span> คน</span>
       <span class="stats-sep">·</span>
       <span class="stats-star">⭐ 5</span>
     </div>
@@ -253,6 +264,12 @@
       <input type="range" id="flip-slider" class="flip-slider" min="1" max="91" value="1" step="1">
     </div>
   </div>
+
+  <!-- ── สนับสนุนเล่มนี้ ── -->
+  <a href="plukfai-support.html" class="support-banner">
+    <span class="support-banner-title">❤️‍🔥 อยากสนับสนุนเล่มนี้?</span>
+    <span class="support-banner-sub">โดเนทเท่าไหร่ก็ได้ตามใจ ถึงขั้นรับของแถมฟรี (ริสแบนด์ / Planner) →</span>
+  </a>
 
   <!-- ── เขียนรีวิว ── -->
   <div class="review-write-section">
@@ -428,22 +445,6 @@
     } catch (e) {}
   }
 
-  /* ── ดึงจำนวนผู้อ่านจริงมาแสดง (ไม่มีเลขปลอมค้างไว้ก่อน โผล่ก็ต่อเมื่อได้ค่าจริงแล้วเท่านั้น) ── */
-  function loadStats() {
-    if (!urlReady) return;
-    fetch(WEB_APP_URL + '?action=getStats')
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        var textEl = document.getElementById('reader-count-text');
-        var statsEl = document.getElementById('plukfai-stats');
-        if (data && data.ok && textEl) {
-          textEl.textContent = 'อ่านแล้ว ' + Number(data.readerCount).toLocaleString() + ' คน';
-          if (statsEl) statsEl.style.display = 'flex';
-        }
-      })
-      .catch(function () {});
-  }
-
   /* ── ฟอร์มส่งรีวิว ── */
   function initReviewForm() {
     var nameInput = document.getElementById('review-name');
@@ -549,7 +550,6 @@
   }
 
   trackReader();
-  loadStats();
   initReviewForm();
   loadReviews();
 }());

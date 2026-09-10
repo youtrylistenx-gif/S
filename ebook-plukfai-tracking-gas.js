@@ -18,6 +18,14 @@
 //     หลังมีคนส่งรีวิวเข้ามาครั้งแรก
 //  2. แต่ละแถวจะมีคอลัมน์ Approved (ช่องติ๊ก checkbox)
 //  3. ติ๊กถูกแถวไหน รีวิวแถวนั้นจะขึ้นแสดงบนเว็บภายในไม่กี่วินาที (ไม่ต้อง deploy ใหม่)
+//
+//  วิธีจัดการยอดสนับสนุน/โดเนท (จากหน้า plukfai-support.html):
+//  1. จะมีแท็บ "Support" โผล่มาเองหลังมีคนส่งครั้งแรก
+//  2. แต่ละแถวมี: DonateType (free/single/cumulative), Amount, Email,
+//     CumulativeNote (ถ้าเลือกแบบสะสม ให้เช็คยอดที่เขาแจ้งเทียบกับสลิป),
+//     ที่อยู่จัดส่ง (ถ้ายอดถึงขั้นรับของแถม), ลิงก์รูปสลิปที่อัปโหลด (SlipLink)
+//  3. คอลัมน์ RewardSent เป็น checkbox — ติ๊กเมื่อจัดส่งของแถมให้แล้ว
+//     (ไว้กันลืม/กันส่งซ้ำ ไม่ได้ผูกกับการแสดงผลบนเว็บ)
 // ════════════════════════════════════════════════════════════
 
 function doGet(e) {
@@ -44,6 +52,11 @@ function doPost(e) {
 
     if (body.type === 'review') {
       addReview(body.name || '', body.rating || 5, body.text || '');
+      return jsonOut({ ok: true });
+    }
+
+    if (body.type === 'support') {
+      addSupport(body);
       return jsonOut({ ok: true });
     }
   } catch (err) {
@@ -95,6 +108,48 @@ function getApprovedReviews() {
     }
   }
   return reviews;
+}
+
+// ─── สนับสนุน / โดเนท ───
+
+function addSupport(body) {
+  var sheet = getOrCreateSheet('Support', [
+    'Timestamp', 'DonateType', 'Amount', 'Email', 'CumulativeNote',
+    'ShipName', 'ShipAddress', 'ShipPhone', 'SlipLink', 'RewardSent'
+  ]);
+
+  var slipLink = '';
+  if (body.slipData) {
+    try {
+      var blob = Utilities.newBlob(
+        Utilities.base64Decode(body.slipData), 'image/jpeg',
+        body.slipName || ('slip_' + Date.now() + '.jpg')
+      );
+      var folder = getOrCreateFolder('ปลุกไฟในตัวมึง - สลิปโอนเงิน');
+      var file = folder.createFile(blob);
+      slipLink = file.getUrl();
+    } catch (err) {
+      slipLink = 'เก็บสลิปไม่สำเร็จ: ' + err.message;
+    }
+  }
+
+  sheet.appendRow([
+    new Date(),
+    body.donateType || '',
+    body.amount || 0,
+    body.email || '',
+    body.cumulativeNote || '',
+    body.shipName || '',
+    body.shipAddress || '',
+    body.shipPhone || '',
+    slipLink,
+    false
+  ]);
+}
+
+function getOrCreateFolder(name) {
+  var folders = DriveApp.getFoldersByName(name);
+  return folders.hasNext() ? folders.next() : DriveApp.createFolder(name);
 }
 
 // ─── Helper ───

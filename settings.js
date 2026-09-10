@@ -89,6 +89,17 @@ var POPUP_INTERVAL_MS = 10000;
 var ACTIVE_USERS = 970;
 
 
+/* ┌──────────────────────────────────────────────────────────────┐
+   │  7. จำนวนผู้อ่าน Ebook "ปลุกไฟในตัวมึง"                        │
+   └──────────────────────────────────────────────────────────────┘
+   ตัวเลขนี้ไม่อัปเดตอัตโนมัติ ต้องมาแก้เองตรงนี้ทีละครั้ง
+   เช็คจำนวนจริงล่าสุดได้จาก Google Sheet ที่ผูกกับ Apps Script ของอีบุ๊คนี้
+   (เปิดชีต ดูแท็บ "Readers" นับจำนวนแถว) แล้วแก้เลขด้านล่าง Save + push
+   ขึ้น GitHub เว็บจริงถึงจะอัปเดตตาม — เหมือนกับ ACTIVE_USERS ด้านบน */
+
+var PLUKFAI_READERS = 8;
+
+
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    ไม่ต้องแก้ใต้บรรทัดนี้
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
@@ -261,11 +272,14 @@ function applyPriceConfig(cfg) {
   }
 }());
 
-/* ── อัปเดตจำนวนผู้ใช้งานทุกหน้าอัตโนมัติ ── */
+/* ── อัปเดตจำนวนผู้ใช้งาน / ผู้อ่านทุกหน้าอัตโนมัติ ── */
 (function () {
   function run() {
     document.querySelectorAll('[data-active-users]').forEach(function(el) {
       el.textContent = ACTIVE_USERS;
+    });
+    document.querySelectorAll('[data-plukfai-readers]').forEach(function(el) {
+      el.textContent = PLUKFAI_READERS;
     });
   }
   // script โหลดท้าย body — DOM พร้อมแล้ว เรียกตรงได้เลย
