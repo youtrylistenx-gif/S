@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>มึงลองฟัง.❤️‍🔥 — ปลุกไฟในตัวมึง (อ่านฟรี)</title>
+  <title>มึงลองฟัง.❤️‍🔥 — ชีวิตที่มึงไม่เสียใจภายหลัง (อ่านฟรี)</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -276,7 +276,7 @@
       <span class="logo-name">มึงลองฟัง.❤️‍🔥</span>
     </a>
     <div class="gs-nav-links">
-      <a href="ebook-plukfai.html" class="active">ปลุกไฟในตัวมึง</a>
+      <a href="ebook-chiwit-read.html" class="active">ชีวิตที่มึงไม่เสียใจภายหลัง</a>
     </div>
     <a href="index.html" class="btn-back">← ย้อนกลับ</a>
   </div>
@@ -288,7 +288,7 @@
   <div id="reader">
     <div class="plukfai-stats">
       <span class="live-dot"></span>
-      <span>อ่านแล้ว <span data-plukfai-readers>8</span> คน</span>
+      <span>อ่านแล้ว <span data-chiwit-readers>15</span> คน</span>
       <span class="stats-sep">·</span>
       <span class="stats-star">คะแนน ⭐ 5</span>
     </div>
@@ -302,15 +302,15 @@
       </div>
       <div class="flip-controls">
         <button type="button" id="flip-prev-btn" aria-label="หน้าก่อนหน้า">‹</button>
-        <span class="flip-page-indicator" id="flip-indicator">หน้า 1 / 91</span>
+        <span class="flip-page-indicator" id="flip-indicator">หน้า 1 / 92</span>
         <button type="button" id="flip-next-btn" aria-label="หน้าถัดไป">›</button>
       </div>
-      <input type="range" id="flip-slider" class="flip-slider" min="1" max="91" value="1" step="1">
+      <input type="range" id="flip-slider" class="flip-slider" min="1" max="92" value="1" step="1">
     </div>
   </div>
 
   <!-- ── สนับสนุนเล่มนี้ ── -->
-  <a href="plukfai-support.html" class="support-banner">
+  <a href="plukfai-support.html?ebook=ชีวิตที่มึงไม่เสียใจภายหลัง" class="support-banner">
     <span class="support-banner-title">❤️‍🔥 อ่านแล้วรู้สึกประทับใจและอยากสนับสนุน?</span>
     <span class="support-banner-sub">สามารถโดเนทเท่าไหร่ก็ได้ และมีของแถมให้ฟรี (ริสแบนด์ / Planner) →</span>
   </a>
@@ -371,9 +371,9 @@
 <script src="settings.js"></script>
 <script>
 (function () {
-  var PAGE_COUNT = 91;
-  var IMG_DIR = './ภาพ/ปลุกไฟ-หน้าหนังสือ/';
-  var IMG_PREFIX = 'plukfai-';
+  var PAGE_COUNT = 92;
+  var IMG_DIR = './ภาพ/ชีวิต-หน้าหนังสือ/';
+  var IMG_PREFIX = 'chiwit-';
 
   function pageSrc(n) {
     var num = String(n).padStart(2, '0');
@@ -474,28 +474,28 @@
 (function () {
   /* ═══════════════════════════════════════════════════════════
      นับผู้อ่าน + ระบบรีวิว — เชื่อมกับ Google Apps Script
-     วิธี deploy backend: ดูใน ebook-plukfai-tracking-gas.js
+     วิธี deploy backend: ดูใน ebook-reader-review-tracking-gas.js
      ═══════════════════════════════════════════════════════════ */
   var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyxvA7Oihjtqois1eLutGg_Orq5pM1AFbtd8EeV_yGjTCREfKAIZbbYdPwz44QAqgiT/exec';
   var urlReady = WEB_APP_URL.indexOf('http') === 0;
-  var EBOOK_NAME = 'ปลุกไฟในตัวมึง'; // ชื่อนี้ต้องตรงกับที่ใช้ในหลังบ้าน (ebook-plukfai-tracking-gas.js)
+  var EBOOK_NAME = 'ชีวิตที่มึงไม่เสียใจภายหลัง'; // ชื่อนี้ต้องตรงกับที่ใช้ในหลังบ้าน (ebook-reader-review-tracking-gas.js)
 
   /* ── นับผู้อ่านไม่ซ้ำเครื่อง (เก็บ id ไว้ใน localStorage) ── */
   function trackReader() {
     if (!urlReady) return;
     try {
-      var id = localStorage.getItem('plukfai_reader_id');
+      var id = localStorage.getItem('chiwit_reader_id');
       if (!id) {
         id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
              : ('r-' + Date.now() + '-' + Math.random().toString(36).slice(2));
-        localStorage.setItem('plukfai_reader_id', id);
+        localStorage.setItem('chiwit_reader_id', id);
       }
-      if (!localStorage.getItem('plukfai_reader_sent')) {
+      if (!localStorage.getItem('chiwit_reader_sent')) {
         fetch(WEB_APP_URL, {
           method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
           body: JSON.stringify({ type: 'reader', readerId: id, ebook: EBOOK_NAME }),
         });
-        localStorage.setItem('plukfai_reader_sent', '1');
+        localStorage.setItem('chiwit_reader_sent', '1');
       }
     } catch (e) {}
   }
