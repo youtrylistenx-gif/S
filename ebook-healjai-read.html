@@ -288,7 +288,7 @@
   <div id="reader">
     <div class="plukfai-stats">
       <span class="live-dot"></span>
-      <span>อ่านแล้ว <span data-healjai-readers>1652</span> คน</span>
+      <span>อ่านแล้ว <span data-healjai-readers>16</span> คน</span>
       <span class="stats-sep">·</span>
       <span class="stats-star">คะแนน ⭐ 5</span>
     </div>
@@ -641,24 +641,9 @@
       .catch(function () {});
   }
 
-  /* ── ดึงจำนวนผู้อ่านจริงจากชีทมาโชว์สด ไม่ต้องแก้เลขในไฟล์เองแล้ว ── */
-  function loadReaderCount() {
-    if (!urlReady) return;
-    fetch(WEB_APP_URL + '?action=getStats&ebook=' + encodeURIComponent(EBOOK_NAME))
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (!data || !data.ok) return;
-        document.querySelectorAll('[data-healjai-readers]').forEach(function (el) {
-          el.textContent = data.readerCount;
-        });
-      })
-      .catch(function () {});
-  }
-
   trackReader();
   initReviewForm();
   loadReviews();
-  loadReaderCount();
 }());
 </script>
 </body>

@@ -329,7 +329,7 @@
         <div class="product-info">
           <div class="product-title">Ebook - ปลุกไฟในตัวมึง</div>
           <div class="price-container"><span class="price-new">฿แจกฟรี</span></div>
-          <div class="product-sold">อ่านแล้ว <span data-plukfai-readers>8</span> คน</div>
+          <div class="product-sold">อ่านแล้ว <span data-plukfai-readers>21</span> คน</div>
           <div class="product-stars">⭐5</div>
         </div>
       </a>
@@ -339,7 +339,7 @@
         <div class="product-info">
           <div class="product-title">Ebook - ฮีลใจ</div>
           <div class="price-container"><span class="price-new">฿แจกฟรี</span></div>
-          <div class="product-sold">อ่านแล้ว <span data-healjai-readers>1652</span> คน</div>
+          <div class="product-sold">อ่านแล้ว <span data-healjai-readers>16</span> คน</div>
           <div class="product-stars">⭐5</div>
         </div>
       </a>
@@ -349,7 +349,7 @@
         <div class="product-info">
           <div class="product-title">Ebook - ชีวิตที่มึง...ไม่เสียใจภายหลัง</div>
           <div class="price-container"><span class="price-new">แจกฟรี</span></div>
-          <div class="product-sold">อ่านแล้ว <span data-chiwit-readers>15</span> คน</div>
+          <div class="product-sold">อ่านแล้ว <span data-chiwit-readers>9</span> คน</div>
           <div class="product-stars">⭐5</div>
         </div>
       </a>
@@ -385,27 +385,5 @@
   </script>
   <script src="settings.js"></script>
   <script>applyPriceConfig();</script>
-  <script>
-    /* ── ดึงจำนวนผู้อ่านจริงของทั้ง 3 เล่มจากชีทมาโชว์สด ไม่ต้องมานั่งนับเองแล้วมาแก้เลขใน settings.js ── */
-    (function () {
-      var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyxvA7Oihjtqois1eLutGg_Orq5pM1AFbtd8EeV_yGjTCREfKAIZbbYdPwz44QAqgiT/exec';
-      var books = [
-        { ebook: 'ปลุกไฟในตัวมึง', attr: 'data-plukfai-readers' },
-        { ebook: 'ฮีลใจ', attr: 'data-healjai-readers' },
-        { ebook: 'ชีวิตที่มึงไม่เสียใจภายหลัง', attr: 'data-chiwit-readers' },
-      ];
-      books.forEach(function (book) {
-        fetch(WEB_APP_URL + '?action=getStats&ebook=' + encodeURIComponent(book.ebook))
-          .then(function (r) { return r.json(); })
-          .then(function (data) {
-            if (!data || !data.ok) return;
-            document.querySelectorAll('[' + book.attr + ']').forEach(function (el) {
-              el.textContent = data.readerCount;
-            });
-          })
-          .catch(function () {});
-      });
-    }());
-  </script>
 </body>
 </html>
