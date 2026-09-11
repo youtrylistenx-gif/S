@@ -447,7 +447,7 @@
   (function () {
     var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz4g4FL8k7nL7ZH1tkh3jcrHbAOwcSjRrMNFiIA4tt42rFx0BnyrXEEzkgdSwO8JbHJvA/exec';
     // หน้านี้ใช้ร่วมกันทุกอีบุ๊ค — รู้ว่าลูกค้ามาจากเล่มไหนจาก query string ท้าย URL
-    // เช่น plukfai-support.html?ebook=ฮีลใจ (หน้าอ่านแต่ละเล่มลิงก์มาแบบนี้อยู่แล้ว)
+    // เช่น donate.html?ebook=ฮีลใจ (หน้าอ่านแต่ละเล่มลิงก์มาแบบนี้อยู่แล้ว)
     // ถ้าเข้าหน้านี้ตรงๆ โดยไม่มี ?ebook= เลย จะถือว่าเป็นเล่มนี้ไปก่อน (ปรับได้ตามต้องการ)
     var DEFAULT_EBOOK_NAME = 'ปลุกไฟในตัวมึง';
     var EBOOK_NAME = new URLSearchParams(window.location.search).get('ebook') || DEFAULT_EBOOK_NAME;

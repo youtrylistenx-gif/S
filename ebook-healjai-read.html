@@ -66,7 +66,7 @@
 
     /* ── PAGE LAYOUT (เท่ากับ planner.html) ── */
     .ebook-page { max-width: 75vw; margin: 0 auto; padding: 24px 0 110px; }
-    @media (max-width: 768px) { .ebook-page { max-width: 95vw; padding: 16px 0 110px; } }
+    @media (max-width: 768px) { .ebook-page { max-width: 95vw; padding: 16px 16px 110px; } }
 
     /* ── STATS LINE ── */
     .plukfai-stats {
@@ -310,7 +310,7 @@
   </div>
 
   <!-- ── สนับสนุนเล่มนี้ ── -->
-  <a href="plukfai-support.html?ebook=ฮีลใจ" class="support-banner">
+  <a href="donate.html?ebook=ฮีลใจ" class="support-banner">
     <span class="support-banner-title">❤️‍🔥 อ่านแล้วรู้สึกประทับใจและอยากสนับสนุน?</span>
     <span class="support-banner-sub">สามารถโดเนทเท่าไหร่ก็ได้ และมีของแถมให้ฟรี (ริสแบนด์ / Planner) →</span>
   </a>
@@ -641,9 +641,24 @@
       .catch(function () {});
   }
 
+  /* ── ดึงจำนวนผู้อ่านจริงจากชีทมาโชว์สด ไม่ต้องแก้เลขในไฟล์เองแล้ว ── */
+  function loadReaderCount() {
+    if (!urlReady) return;
+    fetch(WEB_APP_URL + '?action=getStats&ebook=' + encodeURIComponent(EBOOK_NAME))
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data || !data.ok) return;
+        document.querySelectorAll('[data-healjai-readers]').forEach(function (el) {
+          el.textContent = data.readerCount;
+        });
+      })
+      .catch(function () {});
+  }
+
   trackReader();
   initReviewForm();
   loadReviews();
+  loadReaderCount();
 }());
 </script>
 </body>
