@@ -332,11 +332,22 @@
   </div>
 
   <!-- ── รีวิวจากผู้อ่าน (แสดงเฉพาะที่อนุมัติแล้ว) ── -->
-  <div class="reviews-display-section" id="reviews-display-section">
+  <!-- REVIEWS:START (ฝังไว้ล่วงหน้าโดย update-reviews.mjs ห้ามแก้มือ รันสคริปต์แทน) -->
+  <div class="reviews-display-section" id="reviews-display-section" style="display:block">
     <p class="reviews-display-heading">รีวิวจากผู้อ่านจริง</p>
-    <div class="review-stars-summary" id="review-stars-summary"></div>
-    <div class="reviews-list" id="reviews-list"></div>
+    <div class="review-stars-summary" id="review-stars-summary">5.0/5 ⭐⭐⭐⭐⭐ (2 รีวิว)</div>
+    <div class="reviews-list" id="reviews-list">
+      <div class="review-card">
+        <div class="review-card-top"><span class="review-card-name">ต้นนัท</span><span class="review-card-stars">⭐⭐⭐⭐⭐</span></div>
+        <div class="review-card-text">ไฟในตัวผมลุกขึ้นมาอีกครั้งนึงหนังสือเล่มนี้ได้สอนอะไรหลายๆอย่างตัวผมผมก็ขอขอบคุณที่พี่ได้เขียนหนังสือเล่มนี้ขึ้นมาให้ทุกคนได้อ่านครับขอบคุณครับ</div>
+      </div>
+      <div class="review-card">
+        <div class="review-card-top"><span class="review-card-name">เกล้า</span><span class="review-card-stars">⭐⭐⭐⭐⭐</span></div>
+        <div class="review-card-text">รู้สึกดีมากครับเริ่มมีไฟจากไม้ขีดไฟเล็กๆเริ่มเป็นตะเกียงที่ใหญ่ขึ้นเเละมีเเรงบันดาลใจในการลุกไปทำธุรกิจหาเงินขึ้นมาด้วยตัวเองโดยที่ตัวเองไม่ต้องถูกคนอื่นดูถูกผมเข้าใจตัวเองว่า การที่เราจะเป็นคนรวยในวันเด็ก มันน่าจะยากเเละในห้องเรียนผมมี41คนเเต่ใน1คนจะมีคนเเตกต่าง้ขาไม่ทำอะไรเขาทำให้ได้เเค่เรื่องการกฝเรียนเบื้องต้นเเละเขาทุ่มเทเเค่การหาเงินให้ได้หรือผมว่าพี่น่าจะเคยำด้ยินคำนี้ ผมอยากรวย ใช่ครับมันคือคำพูดของผมเองเเละใน41คนนั้นเเละในอีก1คนของ41คนนั้นที่ทุ่มเทกับเรื่องธุรกิจคือผม้องผมขอบคุณะี่มาทกครับที่ทำหนังสือเล่มนี้ขึ้นมามะนทำมห้ผมมีเเรงบันดาลใจในการทำสิ่งต่างๆ เเละเมื่อก่อนผมเศร้ามากไม่เคยยิ้มเเต่พอมาเจอพี่ทำให้ผมมีความรู้สึกดีขึ้นเริ่มยิ้มขึ้นมาได้ จากคนที่พี่เรียกภู</div>
+      </div>
+    </div>
   </div>
+  <!-- REVIEWS:END -->
 
   <div class="story-signoff">
     <img src="./ภาพ/โลโก้หมากรุก พื้นหลังสีดำ.jpg" alt="Logo" class="signoff-logo">
@@ -576,69 +587,19 @@
     });
   }
 
-  /* ── โหลดรีวิวที่อนุมัติแล้วมาแสดง ── */
+  /* ── รีวิวถูกฝังไว้ล่วงหน้าแบบ static แล้ว (อัปเดตโดย update-reviews.mjs) ──
+     ตรงนี้แค่ผูกปุ่ม "ดูรีวิวเพิ่มเติม" ให้ทำงาน ไม่มีการดึงข้อมูลจากเน็ตแล้ว
+     หน้าเว็บเลยขึ้นรีวิวทันทีไม่มีดีเลย์ ── */
   function loadReviews() {
-    if (!urlReady) return;
-    fetch(WEB_APP_URL + '?action=getReviews&ebook=' + encodeURIComponent(EBOOK_NAME))
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (!data || !data.ok || !data.reviews || !data.reviews.length) return;
-        var section = document.getElementById('reviews-display-section');
-        var list = document.getElementById('reviews-list');
-        list.innerHTML = '';
-
-        // คำนวณคะแนนเฉลี่ย + จำนวนรีวิวจริงจากข้อมูลทั้งหมด (ไม่ใช่ตัวเลขคงที่)
-        var totalRating = data.reviews.reduce(function (sum, r) { return sum + (Number(r.rating) || 5); }, 0);
-        var avg = totalRating / data.reviews.length;
-        var starCount = Math.max(1, Math.min(5, Math.round(avg)));
-        document.getElementById('review-stars-summary').textContent =
-          avg.toFixed(1) + '/5 ' + '⭐'.repeat(starCount) + ' (' + data.reviews.length + ' รีวิว)';
-
-        var VISIBLE_COUNT = 5; // จำนวนรีวิวที่โชว์ทันทีตอนแรก ที่เหลือซ่อนไว้หลังปุ่ม
-
-        data.reviews.forEach(function (rev, i) {
-          var stars = '⭐'.repeat(Math.max(1, Math.min(5, rev.rating || 5)));
-          var card = document.createElement('div');
-          card.className = 'review-card' + (i >= VISIBLE_COUNT ? ' review-hidden' : '');
-
-          var top = document.createElement('div');
-          top.className = 'review-card-top';
-          var nameEl = document.createElement('span');
-          nameEl.className = 'review-card-name';
-          nameEl.textContent = rev.name || 'ไม่ระบุชื่อ';
-          var starsEl = document.createElement('span');
-          starsEl.className = 'review-card-stars';
-          starsEl.textContent = stars;
-          top.appendChild(nameEl);
-          top.appendChild(starsEl);
-
-          var textEl = document.createElement('div');
-          textEl.className = 'review-card-text';
-          textEl.textContent = rev.text || '';
-
-          card.appendChild(top);
-          card.appendChild(textEl);
-          list.appendChild(card);
-        });
-
-        if (data.reviews.length > VISIBLE_COUNT) {
-          var moreBtn = document.createElement('button');
-          moreBtn.type = 'button';
-          moreBtn.className = 'btn-show-more-reviews';
-          var hiddenCount = data.reviews.length - VISIBLE_COUNT;
-          moreBtn.textContent = '⬇️ ดูรีวิวเพิ่มเติมอีก ' + hiddenCount + ' รายการ';
-          moreBtn.addEventListener('click', function () {
-            list.querySelectorAll('.review-card.review-hidden').forEach(function (el) {
-              el.classList.remove('review-hidden');
-            });
-            moreBtn.remove();
-          });
-          section.appendChild(moreBtn);
-        }
-
-        section.style.display = 'block';
-      })
-      .catch(function () {});
+    var moreBtn = document.getElementById('btn-show-more-reviews');
+    if (!moreBtn) return;
+    var list = document.getElementById('reviews-list');
+    moreBtn.addEventListener('click', function () {
+      list.querySelectorAll('.review-card.review-hidden').forEach(function (el) {
+        el.classList.remove('review-hidden');
+      });
+      moreBtn.remove();
+    });
   }
 
   trackReader();

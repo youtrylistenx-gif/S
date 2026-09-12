@@ -1,16 +1,16 @@
 # ════════════════════════════════════════════════════════════
-#  กดอัปเดตจำนวนผู้อ่านผ่านมือถือ ไม่ต้องเปิดคอมเลย
+#  กดอัปเดตจำนวนผู้อ่าน + รีวิว ผ่านมือถือ ไม่ต้องเปิดคอมเลย
 #
 #  วิธีใช้ (ทำได้จากมือถือ เปิดผ่านเบราว์เซอร์ ไม่ใช่แอป GitHub):
 #  1. เข้าหน้า repo บน github.com
 #  2. แตะแท็บ "Actions" ด้านบน
-#  3. แตะ "Update Reader Counts" ทางซ้าย
+#  3. แตะ "Update Website Data" ทางซ้าย
 #  4. แตะปุ่ม "Run workflow" (สีเขียว) แล้วกดยืนยันอีกที
-#  5. รอสักครู่ (ประมาณ 20-40 วิ) ตัวเลขในเว็บจะอัปเดตให้เองอัตโนมัติ
+#  5. รอสักครู่ (ประมาณ 20-40 วิ) ตัวเลขคนอ่านและรีวิวในเว็บจะอัปเดตให้เองอัตโนมัติ
 #     ไม่ต้อง push อะไรเองเลย ระบบจะ commit + push ให้เสร็จสรรพ
 # ════════════════════════════════════════════════════════════
 
-name: Update Reader Counts
+name: Update Website Data
 
 on:
   workflow_dispatch:
@@ -33,14 +33,17 @@ jobs:
       - name: ดึงจำนวนผู้อ่านล่าสุดมาแก้ settings.js
         run: node update-reader-counts.mjs
 
-      - name: Commit และ push ถ้ามีตัวเลขเปลี่ยน
+      - name: ดึงรีวิวล่าสุดมาฝังในหน้าอีบุ๊คทั้ง 3 เล่ม
+        run: node update-reviews.mjs
+
+      - name: Commit และ push ถ้ามีอะไรเปลี่ยน
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add settings.js
+          git add settings.js ebook-plukfai.html ebook-healjai-read.html ebook-chiwit-read.html
           if git diff --cached --quiet; then
-            echo "ตัวเลขไม่เปลี่ยน ไม่ต้อง commit"
+            echo "ไม่มีอะไรเปลี่ยน ไม่ต้อง commit"
           else
-            git commit -m "อัปเดตจำนวนผู้อ่านอัตโนมัติ (กดผ่านมือถือ)"
+            git commit -m "อัปเดตจำนวนผู้อ่านและรีวิวอัตโนมัติ (กดผ่านมือถือ)"
             git push
           fi
