@@ -116,9 +116,35 @@ var HEALJAI_READERS = 16;
 var CHIWIT_READERS = 9;
 
 
+/* ┌──────────────────────────────────────────────────────────────┐
+   │  10. หน้าริสแบนด์ที่จะใช้ตอนนี้                                │
+   └──────────────────────────────────────────────────────────────┘
+   เปลี่ยนค่าบรรทัดเดียว ลิงก์ริสแบนด์ทุกจุดในเว็บ (การ์ดหน้าแรก,
+   ปุ่ม "ดูรายละเอียดริสแบนด์" ในหน้าโดเนท ฯลฯ) จะเปลี่ยนตามให้เองอัตโนมัติ
+
+   'sale'    →  หน้าขายปกติ (wristband.html) ใครก็กดซื้อได้เลย ฿199.-
+   'limited' →  หน้าลิมิเต็ด (wristband-limited.html) ต้องโดเนทสนับสนุนถึงจะได้ */
+
+var ACTIVE_WRISTBAND_PAGE = 'limited';
+
+var WRISTBAND_PAGES = {
+  sale: 'wristband.html',
+  limited: 'wristband-limited.html',
+};
+
+/* ป้ายราคา/ยอดขาย ที่โชว์ตรงการ์ดริสแบนด์ในหน้าแรก จะสลับข้อความให้ตรงกับโหมดด้านบนอัตโนมัติ */
+var WRISTBAND_LABELS = {
+  sale:    { price: '฿199',          sold: 'ขายแล้ว 31 ชิ้น' },
+  limited: { price: 'โดเนท ฿199+',   sold: 'แจกไปแล้ว 31 ชิ้น' },
+};
+
+
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    ไม่ต้องแก้ใต้บรรทัดนี้
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+var WRISTBAND_URL = WRISTBAND_PAGES[ACTIVE_WRISTBAND_PAGE] || WRISTBAND_PAGES.sale;
+var WRISTBAND_LABEL = WRISTBAND_LABELS[ACTIVE_WRISTBAND_PAGE] || WRISTBAND_LABELS.sale;
 
 var PRICE_CONFIG = PROMOS[ACTIVE_PROMO] || PROMOS['50first'];
 
@@ -302,6 +328,15 @@ function applyPriceConfig(cfg) {
     });
     document.querySelectorAll('[data-chiwit-readers]').forEach(function(el) {
       el.textContent = CHIWIT_READERS;
+    });
+    document.querySelectorAll('[data-wristband-url]').forEach(function(el) {
+      el.href = WRISTBAND_URL;
+    });
+    document.querySelectorAll('[data-wristband-price]').forEach(function(el) {
+      el.textContent = WRISTBAND_LABEL.price;
+    });
+    document.querySelectorAll('[data-wristband-sold]').forEach(function(el) {
+      el.textContent = WRISTBAND_LABEL.sold;
     });
   }
   // script โหลดท้าย body — DOM พร้อมแล้ว เรียกตรงได้เลย

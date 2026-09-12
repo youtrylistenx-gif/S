@@ -1,0 +1,46 @@
+# ════════════════════════════════════════════════════════════
+#  กดอัปเดตจำนวนผู้อ่านผ่านมือถือ ไม่ต้องเปิดคอมเลย
+#
+#  วิธีใช้ (ทำได้จากมือถือ เปิดผ่านเบราว์เซอร์ ไม่ใช่แอป GitHub):
+#  1. เข้าหน้า repo บน github.com
+#  2. แตะแท็บ "Actions" ด้านบน
+#  3. แตะ "Update Reader Counts" ทางซ้าย
+#  4. แตะปุ่ม "Run workflow" (สีเขียว) แล้วกดยืนยันอีกที
+#  5. รอสักครู่ (ประมาณ 20-40 วิ) ตัวเลขในเว็บจะอัปเดตให้เองอัตโนมัติ
+#     ไม่ต้อง push อะไรเองเลย ระบบจะ commit + push ให้เสร็จสรรพ
+# ════════════════════════════════════════════════════════════
+
+name: Update Reader Counts
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: ดึงจำนวนผู้อ่านล่าสุดมาแก้ settings.js
+        run: node update-reader-counts.mjs
+
+      - name: Commit และ push ถ้ามีตัวเลขเปลี่ยน
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add settings.js
+          if git diff --cached --quiet; then
+            echo "ตัวเลขไม่เปลี่ยน ไม่ต้อง commit"
+          else
+            git commit -m "อัปเดตจำนวนผู้อ่านอัตโนมัติ (กดผ่านมือถือ)"
+            git push
+          fi
